@@ -77,7 +77,7 @@ namespace GameStateManagement
             {
                 Content.Load<object>(asset);
 
-                // Wilder code 
+                
             }
         }
 
