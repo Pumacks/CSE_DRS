@@ -76,6 +76,8 @@ namespace GameStateManagement
             foreach (string asset in preloadAssets)
             {
                 Content.Load<object>(asset);
+
+                // Wilder code 
             }
         }
 
