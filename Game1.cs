@@ -94,6 +94,7 @@ namespace GameStateManagement
 
             // The real drawing happens inside the screen manager component.
             base.Draw(gameTime);
+            // draw beispiel
         }
 
         #endregion Draw
