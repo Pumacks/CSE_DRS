@@ -11,11 +11,14 @@
 
 #region Using Statements
 
+using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 #endregion Using Statements
@@ -57,12 +60,25 @@ namespace GameStateManagement
         /// <summary>
         /// Load graphics content for the game.
         /// </summary>
+        /// 
+        Texture2D golem;
+        Entity hero;
         public override void LoadContent()
         {
+
+
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
+
+
+
             gameFont = content.Load<SpriteFont>("gamefont");
+            golem = content.Load<Texture2D>("GolemIdle");
+
+
+            hero = new Player(100, 5, new Vector2(10, 10), golem, new List<Item>());
+
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -110,10 +126,7 @@ namespace GameStateManagement
             if (IsActive)
             {
                 // Apply some random jitter to make the enemy move around.
-                const float randomization = 10;
 
-                enemyPosition.X += (float)(random.NextDouble() - 0.5) * randomization;
-                enemyPosition.Y += (float)(random.NextDouble() - 0.5) * randomization;
 
                 // Apply a stabilizing force to stop the enemy moving off the screen.
                 Vector2 targetPosition = new Vector2(
@@ -157,40 +170,47 @@ namespace GameStateManagement
             }
             else
             {
+
                 // Otherwise move the player position.
                 Vector2 movement = Vector2.Zero;
 
+
                 if (keyboardState.IsKeyDown(Keys.Left))
                 {
-                    movement.X--;
+                    movement.X -= hero.MovementSpeed;
                 }
 
                 if (keyboardState.IsKeyDown(Keys.Right))
                 {
-                    movement.X++;
+                    movement.X += hero.MovementSpeed;
                 }
 
                 if (keyboardState.IsKeyDown(Keys.Up))
                 {
-                    movement.Y--;
+                    movement.Y -= hero.MovementSpeed; ;
                 }
 
                 if (keyboardState.IsKeyDown(Keys.Down))
                 {
-                    movement.Y++;
+                    movement.Y += hero.MovementSpeed; ;
                 }
+
 
                 Vector2 thumbstick = gamePadState.ThumbSticks.Left;
 
                 movement.X += thumbstick.X;
                 movement.Y -= thumbstick.Y;
 
-                if (movement.Length() > 1)
-                {
-                    movement.Normalize();
-                }
+                //if (movement.Length() > 1)
+                //{
+                //    movement.Normalize();
+                //}
 
-                playerPosition += movement * 2;
+                Vector2 tmp = hero.Position;
+
+                tmp += movement;
+
+                hero.Position = tmp;
             }
         }
 
@@ -208,10 +228,8 @@ namespace GameStateManagement
 
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
 
-            spriteBatch.DrawString(gameFont, "Insert Gameplay Here",
-                                   enemyPosition, Color.DarkRed);
+            spriteBatch.Draw(hero.Texture, hero.Position, Color.White);
 
             spriteBatch.End();
 
