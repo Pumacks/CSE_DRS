@@ -62,7 +62,7 @@ namespace GameStateManagement
         /// </summary>
         /// 
         Texture2D golem;
-        Entity hero;
+        Player hero;
         public override void LoadContent()
         {
 
@@ -76,9 +76,10 @@ namespace GameStateManagement
             gameFont = content.Load<SpriteFont>("gamefont");
             golem = content.Load<Texture2D>("GolemIdle");
 
+            
 
             hero = new Player(100, 5, new Vector2(10, 10), golem, new List<Item>());
-
+            hero.LoadContent(content);
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -170,47 +171,12 @@ namespace GameStateManagement
             }
             else
             {
-
-                // Otherwise move the player position.
-                Vector2 movement = Vector2.Zero;
-
-
-                if (keyboardState.IsKeyDown(Keys.Left))
-                {
-                    movement.X -= hero.MovementSpeed;
-                }
-
-                if (keyboardState.IsKeyDown(Keys.Right))
-                {
-                    movement.X += hero.MovementSpeed;
-                }
-
-                if (keyboardState.IsKeyDown(Keys.Up))
-                {
-                    movement.Y -= hero.MovementSpeed; ;
-                }
-
-                if (keyboardState.IsKeyDown(Keys.Down))
-                {
-                    movement.Y += hero.MovementSpeed; ;
-                }
-
-
-                Vector2 thumbstick = gamePadState.ThumbSticks.Left;
-
-                movement.X += thumbstick.X;
-                movement.Y -= thumbstick.Y;
-
+                hero.Move();
                 //if (movement.Length() > 1)
                 //{
                 //    movement.Normalize();
                 //}
 
-                Vector2 tmp = hero.Position;
-
-                tmp += movement;
-
-                hero.Position = tmp;
             }
         }
 
@@ -228,8 +194,8 @@ namespace GameStateManagement
 
             spriteBatch.Begin();
 
+            hero.Draw(spriteBatch);
 
-            spriteBatch.Draw(hero.Texture, hero.Position, Color.White);
 
             spriteBatch.End();
 

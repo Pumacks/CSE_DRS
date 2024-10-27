@@ -1,5 +1,6 @@
 ﻿using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,16 @@ namespace GameStateManagementSample.Models.Entities
         public override void Atack()
         {
             Console.WriteLine("AI Atack:" + ActiveWeapon);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void LoadContent(ContentManager content)
+        {
+            throw new NotImplementedException();
         }
     }
 }
