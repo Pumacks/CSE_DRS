@@ -63,6 +63,11 @@ namespace GameStateManagement
         /// 
         Texture2D golem;
         Player hero;
+        Player hero2;
+
+        // Dummy Texture
+        Texture2D _texture;
+
         public override void LoadContent()
         {
 
@@ -72,15 +77,20 @@ namespace GameStateManagement
 
 
 
+            _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
+            _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
-            golem = content.Load<Texture2D>("GolemIdle");
+            golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
-            
+       
 
             hero = new Player(100, 5, new Vector2(10, 10), golem, new List<Item>());
+            hero2 = new Player(100, 5, new Vector2(200, 200), golem, new List<Item>());
+
             hero.LoadContent(content);
 
+            hero2.LoadContent(content);
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
             // while, giving you a chance to admire the beautiful loading screen.
@@ -175,6 +185,8 @@ namespace GameStateManagement
             else
             {
                 hero.Move();
+                
+
                 //if (movement.Length() > 1)
                 //{
                 //    movement.Normalize();
@@ -188,18 +200,28 @@ namespace GameStateManagement
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            // This game has a blue background. Why? Because!
-            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.CornflowerBlue, 0, 0);
 
+
+            if (CollisionDetector.IsIntersecting(hero.BoundingBox, hero2.BoundingBox))
+                ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
+                                               Color.Navy, 0, 0);
+            else
+            {
+                ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
+                                               Color.CornflowerBlue, 0, 0);
+            }
+                
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
 
             hero.Draw(spriteBatch);
+            hero2.Draw(spriteBatch);
+            //spriteBatch.Draw(_texture, hero.BoundingBox, Color.Black);
+            //spriteBatch.Draw(_texture, hero2.BoundingBox, Color.Black);
 
-
+            
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
