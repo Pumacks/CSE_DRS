@@ -36,7 +36,7 @@ namespace GameStateManagementSample.Models.Items
         }
 
         private Entity itemOwner;
-        public Texture2D ItemOwner
+        public Entity ItemOwner
         {
             get
             {
@@ -50,6 +50,12 @@ namespace GameStateManagementSample.Models.Items
         //private Sound itemSounds
         // ItemType können wir einfach mittels Abfrage nach instanceOf weapon oder consumable oder meleeweapon, rangedweapon, etc. machen.
         #endregion
+
+        public Item (String itemName, Texture2D itemTexture, Entity itemOwner) {
+            this.itemName = itemName;
+            this.itemTexture = itemTexture;
+            this.itemOwner = itemOwner;
+        }
 
         #region abstract methods
         public abstract void use(); // Könnte z.B. je nach Item die Methoden consume() bzw. drink() bzw. eat() oder attack() aufrufen. Einfach als optionale Zusatzmethode gedacht.

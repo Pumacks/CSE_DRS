@@ -17,7 +17,7 @@ namespace GameStateManagementSample.Models.Entities
         protected bool flipTexture = false;
         //protected Dictionary<string, Texture2D> animation;
 
-        
+
 
         // Weapon + Healthpots
         List<Item> items = new List<Item>();
@@ -27,8 +27,9 @@ namespace GameStateManagementSample.Models.Entities
         public int HealthPoints { get; set; }
         public float MovementSpeed { get; set; }
         public Texture2D Texture { get { return texture; } set { texture = value; } }
+        public Vector2 Position { get { return this.position;} private set {this.position = value;} } // Hinzugefügt am 09.11.2024 von Stylianos, um es möglich zu machen, den Abstand von Gegnern zum Spieler für Waffenangriffe zu berechnen.
         #endregion
-        
+
         protected AnimationManager animationManager;
         public Entity() { }
 
@@ -39,7 +40,7 @@ namespace GameStateManagementSample.Models.Entities
             this.position = playerPosition;
             this.texture = texture;
             this.items = items;
-            
+
             animationManager = new AnimationManager(MovementSpeed);
 
         }

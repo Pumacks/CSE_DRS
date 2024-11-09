@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 
 namespace GameStateManagementSample.Models.World
@@ -8,8 +10,8 @@ namespace GameStateManagementSample.Models.World
     {
 
         #region attributes, fields and properties
-        private List<Entity> enemies;
-        public List<Entity> Enemies
+        private List<Enemy> enemies;
+        public List<Enemy> Enemies
         {
             get
             {
@@ -32,8 +34,8 @@ namespace GameStateManagementSample.Models.World
                 this.player = value;
             }
         }
-        private List<Vector2> projectiles
-        public List<Vector2> Projectiles
+        private List<Projectile> projectiles;
+        public List<Projectile> Projectiles
         {
             get
             {

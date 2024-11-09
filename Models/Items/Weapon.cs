@@ -1,4 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.World;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameStateManagementSample.Models.Items
 {
@@ -53,11 +59,28 @@ namespace GameStateManagementSample.Models.Items
         */
         #endregion
 
+        public Weapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange) : base (itemName, itemTexture, itemOwner) {
+            this.weaponDamage = weaponDamage;
+            this.attackSpeed = attackSpeed;
+            this.weaponRange = weaponRange;
+        }
+
         public override void use()
         {
             throw new System.NotImplementedException();
         }
 
-        public abstract void attack();
+        public abstract void attack(Entity owner, Level level);
+
+        public int distance(Vector2 first, Vector2 second) {
+            Vector2 combined = new Vector2(first.X-second.X, first.Y-second.Y);
+            int distance = (int) Math.Sqrt(combined.X*combined.X + combined.Y*combined.Y);
+            if (distance >= 0) {
+                return distance;
+            } else {
+                Console.WriteLine("Rückgabewert der Funktion distance ist negativ!");
+                return -1;
+            }
+        }
     }
 }
