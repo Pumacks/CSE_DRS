@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -26,18 +27,20 @@ namespace GameStateManagementSample.Models.Entities
         {
             Vector2 movement = Vector2.Zero;
 
+            #region Atacking Timer
             if (isAtacking)
                 atackTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
 
             if (atackTimer >= 0.4)
             {
                 atackTimer = 0;
                 isAtacking = false;
             }
+            #endregion
 
 
 
+            #region Keyboard input
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 if (!isAtacking)
@@ -68,18 +71,26 @@ namespace GameStateManagementSample.Models.Entities
             {
                 movement.Y += MovementSpeed; ;
             }
+            #endregion
 
+
+             
             if (isAtacking)
                 Texture = animationManager.AttackAnimation();
             else if (movement != Vector2.Zero)
+            {
                 Texture = animationManager.WalkAnimation();
+                boundingBox.X = (int)position.X;
+                boundingBox.Y = (int)position.Y;
+            }
+        
 
 
             position += movement;
         }
         public override void Atack()
         {
-            Trace.WriteLine("Atack: " + ActiveWeapon);
+            Trace.WriteLine("Atack: " + ActiveWeapon + atackTimer);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

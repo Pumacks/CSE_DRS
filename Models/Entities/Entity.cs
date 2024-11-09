@@ -11,12 +11,13 @@ namespace GameStateManagementSample.Models.Entities
         #region atributes
 
         private Weapon activeWeapon;
-        public Weapon ActiveWeapon { get { return activeWeapon; } set { activeWeapon = value; } }
         private Texture2D texture;
         protected Vector2 position;
+        protected Rectangle boundingBox;
         protected bool flipTexture = false;
         protected GameTime gameTime;
-        //protected Dictionary<string, Texture2D> animation;
+        
+
 
 
 
@@ -28,6 +29,7 @@ namespace GameStateManagementSample.Models.Entities
         public int HealthPoints { get; set; }
         public float MovementSpeed { get; set; }
         public Texture2D Texture { get { return texture; } set { texture = value; } }
+        public Weapon ActiveWeapon { get { return activeWeapon; } set { activeWeapon = value; } }
         #endregion
 
         protected AnimationManager animationManager;
@@ -40,6 +42,7 @@ namespace GameStateManagementSample.Models.Entities
             this.position = playerPosition;
             this.texture = texture;
             this.items = items;
+            this.boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
             animationManager = new AnimationManager(MovementSpeed);
 
         }
