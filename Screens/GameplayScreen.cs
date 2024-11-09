@@ -12,6 +12,7 @@
 #region Using Statements
 
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
