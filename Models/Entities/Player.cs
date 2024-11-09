@@ -14,7 +14,6 @@ namespace GameStateManagementSample.Models.Entities
 {
     public class Player : Entity
     {
-
         private double atackTimer = 0;
         private bool isAtacking = false;
         public Player() { }
@@ -74,16 +73,19 @@ namespace GameStateManagementSample.Models.Entities
             #endregion
 
 
-             
+
             if (isAtacking)
                 Texture = animationManager.AttackAnimation();
             else if (movement != Vector2.Zero)
-            {
                 Texture = animationManager.WalkAnimation();
-                boundingBox.X = (int)position.X;
-                boundingBox.Y = (int)position.Y;
-            }
-        
+
+
+
+            boundingBox.X = (int)position.X - Texture.Width /2 ;
+            boundingBox.Y = (int)position.Y - Texture.Height / 2;
+            boundingBox.Width = Texture.Width;
+            boundingBox.Height = Texture.Height;
+
 
 
             position += movement;
@@ -100,8 +102,8 @@ namespace GameStateManagementSample.Models.Entities
                             sourceRectangle: null,
                             color: Color.White,
                             rotation: 0f,
-                            origin: Vector2.Zero,
-                            scale: 0.2f,
+                            origin: new Vector2(Texture.Width / 2, Texture.Height / 2),
+                            scale: 1f,
                             effects: flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                             layerDepth: 0f);
         }

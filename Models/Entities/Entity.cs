@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace GameStateManagementSample.Models.Entities
 {
-    public abstract class Entity
+    public abstract class Entity 
     {
         #region atributes
 
@@ -16,7 +16,7 @@ namespace GameStateManagementSample.Models.Entities
         protected Rectangle boundingBox;
         protected bool flipTexture = false;
         protected GameTime gameTime;
-        
+
 
 
 
@@ -30,6 +30,7 @@ namespace GameStateManagementSample.Models.Entities
         public float MovementSpeed { get; set; }
         public Texture2D Texture { get { return texture; } set { texture = value; } }
         public Weapon ActiveWeapon { get { return activeWeapon; } set { activeWeapon = value; } }
+        public Rectangle BoundingBox { get { return boundingBox; } }
         #endregion
 
         protected AnimationManager animationManager;
@@ -42,7 +43,10 @@ namespace GameStateManagementSample.Models.Entities
             this.position = playerPosition;
             this.texture = texture;
             this.items = items;
-            this.boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            this.boundingBox = new Rectangle((int)position.X - texture.Width / 2,
+                                             (int)position.Y - texture.Height / 2,
+                                             texture.Width,
+                                             texture.Height);
             animationManager = new AnimationManager(MovementSpeed);
 
         }
