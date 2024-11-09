@@ -14,6 +14,8 @@ namespace GameStateManagementSample.Models.Entities
     public class Player : Entity
     {
 
+        private double atackTimer = 0;
+        private bool isAtacking = false;
         public Player() { }
         public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, List<Item> items)
         : base(healthPoints, movementSpeed, playerPosition, texture, items)
@@ -24,12 +26,25 @@ namespace GameStateManagementSample.Models.Entities
         {
             Vector2 movement = Vector2.Zero;
 
+            if (isAtacking)
+                atackTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+
+            if (atackTimer >= 0.4)
+            {
+                atackTimer = 0;
+                isAtacking = false;
+            }
+
 
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                Texture = animationManager.AttackAnimation();
-                Atack();
+                if (!isAtacking)
+                {
+                    isAtacking = true;
+                    Atack();
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
@@ -54,9 +69,11 @@ namespace GameStateManagementSample.Models.Entities
                 movement.Y += MovementSpeed; ;
             }
 
-
-            if (movement != Vector2.Zero)
+            if (isAtacking)
+                Texture = animationManager.AttackAnimation();
+            else if (movement != Vector2.Zero)
                 Texture = animationManager.WalkAnimation();
+
 
             position += movement;
         }

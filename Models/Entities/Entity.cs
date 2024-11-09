@@ -15,9 +15,10 @@ namespace GameStateManagementSample.Models.Entities
         private Texture2D texture;
         protected Vector2 position;
         protected bool flipTexture = false;
+        protected GameTime gameTime;
         //protected Dictionary<string, Texture2D> animation;
 
-        
+
 
         // Weapon + Healthpots
         List<Item> items = new List<Item>();
@@ -28,7 +29,7 @@ namespace GameStateManagementSample.Models.Entities
         public float MovementSpeed { get; set; }
         public Texture2D Texture { get { return texture; } set { texture = value; } }
         #endregion
-        
+
         protected AnimationManager animationManager;
         public Entity() { }
 
@@ -39,7 +40,6 @@ namespace GameStateManagementSample.Models.Entities
             this.position = playerPosition;
             this.texture = texture;
             this.items = items;
-            
             animationManager = new AnimationManager(MovementSpeed);
 
         }
@@ -51,5 +51,11 @@ namespace GameStateManagementSample.Models.Entities
         public abstract void LoadContent(ContentManager content);
 
         public abstract void Draw(SpriteBatch spriteBatch);
+
+        public void SetGameTime(GameTime gameTime)
+        {
+            if (gameTime != null)
+                this.gameTime = gameTime;
+        }
     }
 }
