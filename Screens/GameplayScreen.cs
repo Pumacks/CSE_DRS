@@ -20,7 +20,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 #endregion Using Statements
 
@@ -78,7 +81,7 @@ namespace GameStateManagement
 
 
 
-            _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
+            _texture = new Texture2D(ScreenManager.GraphicsDevice,1,1);
             _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
@@ -199,6 +202,10 @@ namespace GameStateManagement
         /// <summary>
         /// Draws the gameplay screen.
         /// </summary>
+        public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangle, Color color, int thickness = 2)
+        {
+            
+        }
         public override void Draw(GameTime gameTime)
         {
 
@@ -217,10 +224,20 @@ namespace GameStateManagement
 
             spriteBatch.Begin();
 
+            // Draw Bounding box
+            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black); 
+            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
+            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
+            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Bottom - 1, hero.BoundingBox.Width, 1), Color.Black);
+
+            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Y, hero2.BoundingBox.Width, 1), Color.Black);
+            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
+            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.Right - 1, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
+            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Bottom - 1, hero2.BoundingBox.Width, 1), Color.Black);
+
             hero.Draw(spriteBatch);
             hero2.Draw(spriteBatch);
-            //spriteBatch.Draw(_texture, hero.BoundingBox, Color.Black);
-            //spriteBatch.Draw(_texture, hero2.BoundingBox, Color.Black);
+     
 
             
             spriteBatch.End();
