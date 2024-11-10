@@ -11,6 +11,7 @@
 
 #region Using Statements
 
+using GameStateManagementSample.Models.Camera;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
@@ -41,13 +42,18 @@ namespace GameStateManagement
         private ContentManager content;
         private SpriteFont gameFont;
 
+        Texture2D golem;
+        Player hero;
+        Player hero2;
+        Camera camera;
+        // Dummy Texture
+        Texture2D _texture;
+
         private Vector2 playerPosition = new Vector2(100, 100);
         private Vector2 enemyPosition = new Vector2(100, 100);
 
         private Random random = new Random();
-
         private float pauseAlpha;
-
         #endregion Fields
 
         #region Initialization
@@ -65,23 +71,18 @@ namespace GameStateManagement
         /// Load graphics content for the game.
         /// </summary>
         /// 
-        Texture2D golem;
-        Player hero;
-        Player hero2;
 
-        // Dummy Texture
-        Texture2D _texture;
 
         public override void LoadContent()
         {
-
+            camera = new Camera();
 
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
 
 
-            _texture = new Texture2D(ScreenManager.GraphicsDevice,1,1);
+            _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
             _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
@@ -127,7 +128,7 @@ namespace GameStateManagement
                                                        bool coveredByOtherScreen)
         {
             hero.SetGameTime(gameTime);
-
+            camera.Follow(hero);
 
             base.Update(gameTime, otherScreenHasFocus, false);
 
@@ -202,14 +203,10 @@ namespace GameStateManagement
         /// <summary>
         /// Draws the gameplay screen.
         /// </summary>
-        public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangle, Color color, int thickness = 2)
-        {
-            
-        }
         public override void Draw(GameTime gameTime)
         {
 
-
+        
             if (CollisionDetector.IsIntersecting(hero.BoundingBox, hero2.BoundingBox))
                 ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Navy, 0, 0);
@@ -222,7 +219,7 @@ namespace GameStateManagement
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix: camera.Transform);
 
             // Draw Bounding box
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black); 

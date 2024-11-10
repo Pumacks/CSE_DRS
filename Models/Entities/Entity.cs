@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace GameStateManagementSample.Models.Entities
 {
-    public abstract class Entity 
+    public abstract class Entity
     {
         #region atributes
 
@@ -31,6 +31,7 @@ namespace GameStateManagementSample.Models.Entities
         public Texture2D Texture { get { return texture; } set { texture = value; } }
         public Weapon ActiveWeapon { get { return activeWeapon; } set { activeWeapon = value; } }
         public Rectangle BoundingBox { get { return boundingBox; } }
+        public Vector2 Position { get { return position; } set { position = value; } }
         #endregion
 
         protected AnimationManager animationManager;
