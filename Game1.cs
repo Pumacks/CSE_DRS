@@ -27,6 +27,10 @@ namespace GameStateManagement
     {
         #region Fields
 
+        public static int ScreenWidth = 1280;
+        public static int ScreenHeight = 1024;
+        
+
         private readonly GraphicsDeviceManager graphics;
         private readonly ScreenManager screenManager;
 
@@ -62,8 +66,8 @@ namespace GameStateManagement
 
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 1024;
+            graphics.PreferredBackBufferWidth = ScreenWidth;
+            graphics.PreferredBackBufferHeight = ScreenHeight;
             graphics.ApplyChanges();
             base.Initialize();
         }
