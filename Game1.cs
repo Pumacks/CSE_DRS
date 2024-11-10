@@ -69,6 +69,7 @@ namespace GameStateManagement
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
             graphics.ApplyChanges();
+            IsMouseVisible = true;
             base.Initialize();
         }
 
