@@ -13,6 +13,7 @@
 
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.Items;
+using GameStateManagementSample.Models.Room;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -63,6 +64,10 @@ namespace GameStateManagement
         /// 
         Texture2D golem;
         Player hero;
+
+        Room room = new Room("../../../Map/rooms/Room1.txt");
+        // Texture2D grass;
+        
         public override void LoadContent()
         {
 
@@ -75,11 +80,11 @@ namespace GameStateManagement
 
             gameFont = content.Load<SpriteFont>("gamefont");
             golem = content.Load<Texture2D>("GolemIdle");
-
             
-
             hero = new Player(100, 5, new Vector2(10, 10), golem, new List<Item>());
             hero.LoadContent(content);
+
+            room.loadTextures(content);
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -193,10 +198,8 @@ namespace GameStateManagement
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
-
+            room.Draw(spriteBatch);
             hero.Draw(spriteBatch);
-
-
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
