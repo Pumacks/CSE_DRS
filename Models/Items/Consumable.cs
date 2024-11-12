@@ -1,3 +1,5 @@
+using GameStateManagementSample.Models.Entities;
+using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace GameStateManagementSample.Models.Items
@@ -7,6 +9,11 @@ namespace GameStateManagementSample.Models.Items
 
         #region attributes, fields and properties
         private int healingAmount;
+
+        public Consumable(string itemName, Texture2D itemTexture, Entity itemOwner) : base(itemName, itemTexture, itemOwner)
+        {
+        }
+
         public int HealingAmount
         {
             get
@@ -24,10 +31,12 @@ namespace GameStateManagementSample.Models.Items
         */
         #endregion
 
-        public override void use(Entity user)
+        public override void use()
         {
-            useConsumable(user);
+        //useConsumable(user);
         }
+
+   
 
         public void useConsumable(Entity user) {
             user.HealthPoints = user.HealthPoints + this.HealingAmount;

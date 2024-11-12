@@ -77,14 +77,10 @@ namespace GameStateManagement
         /// </summary>
         /// 
 
-        Texture2D golem;
-        Player hero;
 
         Room room = new Room("../../../Map/rooms/Room1.txt");
         // Texture2D grass;
         
-        public override void LoadContent()
-        {
 
 
 
@@ -104,7 +100,6 @@ namespace GameStateManagement
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
-            golem = content.Load<Texture2D>("GolemIdle");
             
 
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
@@ -112,7 +107,7 @@ namespace GameStateManagement
             gui = new GUI(ScreenManager.SpriteBatch, content,gameFont);
 
 
-            hero = new Player(100, 5, new Vector2(10, 10), golem, new List<Item>());
+            hero = new Player(100, 5, new Vector2(500, 400), golem, new List<Item>());
             hero2 = new Player(100, 5, new Vector2(200, 200), golem, new List<Item>());
 
            
@@ -120,7 +115,7 @@ namespace GameStateManagement
             room.loadTextures(content);
 
             hero.LoadContent(content);
-            hero2.LoadContent(content);
+           // hero2.LoadContent(content);
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -246,11 +241,6 @@ namespace GameStateManagement
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
 
-            spriteBatch.Begin();
-            room.Draw(spriteBatch);
-            gui.DrawGui(hero);
-          
-            spriteBatch.End();
           
  
             spriteBatch.Begin(transformMatrix: camera.Transform);
@@ -266,8 +256,10 @@ namespace GameStateManagement
             spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.Right - 1, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Bottom - 1, hero2.BoundingBox.Width, 1), Color.Black);
 
+            room.Draw(spriteBatch);
+
             hero.Draw(spriteBatch);
-            hero2.Draw(spriteBatch);
+           // hero2.Draw(spriteBatch);
 
 
             
@@ -276,6 +268,11 @@ namespace GameStateManagement
 
 
 
+            spriteBatch.Begin();
+
+            gui.DrawGui(hero);
+
+            spriteBatch.End();
 
 
             // If the game is transitioning on or off, fade it out to black.
