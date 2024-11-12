@@ -11,6 +11,7 @@
 
 #region Using Statements
 
+using GameStateManagementSample.Models;
 using GameStateManagementSample.Models.Camera;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.Helpers;
@@ -19,8 +20,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.OpenGL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using Color = Microsoft.Xna.Framework.Color;
@@ -46,6 +49,7 @@ namespace GameStateManagement
         Player hero;
         Player hero2;
         Camera camera;
+        GUI gui;
         // Dummy Texture
         Texture2D _texture;
 
@@ -68,27 +72,29 @@ namespace GameStateManagement
         }
 
         /// <summary>
-        /// Load graphics content for the game.
+        /// LoadContent graphics content for the game.
         /// </summary>
         /// 
 
 
         public override void LoadContent()
         {
-            camera = new Camera();
-
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
 
-
+            camera = new Camera();
+             
+           
+           
+           
             _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
             _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
-       
+            gui = new GUI(ScreenManager.SpriteBatch, content,gameFont);
 
             hero = new Player(100, 5, new Vector2(10, 10), golem, new List<Item>());
             hero2 = new Player(100, 5, new Vector2(200, 200), golem, new List<Item>());
@@ -220,8 +226,10 @@ namespace GameStateManagement
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin(transformMatrix: camera.Transform);
+           
 
-            // Draw Bounding box
+
+            // DrawGui Bounding box
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black); 
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
@@ -234,9 +242,18 @@ namespace GameStateManagement
 
             hero.Draw(spriteBatch);
             hero2.Draw(spriteBatch);
-     
+
 
             
+
+            spriteBatch.End();
+
+
+
+
+            spriteBatch.Begin();
+            gui.DrawGui(hero);
+
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
