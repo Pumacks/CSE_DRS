@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 
-
 namespace GameStateManagementSample.Models.Room
 {
     public class Room
@@ -14,18 +13,12 @@ namespace GameStateManagementSample.Models.Room
         private int[,] roomTiles;
         Texture2D grass;
         Texture2D hole;
+        Texture2D tree;
 
         public Room(string roomTxt)
         {
             roomTiles = ReadRoomAsTxtFile(roomTxt);
         }
-
-        /*
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            //spriteBatch.Draw(tiles:tiles);
-        }
-        */
 
         static int[,] ReadRoomAsTxtFile(string filePath)
         {
@@ -58,29 +51,19 @@ namespace GameStateManagementSample.Models.Room
         {
             grass = content.Load<Texture2D>("Map/grass");
             hole = content.Load<Texture2D>("Map/hole");
+            tree = content.Load<Texture2D>("Map/tree");
+            
         }
-
-
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            /*spriteBatch.Draw(texture: Texture,
-                            position: position,
-                            sourceRectangle: null,
-                            color: Color.White,
-                            rotation: 0f,
-                            origin: Vector2.Zero,
-                            scale: 0.2f,
-                            effects: flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-                            layerDepth: 0f);*/
-
             Vector2 tile = new Vector2(0,0);
             for (int i = 0; i < roomTiles.GetLength(0); i++)
             {
                 tile.X = 0;
                 for (int j = 0; j < roomTiles.GetLength(1); j++)
                 {
-                    if (roomTiles[i, j] == 1){
+                    if (roomTiles[i, j] == 1 || roomTiles[i, j] == 2){
                         spriteBatch.Draw(grass, tile, Color.White);
                         tile.X += 100;
                     }
@@ -92,10 +75,20 @@ namespace GameStateManagementSample.Models.Room
                 }
                 tile.Y += 100;
             }
-
+            tile.X = 0;
+            tile.Y = 0;
+            for (int i = 0; i < roomTiles.GetLength(0); i++)
+            {
+                tile.X = 0;
+                for (int j = 0; j < roomTiles.GetLength(1); j++)
+                {
+                    if (roomTiles[i, j] == 2){
+                        spriteBatch.Draw(tree, tile, Color.White);
+                        tile.X += 100;
+                    }
+                }
+                tile.Y += 100;
+            }
         }
-
-
-
     }
 }
