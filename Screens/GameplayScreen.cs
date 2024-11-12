@@ -16,6 +16,7 @@ using GameStateManagementSample.Models.Camera;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
+using GameStateManagementSample.Models.Room;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -76,6 +77,16 @@ namespace GameStateManagement
         /// </summary>
         /// 
 
+        Texture2D golem;
+        Player hero;
+
+        Room room = new Room("../../../Map/rooms/Room1.txt");
+        // Texture2D grass;
+        
+        public override void LoadContent()
+        {
+
+
 
         public override void LoadContent()
         {
@@ -92,16 +103,25 @@ namespace GameStateManagement
             _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
+
+            golem = content.Load<Texture2D>("GolemIdle");
+            
+
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
             gui = new GUI(ScreenManager.SpriteBatch, content,gameFont);
 
+
             hero = new Player(100, 5, new Vector2(10, 10), golem, new List<Item>());
             hero2 = new Player(100, 5, new Vector2(200, 200), golem, new List<Item>());
 
-            hero.LoadContent(content);
+           
 
+            room.loadTextures(content);
+
+            hero.LoadContent(content);
             hero2.LoadContent(content);
+
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
             // while, giving you a chance to admire the beautiful loading screen.
@@ -225,10 +245,16 @@ namespace GameStateManagement
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
+
+            spriteBatch.Begin();
+            room.Draw(spriteBatch);
+            gui.DrawGui(hero);
+          
+            spriteBatch.End();
+          
+ 
             spriteBatch.Begin(transformMatrix: camera.Transform);
            
-
-
             // DrawGui Bounding box
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black); 
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
@@ -251,10 +277,6 @@ namespace GameStateManagement
 
 
 
-            spriteBatch.Begin();
-            gui.DrawGui(hero);
-
-            spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)
