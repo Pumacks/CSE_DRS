@@ -64,6 +64,9 @@ namespace GameStateManagementSample.Models.Room
                 for (int j = 0; j < roomTiles.GetLength(1); j++)
                 {
                     if (roomTiles[i, j] == 1 || roomTiles[i, j] == 2){
+                        if(i == roomTiles.GetLength(0)-1)
+                            spriteBatch.Draw(grass, new Vector2(tile.X, tile.Y + 100), Color.White);
+
                         spriteBatch.Draw(grass, tile, Color.White);
                         tile.X += 100;
                     }
@@ -82,10 +85,11 @@ namespace GameStateManagementSample.Models.Room
                 tile.X = 0;
                 for (int j = 0; j < roomTiles.GetLength(1); j++)
                 {
-                    if (roomTiles[i, j] == 2){
+                    
+                    if (roomTiles[i, j] == 2){                 
                         spriteBatch.Draw(tree, tile, Color.White);
-                        tile.X += 100;
                     }
+                    tile.X += 100;
                 }
                 tile.Y += 100;
             }
