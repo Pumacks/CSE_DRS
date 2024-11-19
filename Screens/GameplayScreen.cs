@@ -257,6 +257,7 @@ namespace GameStateManagement
             spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Bottom - 1, hero2.BoundingBox.Width, 1), Color.Black);
 
             room.Draw(spriteBatch);
+            //room.generateRoom(spriteBatch);
 
             hero.Draw(spriteBatch);
            // hero2.Draw(spriteBatch);
