@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-class Tile
+public class Tile
 {
     Vector2 pos;
     Texture2D texture;

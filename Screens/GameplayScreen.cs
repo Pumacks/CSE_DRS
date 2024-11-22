@@ -59,6 +59,8 @@ namespace GameStateManagement
 
         private Random random = new Random();
         private float pauseAlpha;
+        Room room = new Room();
+
         #endregion Fields
 
         #region Initialization
@@ -75,14 +77,7 @@ namespace GameStateManagement
         /// <summary>
         /// LoadContent graphics content for the game.
         /// </summary>
-        /// 
-
-
-        Room room = new Room("../../../Map/rooms/Room1.txt");
-        // Texture2D grass;
-        
-
-
+        ///              
 
         public override void LoadContent()
         {
@@ -91,8 +86,7 @@ namespace GameStateManagement
 
 
             camera = new Camera();
-             
-           
+            
            
            
             _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
@@ -112,8 +106,8 @@ namespace GameStateManagement
 
            
 
-            room.loadTextures(content);
-
+            room.LoadTextures(content);
+            room.GenerateRoom();
             hero.LoadContent(content);
            // hero2.LoadContent(content);
 
@@ -256,9 +250,7 @@ namespace GameStateManagement
             spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.Right - 1, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Bottom - 1, hero2.BoundingBox.Width, 1), Color.Black);
 
-            room.Draw(spriteBatch);
-            //room.generateRoom(spriteBatch);
-
+            room.DrawRoom(spriteBatch);
             hero.Draw(spriteBatch);
            // hero2.Draw(spriteBatch);
 
