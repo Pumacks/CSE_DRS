@@ -50,7 +50,7 @@ namespace GameStateManagement
         Player hero;
         Player hero2;
         Camera camera;
-        GUI gui;
+
         // Dummy Texture
         Texture2D _texture;
 
@@ -80,7 +80,7 @@ namespace GameStateManagement
 
         Room room = new Room("../../../Map/rooms/Room1.txt");
         // Texture2D grass;
-        
+
 
 
 
@@ -91,31 +91,30 @@ namespace GameStateManagement
 
 
             camera = new Camera();
-             
-           
-           
-           
+
+
+
+
             _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
             _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
-            
+
 
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
-            gui = new GUI(ScreenManager.SpriteBatch, content,gameFont);
 
 
-            hero = new Player(100, 5, new Vector2(500, 400), golem, new List<Item>());
-            hero2 = new Player(100, 5, new Vector2(200, 200), golem, new List<Item>());
+            hero = new Player(100, 5, new Vector2(500, 400), golem, gameFont, new List<Item>());
+            hero2 = new Player(100, 5, new Vector2(200, 200), golem, gameFont, new List<Item>());
 
-           
+
 
             room.loadTextures(content);
 
             hero.LoadContent(content);
-           // hero2.LoadContent(content);
+            // hero2.LoadContent(content);
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -211,7 +210,7 @@ namespace GameStateManagement
             else
             {
                 hero.Move();
-                
+
 
                 //if (movement.Length() > 1)
                 //{
@@ -227,7 +226,7 @@ namespace GameStateManagement
         public override void Draw(GameTime gameTime)
         {
 
-        
+
             if (CollisionDetector.IsIntersecting(hero.BoundingBox, hero2.BoundingBox))
                 ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Navy, 0, 0);
@@ -236,17 +235,17 @@ namespace GameStateManagement
                 ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.CornflowerBlue, 0, 0);
             }
-                
+
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
 
-          
- 
+
+
             spriteBatch.Begin(transformMatrix: camera.Transform);
-           
+
             // DrawGui Bounding box
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black); 
+            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Bottom - 1, hero.BoundingBox.Width, 1), Color.Black);
@@ -259,20 +258,15 @@ namespace GameStateManagement
             room.Draw(spriteBatch);
 
             hero.Draw(spriteBatch);
-           // hero2.Draw(spriteBatch);
-
-
-            
-
-            spriteBatch.End();
+            // hero2.Draw(spriteBatch);
 
 
 
-            spriteBatch.Begin();
-
-            gui.DrawGui(hero);
 
             spriteBatch.End();
+
+
+
 
 
             // If the game is transitioning on or off, fade it out to black.

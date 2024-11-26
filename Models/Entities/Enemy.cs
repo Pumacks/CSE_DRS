@@ -13,8 +13,8 @@ namespace GameStateManagementSample.Models.Entities
 
         public Enemy() { }
 
-        public Enemy(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, List<Item> items)
-        : base(healthPoints, movementSpeed, playerPosition, texture, items)
+        public Enemy(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
+        : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
         }
 
@@ -35,6 +35,11 @@ namespace GameStateManagementSample.Models.Entities
         public override void LoadContent(ContentManager content)
         {
             throw new NotImplementedException();
+        }
+
+        public override void TakeDamage(int damage)
+        {
+            HealthPoints -= damage;
         }
     }
 }
