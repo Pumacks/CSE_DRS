@@ -14,6 +14,8 @@ namespace GameStateManagementSample.Models.Entities
     {
         private double atackTimer = 0;
         private bool isAtacking = false;
+
+
         private Vector2 healthPosition = new Vector2(20, 20);
 
         List<GUIObserver> GUIObservers = new();
@@ -39,6 +41,7 @@ namespace GameStateManagementSample.Models.Entities
                 isAtacking = false;
             }
             #endregion
+
 
 
 
@@ -81,6 +84,8 @@ namespace GameStateManagementSample.Models.Entities
                 Texture = animationManager.AttackAnimation();
             else if (movement != Vector2.Zero)
                 Texture = animationManager.WalkAnimation();
+            else if (movement == Vector2.Zero)
+                Texture = animationManager.IdleAnimation();
 
 
 
@@ -100,7 +105,6 @@ namespace GameStateManagementSample.Models.Entities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            TakeDamage(1);
             spriteBatch.Draw(texture: Texture,
                             position: position,
                             sourceRectangle: null,
@@ -135,7 +139,7 @@ namespace GameStateManagementSample.Models.Entities
         }
         public override void TakeDamage(int damage)
         {
-            HealthPoints -= damage;
+            HealthPoints = MathHelper.Max(0, HealthPoints - damage);
             NotifyObservers();
         }
     }
