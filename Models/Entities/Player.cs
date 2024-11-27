@@ -16,7 +16,7 @@ namespace GameStateManagementSample.Models.Entities
         private bool isAtacking = false;
 
 
-        private Vector2 healthPosition = new Vector2(20, 20);
+        private Vector2 healthPositionGUI = new Vector2(20, 20);
 
         List<GUIObserver> GUIObservers = new();
 
@@ -50,6 +50,7 @@ namespace GameStateManagementSample.Models.Entities
             {
                 if (!isAtacking)
                 {
+                    TakeDamage(25);
                     isAtacking = true;
                     Atack();
                 }
@@ -119,7 +120,7 @@ namespace GameStateManagementSample.Models.Entities
 
             foreach (GUIObserver observer in GUIObservers)
             {
-                observer.Draw(spriteBatch, spriteFont, healthPosition);
+                observer.Draw(spriteBatch, spriteFont, healthPositionGUI);
             }
 
         }
@@ -141,6 +142,12 @@ namespace GameStateManagementSample.Models.Entities
         {
             HealthPoints = MathHelper.Max(0, HealthPoints - damage);
             NotifyObservers();
+        }
+
+
+        public void PlayerDeathAnimation()
+        {
+            Texture = animationManager.DeathAnimation();
         }
     }
 }

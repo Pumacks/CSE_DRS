@@ -48,7 +48,7 @@ namespace GameStateManagement
 
         Texture2D golem;
         Player hero;
-        Player hero2;
+
         Camera camera;
 
         // Dummy Texture
@@ -107,14 +107,14 @@ namespace GameStateManagement
 
 
             hero = new Player(100, 5, new Vector2(500, 400), golem, gameFont, new List<Item>());
-            hero2 = new Player(100, 5, new Vector2(200, 200), golem, gameFont, new List<Item>());
+
 
 
 
             room.loadTextures(content);
 
             hero.LoadContent(content);
-            // hero2.LoadContent(content);
+
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -209,8 +209,15 @@ namespace GameStateManagement
             }
             else
             {
-                hero.Move();
 
+                if (hero.HealthPoints <= 0)
+                {
+                    hero.PlayerDeathAnimation();
+                }
+                else
+                {
+                    hero.Move();
+                }
 
                 //if (movement.Length() > 1)
                 //{
@@ -226,48 +233,25 @@ namespace GameStateManagement
         public override void Draw(GameTime gameTime)
         {
 
+            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
-            if (CollisionDetector.IsIntersecting(hero.BoundingBox, hero2.BoundingBox))
-                ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.Navy, 0, 0);
-            else
-            {
-                ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.CornflowerBlue, 0, 0);
-            }
 
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
 
 
-
             spriteBatch.Begin(transformMatrix: camera.Transform);
 
             // DrawGui Bounding box
+            room.Draw(spriteBatch);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Bottom - 1, hero.BoundingBox.Width, 1), Color.Black);
 
-            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Y, hero2.BoundingBox.Width, 1), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.Right - 1, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Bottom - 1, hero2.BoundingBox.Width, 1), Color.Black);
-
-            room.Draw(spriteBatch);
-
             hero.Draw(spriteBatch);
-            // hero2.Draw(spriteBatch);
-
-
-
-
             spriteBatch.End();
-
-
-
-
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)
