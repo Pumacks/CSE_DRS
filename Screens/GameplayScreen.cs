@@ -16,7 +16,7 @@ using GameStateManagementSample.Models.Camera;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
-using GameStateManagementSample.Models.Room;
+using GameStateManagementSample.Models.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -60,6 +60,7 @@ namespace GameStateManagement
         private Random random = new Random();
         private float pauseAlpha;
         Room room = new Room();
+        MapGenerator map = new MapGenerator();
 
         #endregion Fields
 
@@ -86,30 +87,26 @@ namespace GameStateManagement
 
 
             camera = new Camera();
-            
-           
-           
+
+
+
             _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
             _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
             
-
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
-            gui = new GUI(ScreenManager.SpriteBatch, content,gameFont);
+            gui = new GUI(ScreenManager.SpriteBatch, content, gameFont);
 
-
-            hero = new Player(100, 5, new Vector2(500, 400), golem, new List<Item>());
+            
+            hero = new Player(100, 5, new Vector2(5200, 5200), golem, new List<Item>());
             hero2 = new Player(100, 5, new Vector2(200, 200), golem, new List<Item>());
 
-           
-
-            room.LoadTextures(content);
-            room.GenerateRoom();
+            map.LoadMapTextures(content);
+            map.GenerateMap();
             hero.LoadContent(content);
-           // hero2.LoadContent(content);
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -205,7 +202,7 @@ namespace GameStateManagement
             else
             {
                 hero.Move();
-                
+
 
                 //if (movement.Length() > 1)
                 //{
@@ -221,7 +218,7 @@ namespace GameStateManagement
         public override void Draw(GameTime gameTime)
         {
 
-        
+
             if (CollisionDetector.IsIntersecting(hero.BoundingBox, hero2.BoundingBox))
                 ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Navy, 0, 0);
@@ -230,17 +227,18 @@ namespace GameStateManagement
                 ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.CornflowerBlue, 0, 0);
             }
-                
+
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
 
-          
- 
+
+
             spriteBatch.Begin(transformMatrix: camera.Transform);
-           
+
+
             // DrawGui Bounding box
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black); 
+            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Bottom - 1, hero.BoundingBox.Width, 1), Color.Black);
@@ -250,16 +248,12 @@ namespace GameStateManagement
             spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.Right - 1, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Bottom - 1, hero2.BoundingBox.Width, 1), Color.Black);
 
-            room.DrawRoom(spriteBatch);
+            //room.DrawRoom(spriteBatch);
+            map.DrawMap(spriteBatch);
             hero.Draw(spriteBatch);
-           // hero2.Draw(spriteBatch);
-
-
-            
+            // hero2.Draw(spriteBatch);
 
             spriteBatch.End();
-
-
 
             spriteBatch.Begin();
 
