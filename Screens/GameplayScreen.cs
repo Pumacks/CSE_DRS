@@ -456,7 +456,9 @@ namespace GameStateManagement
             //     layerDepth: 0f);
             // spriteBatch.End();
 
-            
+
+           
+
 
             if (Projectiles != null)
             {
@@ -479,49 +481,6 @@ namespace GameStateManagement
                 }
                 spriteBatch.End();
             }
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Total ms: " + gameTime.TotalGameTime.TotalMilliseconds.ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width*0.01f,ScreenManager.GraphicsDevice.Viewport.Height-50),
-                Color.Red
-            );
-            spriteBatch.End();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Hero Position: " + hero.Position.ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width*0.01f,ScreenManager.GraphicsDevice.Viewport.Height-100),
-                Color.Red
-            );
-            spriteBatch.End();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Hero Transformed Position: " + Vector2.Transform(hero.Position,camera.Transform).ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width*0.01f,ScreenManager.GraphicsDevice.Viewport.Height-150),
-                Color.Red
-            );
-            spriteBatch.End();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Mouse Cursor Position: " + new Vector2(Mouse.GetState().X, Mouse.GetState().Y).ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width*0.01f,ScreenManager.GraphicsDevice.Viewport.Height-200),
-                Color.Red
-            );
-            spriteBatch.End();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Mouse Cursor Transformed Position: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),camera.Transform).ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width*0.01f,ScreenManager.GraphicsDevice.Viewport.Height-250),
-                Color.Red
-            );
-            spriteBatch.End();
-
-
 
 
 

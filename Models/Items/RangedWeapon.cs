@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using GameStateManagement;
 using System.Collections.Generic;
 
+
 namespace GameStateManagementSample.Models.Items
 {
     public class RangedWeapon : Weapon
@@ -56,26 +57,17 @@ namespace GameStateManagementSample.Models.Items
 
         public override void attack(Entity owner)
         {
-            // Setze für jeden Angriff ein Projektil in die Welt, welches sich bei jedem Update um eine von der projectileSpeed abhängigen (oder alternativ festen) Distanz bewegt, undzwar in Richtung des Mousecursors beim Abschuss.
-            // Anders als bei Space Invaders, wo die Projektile nur geradewegs nach oben gehen, muss hier daher jedes Projektil die Information mitbekommen, von wo genau aus es wo genau hingeht und wie schnell es sich dabei bewegt.
-            
-            //Models.Camera cam = new Models.Camera
-            // GameStateManagementSample.Models.Camera.Camera cam = new GameStateManagementSample.Models.Camera.Camera();
-            //Matrix matrix = new Matrix 
-            Vector2 transformedPosition = Vector2.Transform(this.ItemOwner.Position,this.ItemOwner.CameraProperty.Transform);
-            Vector2 transformedMouseCursor = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),this.ItemOwner.CameraProperty.Transform);
+
+            Vector2 vector2 = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(owner.CameraProperty.Transform));
+
             Projectiles.Add(
-                new Projectile(
-                    this.ItemName,
-                    projectileTexture,
-                    this.ItemOwner,
-                    this.ItemOwner.Position, //Vector2.Transform(this.ItemOwner.Position,this.ItemOwner.CameraProperty.Transform)              //this.ItemOwner.Position
-                    new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
-                    // new Vector2(Mouse.GetState().X, Mouse.GetState().Y)
-                    // Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),this.ItemOwner.CameraProperty.Transform)
-                    // new Vector2(Mouse.GetState().X - transformedPosition.X, Mouse.GetState().Y - transformedPosition.Y)
-                    // Vector2.Transform(new Vector2(Mouse.GetState().X - transformedPosition.X, Mouse.GetState().Y - transformedPosition.Y),this.ItemOwner.CameraProperty.Transform)
-                    projectileSpeed));
+            new Projectile(
+                this.ItemName,
+                projectileTexture,
+                this.ItemOwner,
+                this.ItemOwner.Position,
+                vector2,
+                projectileSpeed));
         }
 
         public override void DrawItem(SpriteBatch spriteBatch)
