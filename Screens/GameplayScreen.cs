@@ -102,7 +102,7 @@ namespace GameStateManagement
 
 
 
-            hero = new Player(100, 5, new Vector2(5000, 5000), golem, gameFont, new List<Item>());
+            hero = new Player(100, 5, new Vector2(5400, 5400), golem, gameFont, new List<Item>());
 
 
             map.LoadMapTextures(content);
