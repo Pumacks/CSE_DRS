@@ -43,10 +43,10 @@ namespace GameStateManagementSample.Models.Items
         }
         #endregion
 
-        public RangedWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, int projectileSpeed, Texture2D projectileTexture) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange) {
+        public RangedWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, int projectileSpeed, Texture2D projectileTexture, List<Projectile> projectileList) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange) {
             this.projectileSpeed = projectileSpeed;
             this.projectileTexture = projectileTexture;
-            this.Projectiles = new List<Projectile>();
+            this.Projectiles = projectileList;
         }
 
         public override void use()
@@ -69,11 +69,12 @@ namespace GameStateManagementSample.Models.Items
                     this.ItemName,
                     projectileTexture,
                     this.ItemOwner,
-                    Vector2.Transform(this.ItemOwner.Position,this.ItemOwner.CameraProperty.Transform), //Vector2.Transform(this.ItemOwner.Position,this.ItemOwner.CameraProperty.Transform)              //this.ItemOwner.Position
-                    Vector2.Transform(new Vector2(Mouse.GetState().X - transformedPosition.X, Mouse.GetState().Y - transformedPosition.Y),this.ItemOwner.CameraProperty.Transform),
-                    //new Vector2(Mouse.GetState().X, Mouse.GetState().Y)
-                    //Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),this.ItemOwner.CameraProperty.Transform)
+                    this.ItemOwner.Position, //Vector2.Transform(this.ItemOwner.Position,this.ItemOwner.CameraProperty.Transform)              //this.ItemOwner.Position
+                    new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
+                    // new Vector2(Mouse.GetState().X, Mouse.GetState().Y)
+                    // Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),this.ItemOwner.CameraProperty.Transform)
                     // new Vector2(Mouse.GetState().X - transformedPosition.X, Mouse.GetState().Y - transformedPosition.Y)
+                    // Vector2.Transform(new Vector2(Mouse.GetState().X - transformedPosition.X, Mouse.GetState().Y - transformedPosition.Y),this.ItemOwner.CameraProperty.Transform)
                     projectileSpeed));
         }
 

@@ -219,7 +219,8 @@ namespace GameStateManagement
                 16,
                 1000,
                 2000,
-                ArrowTexture
+                ArrowTexture,
+                Projectiles
             );
 
            
@@ -440,20 +441,20 @@ namespace GameStateManagement
 
 
             //Test to find out that the hero's position is not correctly the same as the hero's texture's position. I suppose this might be due to the camera following stuff.
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                texture: MarkerTexture,
-                position: Vector2.Transform(hero.Position,camera.Transform), // Hier Vector2.Transform(hero.Position, camera.Transform) anstatt hero.Position
-                sourceRectangle: null,
-                color: Color.White,
-                rotation: 0f,
-                // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
-                // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
-                origin: new Vector2(MarkerTexture.Width / 2, MarkerTexture.Height),
-                scale: 1f,
-                effects: SpriteEffects.None,
-                layerDepth: 0f);
-            spriteBatch.End();
+            // spriteBatch.Begin();
+            // spriteBatch.Draw(
+            //     texture: MarkerTexture,
+            //     position: Vector2.Transform(hero.Position,camera.Transform), // Hier Vector2.Transform(hero.Position, camera.Transform) anstatt hero.Position
+            //     sourceRectangle: null,
+            //     color: Color.White,
+            //     rotation: 0f,
+            //     // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
+            //     // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
+            //     origin: new Vector2(MarkerTexture.Width / 2, MarkerTexture.Height),
+            //     scale: 1f,
+            //     effects: SpriteEffects.None,
+            //     layerDepth: 0f);
+            // spriteBatch.End();
 
             
 
@@ -465,7 +466,7 @@ namespace GameStateManagement
                 {
                     spriteBatch.Draw(
                         texture: ArrowTexture,
-                        position: Projectiles[projectileIndex].CurrentProjectilePosition, // Hier Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,camera.Transform) anstatt Projectiles[projectileIndex].CurrentProjectilePosition
+                        position: Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,camera.Transform), // Hier Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,camera.Transform) anstatt Projectiles[projectileIndex].CurrentProjectilePosition
                         sourceRectangle: null,
                         color: Color.White,
                         //rotation: (float) projectileIndex*2*(float)Math.PI/100, //normally it depends on the shooting direction of the arrow. This line is currently just for testing purposes.
