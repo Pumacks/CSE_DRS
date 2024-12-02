@@ -17,6 +17,7 @@ using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
 using GameStateManagementSample.Models.Map;
+using GameStateManagementSample.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -205,6 +206,8 @@ namespace GameStateManagement
                 if (hero.HealthPoints <= 0)
                 {
                     hero.PlayerDeathAnimation();
+
+                    ScreenManager.AddScreen(new GameOverScreen(true), ControllingPlayer);
                 }
                 else
                 {

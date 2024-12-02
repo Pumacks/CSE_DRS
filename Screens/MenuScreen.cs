@@ -28,8 +28,8 @@ namespace GameStateManagement
     {
         #region Fields
 
-        private readonly List<MenuEntry> menuEntries = new List<MenuEntry>();
-        private int selectedEntry;
+        protected readonly List<MenuEntry> menuEntries = new List<MenuEntry>();
+        protected int selectedEntry;
         private string menuTitle;
 
         #endregion Fields
