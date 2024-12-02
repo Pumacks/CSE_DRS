@@ -16,7 +16,7 @@ using GameStateManagementSample.Models.Camera;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
-using GameStateManagementSample.Models.Room;
+using GameStateManagementSample.Models.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -59,6 +59,9 @@ namespace GameStateManagement
 
         private Random random = new Random();
         private float pauseAlpha;
+        Room room = new Room();
+        MapGenerator map = new MapGenerator();
+
         #endregion Fields
 
         #region Initialization
@@ -75,14 +78,7 @@ namespace GameStateManagement
         /// <summary>
         /// LoadContent graphics content for the game.
         /// </summary>
-        /// 
-
-
-        Room room = new Room("../../../Map/rooms/Room1.txt");
-        // Texture2D grass;
-
-
-
+        ///              
 
         public override void LoadContent()
         {
@@ -91,7 +87,6 @@ namespace GameStateManagement
 
 
             camera = new Camera();
-
 
 
 
@@ -109,12 +104,9 @@ namespace GameStateManagement
             hero = new Player(100, 5, new Vector2(500, 400), golem, gameFont, new List<Item>());
 
 
-
-
-            room.loadTextures(content);
-
+            map.LoadMapTextures(content);
+            map.GenerateMap();
             hero.LoadContent(content);
-
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -244,12 +236,18 @@ namespace GameStateManagement
             spriteBatch.Begin(transformMatrix: camera.Transform);
 
             // DrawGui Bounding box
-            room.Draw(spriteBatch);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Bottom - 1, hero.BoundingBox.Width, 1), Color.Black);
 
+            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Y, hero2.BoundingBox.Width, 1), Color.Black);
+            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
+            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.Right - 1, hero2.BoundingBox.Y, 1, hero2.BoundingBox.Height), Color.Black);
+            spriteBatch.Draw(_texture, new Rectangle(hero2.BoundingBox.X, hero2.BoundingBox.Bottom - 1, hero2.BoundingBox.Width, 1), Color.Black);
+
+            //room.DrawRoom(spriteBatch);
+            map.DrawMap(spriteBatch);
             hero.Draw(spriteBatch);
             spriteBatch.End();
 
