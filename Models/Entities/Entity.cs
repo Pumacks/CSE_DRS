@@ -16,7 +16,11 @@ namespace GameStateManagementSample.Models.Entities
         protected Rectangle boundingBox;
         protected bool flipTexture = false;
         protected GameTime gameTime;
-      
+
+        //Testing Purposes, required to give a Camera to an Entity so that the
+        private GameStateManagementSample.Models.Camera.Camera camera;
+        public GameStateManagementSample.Models.Camera.Camera CameraProperty { get { return camera; } set { camera = value; } }
+
         // Weapon + Healthpots
         List<Item> items = new List<Item>();
         #endregion
@@ -27,6 +31,7 @@ namespace GameStateManagementSample.Models.Entities
         public Texture2D Texture { get { return texture; } set { texture = value; } }
 
         public Weapon ActiveWeapon { get { return activeWeapon; } set { activeWeapon = value; } }
+        public GameTime GameTime { get { return gameTime; } set { gameTime = value; } }
         public Rectangle BoundingBox { get { return boundingBox; } }
       
         public Vector2 Position { get { return this.position;} private set {this.position = value;} } // Hinzugefügt am 09.11.2024 von Stylianos, um es möglich zu machen, den Abstand von Gegnern zum Spieler für Waffenangriffe zu berechnen.
