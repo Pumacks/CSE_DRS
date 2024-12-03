@@ -16,7 +16,7 @@ namespace GameStateManagementSample.Models
         private float animationSpeed;
         private float timeCounter;
         private int currentFrame;
-
+        private bool isLooping = true;
 
 
         public Animation(float animationSpeed)
@@ -28,16 +28,24 @@ namespace GameStateManagementSample.Models
             this.animationSpeed = animationSpeed;
         }
 
+        public Animation(float animationSpeed, bool loop) : this(animationSpeed)
+        {
+            this.isLooping = loop;
+        }
+
 
         public Texture2D GetCurrentFrame()
         {
-            ChangeToNextFrame();
+            if (!(!isLooping && currentFrame == textures.Count - 1))
+                ChangeToNextFrame();
+
             if (textures.Count > 0)
             {
                 return textures[currentFrame];
             }
             return null;
         }
+
 
         public void addFrame(Texture2D texture)
         {

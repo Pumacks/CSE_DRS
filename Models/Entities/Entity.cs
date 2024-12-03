@@ -17,9 +17,13 @@ namespace GameStateManagementSample.Models.Entities
         protected bool flipTexture = false;
         protected GameTime gameTime;
 
+
         //Testing Purposes, required to give a Camera to an Entity so that the
         private GameStateManagementSample.Models.Camera.Camera camera;
         public GameStateManagementSample.Models.Camera.Camera CameraProperty { get { return camera; } set { camera = value; } }
+
+
+        protected SpriteFont spriteFont;
 
         // Weapon + Healthpots
         List<Item> items = new List<Item>();
@@ -33,27 +37,29 @@ namespace GameStateManagementSample.Models.Entities
         public Weapon ActiveWeapon { get { return activeWeapon; } set { activeWeapon = value; } }
         public GameTime GameTime { get { return gameTime; } set { gameTime = value; } }
         public Rectangle BoundingBox { get { return boundingBox; } }
-      
-        public Vector2 Position { get { return this.position;} private set {this.position = value;} } // Hinzugefügt am 09.11.2024 von Stylianos, um es möglich zu machen, den Abstand von Gegnern zum Spieler für Waffenangriffe zu berechnen.
+
+        public Vector2 Position { get { return this.position; } private set { this.position = value; } } // Hinzugefügt am 09.11.2024 von Stylianos, um es möglich zu machen, den Abstand von Gegnern zum Spieler für Waffenangriffe zu berechnen.
 
         #endregion
 
         protected AnimationManager animationManager;
         public Entity() { }
 
-        public Entity(int healthPoints, float movmentSpeed, Vector2 playerPosition, Texture2D texture, List<Item> items)
+        public Entity(int healthPoints, float movmentSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
         {
             this.HealthPoints = healthPoints;
             this.MovementSpeed = movmentSpeed;
             this.position = playerPosition;
             this.texture = texture;
             this.items = items;
+            this.spriteFont = spriteFont;
 
             this.boundingBox = new Rectangle((int)position.X - texture.Width / 2,
                                              (int)position.Y - texture.Height / 2,
                                              texture.Width,
                                              texture.Height);
-          
+            this.spriteFont = spriteFont;
+
             animationManager = new AnimationManager(MovementSpeed);
         }
 
@@ -64,6 +70,9 @@ namespace GameStateManagementSample.Models.Entities
         public abstract void LoadContent(ContentManager content);
 
         public abstract void Draw(SpriteBatch spriteBatch);
+
+
+        public abstract void TakeDamage(int damage);
 
         public void SetGameTime(GameTime gameTime)
         {

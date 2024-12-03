@@ -12,6 +12,8 @@
 #region Using Statements
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 
 #endregion Using Statements
 
@@ -26,13 +28,13 @@ namespace GameStateManagement
     public class GameStateManagementGame : Microsoft.Xna.Framework.Game
     {
         #region Fields
-
-        public static int ScreenWidth = 1280;
-        public static int ScreenHeight = 1024;
         
-
         private readonly GraphicsDeviceManager graphics;
         private readonly ScreenManager screenManager;
+        private static readonly GraphicsAdapter adapter = new GraphicsAdapter();
+
+        public static int ScreenWidth = adapter.CurrentDisplayMode.Width;
+        public static int ScreenHeight = adapter.CurrentDisplayMode.Height;
 
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.

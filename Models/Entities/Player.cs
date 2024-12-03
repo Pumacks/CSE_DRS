@@ -1,13 +1,11 @@
-﻿using GameStateManagementSample.Models.Items;
+﻿using GameStateManagementSample.Models.GUI;
+using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Security;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -16,10 +14,17 @@ namespace GameStateManagementSample.Models.Entities
     {
         private double atackTimer = 0;
         private bool isAtacking = false;
+
+
+        private Vector2 healthPositionGUI = new Vector2(20, 20);
+
+        List<GUIObserver> GUIObservers = new();
+
         public Player() { }
-        public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, List<Item> items)
-        : base(healthPoints, movementSpeed, playerPosition, texture, items)
+        public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
+        : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
+            GUIObservers.Add(new HealthGUI(this));
         }
 
         public override void Move()
@@ -39,6 +44,7 @@ namespace GameStateManagementSample.Models.Entities
 
 
 
+
             #region Keyboard input
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
@@ -50,6 +56,7 @@ namespace GameStateManagementSample.Models.Entities
 
                 if (!isAtacking)
                 {
+                    TakeDamage(25);
                     isAtacking = true;
                     Atack();
                 }
@@ -84,10 +91,12 @@ namespace GameStateManagementSample.Models.Entities
                 Texture = animationManager.AttackAnimation();
             else if (movement != Vector2.Zero)
                 Texture = animationManager.WalkAnimation();
+            else if (movement == Vector2.Zero)
+                Texture = animationManager.IdleAnimation();
 
 
 
-            boundingBox.X = (int)position.X - Texture.Width /2 ;
+            boundingBox.X = (int)position.X - Texture.Width / 2;
             boundingBox.Y = (int)position.Y - Texture.Height / 2;
             boundingBox.Width = Texture.Width;
             boundingBox.Height = Texture.Height;
@@ -115,11 +124,39 @@ namespace GameStateManagementSample.Models.Entities
                             scale: 1f,
                             effects: flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                             layerDepth: 0f);
+            spriteBatch.End();
+            spriteBatch.Begin();
+
+            foreach (GUIObserver observer in GUIObservers)
+            {
+                observer.Draw(spriteBatch, spriteFont, healthPositionGUI);
+            }
+
         }
 
         public override void LoadContent(ContentManager content)
         {
             animationManager.loadTextures(content);
+        }
+
+        private void NotifyObservers()
+        {
+            foreach (GUIObserver observer in GUIObservers)
+            {
+                observer.Update();
+            }
+
+        }
+        public override void TakeDamage(int damage)
+        {
+            HealthPoints = MathHelper.Max(0, HealthPoints - damage);
+            NotifyObservers();
+        }
+
+
+        public void PlayerDeathAnimation()
+        {
+            Texture = animationManager.DeathAnimation();
         }
     }
 }

@@ -15,7 +15,9 @@ namespace GameStateManagementSample.Models
         float movmentSpeed;
         Animation walk;
         Animation attack;
-        
+        Animation idle;
+        Animation death;
+
         public AnimationManager(float MovmentSpeed)
         {
             movmentSpeed = MovmentSpeed;
@@ -24,6 +26,9 @@ namespace GameStateManagementSample.Models
             // attack speed 10
             attack = new Animation(5);
 
+            idle = new Animation(4);
+
+            death = new Animation(4, false);
         }
 
 
@@ -34,6 +39,16 @@ namespace GameStateManagementSample.Models
 
             for (int i = 0; i <= 11; i++)
                 attack.addFrame(content.Load<Texture2D>("Player/Atack/Golem_03_Attacking_0" + i.ToString("D2")));
+
+            for (int i = 0; i <= 11; i++)
+                idle.addFrame(content.Load<Texture2D>("Player/Idle/Golem_03_Idle_0" + i.ToString("D2")));
+
+
+            for (int i = 0; i <= 11; i++)
+                death.addFrame(content.Load<Texture2D>("Player/Death/Golem_03_Dying_0" + i.ToString("D2")));
+
+
+
         }
 
         public Texture2D AttackAnimation()
@@ -45,5 +60,16 @@ namespace GameStateManagementSample.Models
         {
             return walk.GetCurrentFrame();
         }
+
+        public Texture2D IdleAnimation()
+        {
+            return idle.GetCurrentFrame();
+        }
+
+        public Texture2D DeathAnimation()
+        {
+            return death.GetCurrentFrame();
+        }
     }
+
 }
