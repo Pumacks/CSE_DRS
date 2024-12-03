@@ -48,6 +48,12 @@ namespace GameStateManagementSample.Models.Entities
             #region Keyboard input
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
+
+                // Attack with activeWeapon
+                this.ActiveWeapon.weaponAttack(this);
+
+
+
                 if (!isAtacking)
                 {
                     TakeDamage(25);
@@ -102,7 +108,10 @@ namespace GameStateManagementSample.Models.Entities
         public override void Atack()
         {
             Trace.WriteLine("Atack: " + ActiveWeapon + atackTimer);
+            // ActiveWeapon.weaponAttack(this, )
         }
+
+        // public 
 
         public override void Draw(SpriteBatch spriteBatch)
         {

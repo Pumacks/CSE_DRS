@@ -40,11 +40,11 @@ namespace GameStateManagementSample.Models.Items
         {
             get
             {
-                return this.ItemOwner;
+                return this.itemOwner;
             }
             set
             {
-                this.ItemOwner = value;
+                this.itemOwner = value;
             }
         }
         //private Sound itemSounds
@@ -59,6 +59,10 @@ namespace GameStateManagementSample.Models.Items
 
         #region abstract methods
         public abstract void use(); // Könnte z.B. je nach Item die Methoden consume() bzw. drink() bzw. eat() oder attack() aufrufen. Einfach als optionale Zusatzmethode gedacht.
+
+        public abstract void DrawItem(SpriteBatch spriteBatch);
+
+
         #endregion
 
 
