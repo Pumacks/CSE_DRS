@@ -181,7 +181,7 @@ namespace GameStateManagement
 
 
 
-            hero = new Player(100, 5, new Vector2(500, 400), golem, new List<Item>());
+            hero = new Player(100, 5, new Vector2(5000, 5000), golem, gameFont, new List<Item>());
           
             hero.CameraProperty = camera;
 
