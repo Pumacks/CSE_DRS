@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using GameStateManagement;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.World;
 using Microsoft.Xna.Framework;
@@ -23,9 +24,15 @@ namespace GameStateManagementSample.Models.Items
             throw new System.NotImplementedException();
         }
 
-        public override void attack(Entity owner, Level level) // Momentan 360° Angriff auf alle Feinde in Waffenreichweite des Spielers
+        // Hier Room zurückändern zu Level, sobald die Map verfeinert wurde.
+        public override void attack(Entity owner) // Momentan 360° Angriff auf alle Feinde in Waffenreichweite des Spielers
         {
-            level.Enemies.ForEach(targetEnemy =>
+            //Check for attack-cooldown
+            
+
+            //Attack
+            
+            Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from all Enemies in WeaponRange.
             {
                 if (distance(owner.Position, targetEnemy.Position) <= this.WeaponRange)
                 {
@@ -33,6 +40,11 @@ namespace GameStateManagementSample.Models.Items
                 }
             });
 
+        }
+
+        public override void DrawItem(SpriteBatch spriteBatch)
+        {
+            throw new NotImplementedException();
         }
     }
 }

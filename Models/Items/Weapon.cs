@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameStateManagementSample.Models.Items
 {
@@ -24,7 +26,7 @@ namespace GameStateManagementSample.Models.Items
                 this.weaponDamage = value;
             }
         }
-        private float attackSpeed; // Wieviele Schwerthiebe oder Pfeilschüsse pro Zeiteinheit erfolgen können.
+        private float attackSpeed; // Weapon Attack speed in milliseconds between attacks (1000 means 1 attack per second, 200 means 5 attacks per second, etc.). Wieviele Schwerthiebe oder Pfeilschüsse pro Zeiteinheit erfolgen können.
         public float AttackSpeed
         {
             get
@@ -36,7 +38,7 @@ namespace GameStateManagementSample.Models.Items
                 this.attackSpeed = value;
             }
         }
-        private float weaponRange; // Wie weit der Schwerthieb reicht, oder wie weit Pfeile fliegen können.
+        private float weaponRange; // Weapon Range in Pixels. Wie weit der Schwerthieb reicht, oder wie weit Pfeile fliegen können.
         public float WeaponRange
         {
             get
@@ -46,6 +48,55 @@ namespace GameStateManagementSample.Models.Items
             set
             {
                 this.weaponRange = value;
+            }
+        }
+        private float lastAttackGameTimeInMilliseconds;
+        public float LastAttackGameTimeInMilliseconds
+        {
+            get
+            {
+                return this.lastAttackGameTimeInMilliseconds;
+            }
+            set
+            {
+                this.lastAttackGameTimeInMilliseconds = value;
+            }
+        }
+        private float weaponRotationFloatValue; //Is this needed? I doubt so.
+        public float WeaponRotationFloatValue
+        {
+            get
+            {
+                return this.weaponRotationFloatValue;
+            }
+            set
+            {
+                this.weaponRotationFloatValue = value;
+            }
+        }
+        // Testzwecke:
+        private List<Enemy> enemies;
+        public List<Enemy> Enemies
+        {
+            get
+            {
+                return this.enemies;
+            }
+            set
+            {
+                this.enemies = value;
+            }
+        }
+        private  List<Projectile> projectiles;
+        public  List<Projectile> Projectiles
+        {
+            get
+            {
+                return this.projectiles;
+            }
+            set
+            {
+                this.projectiles = value;
             }
         }
         /*
@@ -63,14 +114,36 @@ namespace GameStateManagementSample.Models.Items
             this.weaponDamage = weaponDamage;
             this.attackSpeed = attackSpeed;
             this.weaponRange = weaponRange;
+            this.lastAttackGameTimeInMilliseconds = 0;
         }
+
+        // public float calculateWeaponRotation()
+        // {
+        //     Vector2 start = ItemOwner.Position;
+        //     Vector2 end = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            
+        //         float deltaX = end.X - start.X;
+        //         float deltaY = end.Y - start.Y;
+
+        //         float rotation = (float)Math.PI/2+(float)Math.Atan2(deltaY, deltaX);
+
+        //         return rotation;
+        // }
 
         public override void use()
         {
             throw new System.NotImplementedException();
         }
 
-        public abstract void attack(Entity owner, Level level);
+        public void weaponAttack(Entity owner) {
+            // Weapon Attack Timer, depending on the weapon's attack speed
+            if ((owner.GameTime.TotalGameTime.TotalMilliseconds - attackSpeed >= lastAttackGameTimeInMilliseconds) || lastAttackGameTimeInMilliseconds == 0) {
+                lastAttackGameTimeInMilliseconds = (float)owner.GameTime.TotalGameTime.TotalMilliseconds;
+                attack(owner);
+            }
+        }
+
+        public abstract void attack(Entity owner);
 
         public int distance(Vector2 first, Vector2 second) {
             Vector2 combined = new Vector2(first.X-second.X, first.Y-second.Y);

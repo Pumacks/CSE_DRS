@@ -25,10 +25,16 @@ namespace GameStateManagementSample.Models.Items
                 this.healingAmount = value;
             }
         }
+
+        public override void DrawItem(SpriteBatch spriteBatch)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /*
-        Möglicherweise noch andere Effekte wie temporär erhöhter ausgeteilter Schaden, oder reduzierter erhaltener Schaden?
-        Nach Implementierung besagter Mechaniken.
-        */
+Möglicherweise noch andere Effekte wie temporär erhöhter ausgeteilter Schaden, oder reduzierter erhaltener Schaden?
+Nach Implementierung besagter Mechaniken.
+*/
         #endregion
 
         public override void use()

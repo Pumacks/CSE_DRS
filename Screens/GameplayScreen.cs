@@ -27,7 +27,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Threading;
+using System.Xml;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -52,18 +55,93 @@ namespace GameStateManagement
 
         Camera camera;
 
+        public Camera CameraProperty
+        {
+            get
+            {
+                return this.camera;
+            }
+            set
+            {
+                this.camera = value;
+            }
+        }
+
+
+
         // Dummy Texture
         Texture2D _texture;
+        Texture2D ArrowTexture;
+        Texture2D BowTexture;
+
+        Texture2D MarkerTexture;
 
         private Vector2 playerPosition = new Vector2(100, 100);
         private Vector2 enemyPosition = new Vector2(100, 100);
 
         private Random random = new Random();
         private float pauseAlpha;
+
+
+
+        #region Fields and properties required for keeping track of enemies, player and projectile
+        private List<Enemy> enemies;
+        public List<Enemy> Enemies
+        {
+            get
+            {
+                return this.enemies;
+            }
+            set
+            {
+                this.enemies = value;
+            }
+        }
+        /*
+        private Entity player;
+        public Entity Player
+        {
+            get
+            {
+                return this.player;
+            }
+            set
+            {
+                this.player = value;
+            }
+        }
+        */
+        private List<Projectile> projectiles;
+        public List<Projectile> Projectiles
+        {
+            get
+            {
+                return this.projectiles;
+            }
+            set
+            {
+                this.projectiles = value;
+            }
+        }
+        #endregion Fields and properties required for keeping track of enemies, player and projectile
+
+
+
+        
+
         Room room = new Room();
         MapGenerator map = new MapGenerator();
 
+
         #endregion Fields
+
+
+
+
+
+
+
+
 
         #region Initialization
 
@@ -79,7 +157,7 @@ namespace GameStateManagement
         /// <summary>
         /// LoadContent graphics content for the game.
         /// </summary>
-        ///              
+
 
         public override void LoadContent()
         {
@@ -98,11 +176,48 @@ namespace GameStateManagement
 
 
 
+
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
 
 
-            hero = new Player(100, 5, new Vector2(5400, 5400), golem, gameFont, new List<Item>());
+            hero = new Player(100, 5, new Vector2(5000, 5000), golem, gameFont, new List<Item>());
+          
+            hero.CameraProperty = camera;
+
+
+
+
+
+
+            // Loading the Texture for Arrows
+            ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
+            BowTexture = content.Load<Texture2D>("Bow1-130x25px");
+            MarkerTexture = content.Load<Texture2D>("Marker");
+            // Creating a List-Object for enemies
+            Enemies = new List<Enemy>();
+            //The following is just for testing Textures and rotations.
+            Projectiles = new List<Projectile>();
+            for (int arrowPlacementIndex = 0; arrowPlacementIndex < 100; arrowPlacementIndex++)
+            {
+                Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex*10,200), new Vector2(1000, 500), 500));
+            }
+            //Giving our Test-Hero a Weapon (bow) at the start (without a texture), so he can shoot arrows!
+            hero.ActiveWeapon = new RangedWeapon(
+                "Bow of the Gods",
+                BowTexture,
+                hero,
+                20,
+                16,
+                1000,
+                2000,
+                ArrowTexture,
+                Projectiles
+            );
+
+
+        
+
 
 
             map.LoadMapTextures(content);
@@ -129,6 +244,14 @@ namespace GameStateManagement
         }
 
         #endregion Initialization
+
+
+
+
+
+
+
+
 
         #region Update and Draw
 
@@ -167,8 +290,25 @@ namespace GameStateManagement
 
                 enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
 
-                // TODO: this game isn't very fun! You could probably improve
-                // it by inserting something more interesting in this space :-)
+
+
+            // Updating the positions of the projectiles (arrows) in the world
+            if (Projectiles != null)
+            {
+                int projectileUpdateIndex;
+                for (projectileUpdateIndex = 0; projectileUpdateIndex < Projectiles.Count; projectileUpdateIndex++)
+                {
+                    Projectiles[projectileUpdateIndex].CurrentProjectilePosition += Projectiles[projectileUpdateIndex].SpeedVector/60;
+                }
+            }
+
+            // Updating the Weapon-Classes necessary awareness of enemies and projectiles in the world.
+            hero.ActiveWeapon.Enemies = Enemies;
+            this.Projectiles = hero.ActiveWeapon.Projectiles;
+
+
+
+                
             }
         }
 
@@ -248,6 +388,76 @@ namespace GameStateManagement
             map.DrawMap(spriteBatch);
             hero.Draw(spriteBatch);
             spriteBatch.End();
+
+
+
+
+            // Bows, Projectiles, GameTime
+            
+            
+            
+            
+            spriteBatch.Begin();
+            spriteBatch.Draw(
+                texture: BowTexture,
+                position: Vector2.Transform(hero.Position,camera.Transform), // Hier Vector2.Transform(hero.Position,camera.Transform) anstatt new Vector2(ScreenManager.GraphicsDevice.Viewport.Width/2,ScreenManager.GraphicsDevice.Viewport.Height/2)
+                sourceRectangle: null,
+                color: Color.White,
+                rotation: (float)Math.PI/2+(float)Math.Atan2(Mouse.GetState().Y - Vector2.Transform(hero.Position,camera.Transform).Y, Mouse.GetState().X - Vector2.Transform(hero.Position,camera.Transform).X),
+                // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
+                // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
+                origin: new Vector2(BowTexture.Width / 2, BowTexture.Height / 2),
+                scale: 1f,
+                effects: SpriteEffects.None,
+                layerDepth: 0f);
+            spriteBatch.End();
+
+
+            //Test to find out that the hero's position is not correctly the same as the hero's texture's position. I suppose this might be due to the camera following stuff.
+            // spriteBatch.Begin();
+            // spriteBatch.Draw(
+            //     texture: MarkerTexture,
+            //     position: Vector2.Transform(hero.Position,camera.Transform), // Hier Vector2.Transform(hero.Position, camera.Transform) anstatt hero.Position
+            //     sourceRectangle: null,
+            //     color: Color.White,
+            //     rotation: 0f,
+            //     // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
+            //     // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
+            //     origin: new Vector2(MarkerTexture.Width / 2, MarkerTexture.Height),
+            //     scale: 1f,
+            //     effects: SpriteEffects.None,
+            //     layerDepth: 0f);
+            // spriteBatch.End();
+
+
+           
+
+
+            if (Projectiles != null)
+            {
+                spriteBatch.Begin();
+                int projectileIndex;
+                for (projectileIndex = 0; projectileIndex < Projectiles.Count; projectileIndex++)
+                {
+                    spriteBatch.Draw(
+                        texture: ArrowTexture,
+                        position: Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,camera.Transform), // Hier Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,camera.Transform) anstatt Projectiles[projectileIndex].CurrentProjectilePosition
+                        sourceRectangle: null,
+                        color: Color.White,
+                        //rotation: (float) projectileIndex*2*(float)Math.PI/100, //normally it depends on the shooting direction of the arrow. This line is currently just for testing purposes.
+                        rotation: Projectiles[projectileIndex].ProjectileRotationFloatValue,
+                        origin: new Vector2(ArrowTexture.Width / 2, ArrowTexture.Height / 2),
+                        scale: 1f,
+                        effects: SpriteEffects.None,
+                        layerDepth: 0f
+                        );
+                }
+                spriteBatch.End();
+            }
+
+
+
+
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)
