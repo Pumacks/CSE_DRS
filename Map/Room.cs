@@ -15,15 +15,20 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D grass3;
         private Texture2D hole;
         private Texture2D tree;
+        private Texture2D doorN;
+        private Texture2D doorE;
+        private Texture2D doorS;
+        private Texture2D doorW;
 
         private Random random = new Random();
 
-        public Room() {
+        public Room()
+        {
             for (int i = 0; i < blocked.Length; i++)
             {
                 blocked[i] = false;
             }
-         }
+        }
 
         public void LoadTextures(ContentManager content)
         {
@@ -32,46 +37,10 @@ namespace GameStateManagementSample.Models.Map
             grass3 = content.Load<Texture2D>("Map/grass3");
             hole = content.Load<Texture2D>("Map/hole");
             tree = content.Load<Texture2D>("Map/tree");
-
-        }
-        // damit der aktuelle stand sichtbar ist, sobald MapGenerator fertig ist kann GenerateRoom ohne Random im konstruktor gelöscht werden
-        public void GenerateRoom()
-        {
-            tiles = new Tile[random.Next(10, 20), random.Next(10, 20)];
-            int rdmNumber;
-            Vector2 tilePos = new Vector2(0, 0);
-            for (int i = 0; i < tiles.GetLength(0); i++)
-            {
-                tilePos.X = 0;
-                for (int j = 0; j < tiles.GetLength(1); j++)
-                {
-                    rdmNumber = random.Next(1, 10);
-                    if (rdmNumber <= 6)
-                        tiles[i, j] = new Tile(tilePos, grass, false);
-                    if (rdmNumber > 6 && rdmNumber <= 8)
-                        tiles[i, j] = new Tile(tilePos, grass2, false);
-                    if (rdmNumber > 8 && rdmNumber <= 10)
-                        tiles[i, j] = new Tile(tilePos, grass3, false);
-
-                    tilePos.X += 100;
-                }
-                tilePos.Y += 100;
-            }
-            tilePos.X = 0;
-            tilePos.Y = 0;
-            for (int i = 0; i < tiles.GetLength(0); i++)
-            {
-                tilePos.X = 0;
-                for (int j = 0; j < tiles.GetLength(1); j++)
-                {
-                    if (i == 0 || j == 0 || j == tiles.GetLength(1) - 1 || i == tiles.GetLength(0) - 1)
-                    {
-                        tiles[i, j] = new Tile(tilePos, tree, true);
-                    }
-                    tilePos.X += 100;
-                }
-                tilePos.Y += 100;
-            }
+            doorN = content.Load<Texture2D>("Map/doorN");
+            doorE = content.Load<Texture2D>("Map/doorE");
+            doorS = content.Load<Texture2D>("Map/doorS");
+            doorW = content.Load<Texture2D>("Map/doorW");
         }
 
         public void GenerateRoom(Random random, Vector2 roomPos)
@@ -145,23 +114,63 @@ namespace GameStateManagementSample.Models.Map
 
         private Tile[,] GenerateRoomArray()
         {
-            return new Tile[random.Next(10, 20), random.Next(10, 20)];
+            int width = random.Next(10, 19);
+            int height = random.Next(10, 19);
+            if (width % 2 == 0)
+                width += 1;
+            if (height % 2 == 0)
+                height += 1;
+
+            return new Tile[width, height];
         }
 
-        public void blockDirection(int direction){
+        public void setDoorInDirection(int direction)
+        {
+            int mid;
+            switch (direction)
+            {
+                case 0: // Norden
+                    mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
+                    tiles[0, mid].setTexture(doorN);
+                    break;
+
+                case 1: // Osten
+                    mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
+                    tiles[mid, tiles.GetLength(1) - 1].setTexture(doorE);
+                    tiles[mid-1, tiles.GetLength(1) - 1].setTexture(grass);
+                    break;
+
+                case 2: // Süden
+                    mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
+                    tiles[tiles.GetLength(0) - 1, mid].setTexture(doorS);
+                    break;
+
+                case 3: // Westen
+                    mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
+                    tiles[mid, 0].setTexture(doorW);
+                    tiles[mid-1, 0].setTexture(grass);
+
+                    break;
+            }
+        }
+
+        public void blockDirection(int direction)
+        {
             blocked[direction] = true;
         }
 
-        public bool allDirectionsBlocked(){
-            if(blocked[0]== true && blocked[1]== true && blocked[2]== true && blocked[3]== true)
+        public bool allDirectionsBlocked()
+        {
+            if (blocked[0] == true && blocked[1] == true && blocked[2] == true && blocked[3] == true)
                 return true;
             else
                 return false;
         }
 
-        public bool isDirectionBlockedOn(int direction){
+        public bool isDirectionBlockedOn(int direction)
+        {
             return blocked[direction];
         }
-        
+
     }
 }

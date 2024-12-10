@@ -56,7 +56,7 @@ namespace GameStateManagementSample.Models.Entities
 
                 if (!isAtacking)
                 {
-                    TakeDamage(25);
+                  
                     isAtacking = true;
                     Atack();
                 }
