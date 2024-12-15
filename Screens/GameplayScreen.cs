@@ -19,8 +19,8 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Linq;
 using System.Threading;
-using GameStateManagementSample.Models.GameEngine;
 using Color = Microsoft.Xna.Framework.Color;
+using GameStateManagementSample.Models.GameLogic;
 
 #endregion Using Statements
 
@@ -158,7 +158,7 @@ namespace GameStateManagement
             }
             else
             {
-                gameEngine.HandleInput(input, ControllingPlayer, ScreenManager);
+                gameEngine.HandleInput(keyboardState, ControllingPlayer, ScreenManager);
             }
         }
 

@@ -56,7 +56,6 @@ namespace GameStateManagementSample.Models.Entities
 
                 if (!isAtacking)
                 {
-                  
                     isAtacking = true;
                     Atack();
                 }
@@ -83,6 +82,73 @@ namespace GameStateManagementSample.Models.Entities
             {
                 movement.Y += MovementSpeed; ;
             }
+            #endregion
+
+
+
+            if (isAtacking)
+                Texture = animationManager.AttackAnimation();
+            else if (movement != Vector2.Zero)
+                Texture = animationManager.WalkAnimation();
+            else if (movement == Vector2.Zero)
+                Texture = animationManager.IdleAnimation();
+
+
+
+            boundingBox.X = (int)position.X - Texture.Width / 2;
+            boundingBox.Y = (int)position.Y - Texture.Height / 2;
+            boundingBox.Width = Texture.Width;
+            boundingBox.Height = Texture.Height;
+
+
+
+            position += movement;
+        }
+
+        public void Move(Vector2 movement)
+        {
+            #region Atacking Timer
+            if (isAtacking)
+                atackTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (atackTimer >= 0.4)
+            {
+                atackTimer = 0;
+                isAtacking = false;
+            }
+            #endregion
+
+
+
+
+            #region Keyboard input
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+
+                // Attack with activeWeapon
+                this.ActiveWeapon.weaponAttack(this);
+
+
+
+                if (!isAtacking)
+                {
+                    isAtacking = true;
+                    Atack();
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+
+                flipTexture = true;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                
+                flipTexture = false;
+            }
+
             #endregion
 
 

@@ -9,12 +9,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
+using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using GameStateManagementSample.Screens;
 
-namespace GameStateManagementSample.Models.GameEngine
+namespace GameStateManagementSample.Models.GameLogic
 {
     public class Engine
     {
@@ -28,17 +30,17 @@ namespace GameStateManagementSample.Models.GameEngine
         Player hero;
 
 
-        private Room room;
+        //private Room room;
         private MapGenerator map;
         public Camera.Camera CameraProperty
         {
             get
             {
-                return this.camera;
+                return camera;
             }
             set
             {
-                this.camera = value;
+                camera = value;
             }
         }
 
@@ -51,11 +53,9 @@ namespace GameStateManagementSample.Models.GameEngine
 
         Texture2D MarkerTexture;
 
-        private Vector2 playerPosition = new Vector2(100, 100);
-        private Vector2 enemyPosition = new Vector2(100, 100);
 
         private Random random = new Random();
- 
+
 
         #region Fields and properties required for keeping track of enemies, player and projectile
         private List<Enemy> enemies;
@@ -63,11 +63,11 @@ namespace GameStateManagementSample.Models.GameEngine
         {
             get
             {
-                return this.enemies;
+                return enemies;
             }
             set
             {
-                this.enemies = value;
+                enemies = value;
             }
         }
 
@@ -77,11 +77,11 @@ namespace GameStateManagementSample.Models.GameEngine
         {
             get
             {
-                return this.projectiles;
+                return projectiles;
             }
             set
             {
-                this.projectiles = value;
+                projectiles = value;
             }
         }
         #endregion Fields and properties required for keeping track of enemies, player and projectile
@@ -101,31 +101,17 @@ namespace GameStateManagementSample.Models.GameEngine
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-
             camera = new Camera.Camera();
-            room = new Room();
             map = new MapGenerator();
-
 
             _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
             _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
-
-
-
-
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
-
-
-            hero = new Player(100, 5, new Vector2(5000, 5000), golem, gameFont, new List<Item>());
-
+            hero = new Player(100, 5, new Vector2(5300, 5300), golem, gameFont, new List<Item>());
             hero.CameraProperty = camera;
-
-
-
-
 
 
             // Loading the Texture for Arrows
@@ -160,9 +146,6 @@ namespace GameStateManagementSample.Models.GameEngine
 
 
             Thread.Sleep(1000);
-
-
-
         }
 
 
@@ -176,15 +159,16 @@ namespace GameStateManagementSample.Models.GameEngine
         {
             spriteBatch.Begin(transformMatrix: camera.Transform);
 
+
+            //room.DrawRoom(spriteBatch);
+            map.DrawMap(spriteBatch);
+            hero.Draw(spriteBatch);
+
             // DrawGui Bounding box
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
             spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Bottom - 1, hero.BoundingBox.Width, 1), Color.Black);
-
-            //room.DrawRoom(spriteBatch);
-            map.DrawMap(spriteBatch);
-            hero.Draw(spriteBatch);
             spriteBatch.End();
 
             // Bows, Projectiles, GameTime
@@ -249,12 +233,11 @@ namespace GameStateManagementSample.Models.GameEngine
 
             // Updating the Weapon-Classes necessary awareness of enemies and projectiles in the world.
             hero.ActiveWeapon.Enemies = Enemies;
-            this.Projectiles = hero.ActiveWeapon.Projectiles;
+            Projectiles = hero.ActiveWeapon.Projectiles;
         }
 
-        public void HandleInput(InputState input, PlayerIndex? controllingPlayer, ScreenManager screenManager)
+        public void HandleInput(KeyboardState keyboardState, PlayerIndex? controllingPlayer, ScreenManager screenManager)
         {
-
             if (hero.HealthPoints <= 0)
             {
                 hero.PlayerDeathAnimation();
@@ -263,9 +246,52 @@ namespace GameStateManagementSample.Models.GameEngine
             }
             else
             {
-                hero.Move();
+
+                Vector2 movement = Vector2.Zero;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                {
+                    movement.X -= hero.MovementSpeed;
+
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.D))
+                {
+                    movement.X += hero.MovementSpeed;
+
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
+                {
+                    movement.Y -= hero.MovementSpeed;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.S))
+                {
+                    movement.Y += hero.MovementSpeed;
+                }
+
+
+                bool hasCollision = false;
+
+                foreach (var Room in map.Rooms)
+                {
+                    hasCollision = CollisionDetector.hasStructureCollision(Room, hero, movement);
+                    if (hasCollision)
+                        break;
+                }
+
+
+                if (hasCollision)
+                    movement = Vector2.Zero;
+
+
+
+                hero.Move(movement);
             }
         }
+
+
 
     }
 }

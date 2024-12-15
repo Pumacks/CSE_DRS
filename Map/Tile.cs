@@ -10,12 +10,20 @@ public class Tile
     Texture2D texture;
     bool collision;
 
+    public Rectangle BoundingBox { get; private set; }
+
+    public bool Collision
+    {
+        get { return collision; }
+    }
+
     public Tile(){}
     public Tile(Vector2 pos, Texture2D texture, bool collision = false)
     {
         this.pos = pos;
         this.texture = texture;
         this.collision = collision;
+        BoundingBox = new Rectangle((int)pos.X, (int)pos.Y, texture.Width, texture.Height);
     }
 
     public Vector2 getPos(){
