@@ -13,6 +13,13 @@ namespace GameStateManagementSample.Models.Entities
     public class Player : Entity
     {
         private double atackTimer = 0;
+        private int selectedInventorySlot = 0;
+        public int SelectedInventorySlot { get { return this.selectedInventorySlot; } set { selectedInventorySlot = value; } }
+        private KeyboardState currentKeyboardState;
+        private KeyboardState previousKeyboardState = Keyboard.GetState();
+        private MouseState currentMouseState;
+        private MouseState previousMouseState = Mouse.GetState();
+
         private bool isAtacking = false;
 
 
@@ -30,6 +37,8 @@ namespace GameStateManagementSample.Models.Entities
         public override void Move()
         {
             Vector2 movement = Vector2.Zero;
+            currentKeyboardState = Keyboard.GetState();
+            currentMouseState = Mouse.GetState();
 
             #region Atacking Timer
             if (isAtacking)
@@ -46,6 +55,153 @@ namespace GameStateManagementSample.Models.Entities
 
 
             #region Keyboard input
+
+            #region Input: Inventory
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.Q) && !previousKeyboardState.IsKeyDown(Keys.Q))
+                {
+                    if (selectedInventorySlot <= 0)
+                    {
+                        selectedInventorySlot = this.inventory.Length - 1;
+                    }
+                    else
+                    {
+                        selectedInventorySlot--;
+                    }
+                }
+            }
+            // previousKeyboardState = currentKeyboardState; This has to occur inside the move method at some point after the methods required for single key pressed. I put it at the very end.
+
+            if (Keyboard.GetState().IsKeyDown(Keys.E))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.E) && !previousKeyboardState.IsKeyDown(Keys.E))
+                {
+                    if (selectedInventorySlot >= this.inventory.Length - 1)
+                    {
+                        selectedInventorySlot = 0;
+                    }
+                    else
+                    {
+                        selectedInventorySlot++;
+                    }
+                }
+            }
+            // previousKeyboardState = currentKeyboardState; This has to occur inside the move method at some point after the methods required for single key pressed. I put it at the very end.
+
+            if (Mouse.GetState().ScrollWheelValue > previousMouseState.ScrollWheelValue)
+            {
+                if (selectedInventorySlot <= 0)
+                {
+                    selectedInventorySlot = this.inventory.Length - 1;
+                }
+                else
+                {
+                    selectedInventorySlot--;
+                }
+                previousMouseState = Mouse.GetState();
+            }
+
+            if (Mouse.GetState().ScrollWheelValue < previousMouseState.ScrollWheelValue)
+            {
+                if (selectedInventorySlot >= this.inventory.Length - 1)
+                {
+                    selectedInventorySlot = 0;
+                }
+                else
+                {
+                    selectedInventorySlot++;
+                }
+                previousMouseState = Mouse.GetState();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D1))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.D1) && !previousKeyboardState.IsKeyDown(Keys.D1))
+                {
+                    selectedInventorySlot = 0;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.D2) && !previousKeyboardState.IsKeyDown(Keys.D2))
+                {
+                    selectedInventorySlot = 1;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D3))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.D3) && !previousKeyboardState.IsKeyDown(Keys.D3))
+                {
+                    selectedInventorySlot = 2;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D4))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.D4) && !previousKeyboardState.IsKeyDown(Keys.D4))
+                {
+                    selectedInventorySlot = 3;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D5))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.D5) && !previousKeyboardState.IsKeyDown(Keys.D5))
+                {
+                    selectedInventorySlot = 4;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D6))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.D6) && !previousKeyboardState.IsKeyDown(Keys.D6))
+                {
+                    selectedInventorySlot = 5;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D7))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.D7) && !previousKeyboardState.IsKeyDown(Keys.D7))
+                {
+                    selectedInventorySlot = 6;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.X))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.X) && !previousKeyboardState.IsKeyDown(Keys.X))
+                {
+                    if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Weapon) { //if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot].GetType() == typeof(Weapon) && Inventory[selectedInventorySlot] is Weapon) {
+                        Weapon toBeSwitchedWeapon = ActiveWeapon;
+                        ActiveWeapon = (Weapon) Inventory[selectedInventorySlot];
+                        Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
+                    }
+                }
+            }
+
+            if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
+            {
+                if (currentMouseState.MiddleButton == ButtonState.Pressed && !(previousMouseState.MiddleButton == ButtonState.Pressed))
+                {
+                    if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Weapon) { //if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot].GetType() == typeof(Weapon) && Inventory[selectedInventorySlot] is Weapon) {
+                        Weapon toBeSwitchedWeapon = ActiveWeapon;
+                        ActiveWeapon = (Weapon) Inventory[selectedInventorySlot];
+                        Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
+                    }
+                }
+            }
+
+            #endregion Input: Inventory
+
+
+
+
+
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
 
@@ -56,6 +212,7 @@ namespace GameStateManagementSample.Models.Entities
 
                 if (!isAtacking)
                 {
+
                     isAtacking = true;
                     Atack();
                 }
@@ -103,6 +260,8 @@ namespace GameStateManagementSample.Models.Entities
 
 
             position += movement;
+            previousKeyboardState = currentKeyboardState;
+            previousMouseState = currentMouseState;
         }
 
         public void Move(Vector2 movement)

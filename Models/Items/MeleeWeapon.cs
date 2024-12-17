@@ -15,7 +15,7 @@ namespace GameStateManagementSample.Models.Items
         #region attributes and properties
         #endregion
 
-        public MeleeWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange) {
+        public MeleeWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies) {
             
         }
 

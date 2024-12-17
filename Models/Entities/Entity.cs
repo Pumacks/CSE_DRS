@@ -11,6 +11,7 @@ namespace GameStateManagementSample.Models.Entities
         #region atributes
 
         private Weapon activeWeapon;
+        protected Item[] inventory;
         private Texture2D texture;
         protected Vector2 position;
         protected Rectangle boundingBox;
@@ -35,6 +36,8 @@ namespace GameStateManagementSample.Models.Entities
         public Texture2D Texture { get { return texture; } set { texture = value; } }
 
         public Weapon ActiveWeapon { get { return activeWeapon; } set { activeWeapon = value; } }
+
+        public Item[] Inventory { get { return this.inventory; } set { inventory = value; } }
         public GameTime GameTime { get { return gameTime; } set { gameTime = value; } }
         public Rectangle BoundingBox { get { return boundingBox; } }
 
@@ -53,6 +56,7 @@ namespace GameStateManagementSample.Models.Entities
             this.texture = texture;
             this.items = items;
             this.spriteFont = spriteFont;
+            this.inventory = new Item[7];
 
             this.boundingBox = new Rectangle((int)position.X - texture.Width / 2,
                                              (int)position.Y - texture.Height / 2,

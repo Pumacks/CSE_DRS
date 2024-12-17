@@ -74,9 +74,45 @@ namespace GameStateManagementSample.Models.Items
                 this.speedVector = value;
             }
         }
+        // private int projectileTimeToLive; // The time that the projectile has until it disappears. This effectively simulates the weapon range (instead of calculating distance) by taking into account the flight speed of the projectile and the range it can reach.
+        // public int ProjectileTimeToLive
+        // {
+        //     get
+        //     {
+        //         return this.projectileTimeToLive;
+        //     }
+        //     set
+        //     {
+        //         this.projectileTimeToLive = value;
+        //     }
+        // }
+        private int projectileRange;
+        public int ProjectileRange
+        {
+            get
+            {
+                return this.projectileRange;
+            }
+            set
+            {
+                this.projectileRange = value;
+            }
+        }
+        private int distanceCovered;
+        public int DistanceCovered
+        {
+            get
+            {
+                return this.distanceCovered;
+            }
+            set
+            {
+                this.distanceCovered = value;
+            }
+        }
         #endregion
 
-        public Projectile(String itemName, Texture2D itemTexture, Entity itemOwner, Vector2 pos, Vector2 target, int projectileSpeed) : base(itemName, itemTexture, itemOwner)
+        public Projectile(String itemName, Texture2D itemTexture, Entity itemOwner, Vector2 pos, Vector2 target, int projectileSpeed, float weaponRange) : base(itemName, itemTexture, itemOwner)
         {
             this.ItemName = "Projectile Nr. " + ++projectileNumber;
             this.currentProjectilePosition = pos;
@@ -84,6 +120,9 @@ namespace GameStateManagementSample.Models.Items
             this.velocity = projectileSpeed;
             this.projectileRotationFloatValue = calculateRotation(pos,target);
             this.speedVector = calculateSpeedVector(pos,target,projectileSpeed);
+            // this.projectileTimeToLive = (int)(weaponRange * 1000 / projectileSpeed);
+            this.projectileRange = (int) weaponRange;
+            this.distanceCovered = 0;
         }
 
         private float calculateRotation(Vector2 start, Vector2 end)
