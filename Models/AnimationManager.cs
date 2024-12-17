@@ -70,6 +70,11 @@ namespace GameStateManagementSample.Models
         {
             return death.GetCurrentFrame();
         }
+
+        public bool DeathAnimationFinished()
+        {
+            return death.GetCurrentFrame() == death.Textures.Last();
+        }
     }
 
 }

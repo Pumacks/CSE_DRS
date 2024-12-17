@@ -22,8 +22,8 @@ namespace GameStateManagementSample.Screens
         bool isDead;
       
 
-        public GameOverScreen(bool isDead)
-            : base(isDead ? "Game  over, you  died!" : "Congratulations, You won!")
+        public GameOverScreen(PlayerGameStatus status)
+            : base(status== PlayerGameStatus.DEAD ? "Game  over, you  died!" : "Congratulations, You won!")
         {
             this.isDead = isDead;
 

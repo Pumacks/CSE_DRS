@@ -9,12 +9,18 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using GameStateManagementSample.Screens;
+
+
+enum PlayerGameStatus
+{
+    ALIVE,
+    DEAD,
+    WON
+}
 
 namespace GameStateManagementSample.Models.GameLogic
 {
@@ -29,6 +35,8 @@ namespace GameStateManagementSample.Models.GameLogic
         Texture2D golem;
         Player hero;
 
+        private PlayerGameStatus playerGameStatus = PlayerGameStatus.ALIVE;
+        private bool deathAnimationFinished = false;
 
         //private Room room;
         private MapGenerator map;
@@ -45,7 +53,6 @@ namespace GameStateManagementSample.Models.GameLogic
         }
 
 
-
         // Dummy Texture
         Texture2D _texture;
         Texture2D ArrowTexture;
@@ -55,6 +62,8 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
         private Random random = new Random();
+
+
 
 
         #region Fields and properties required for keeping track of enemies, player and projectile
@@ -73,6 +82,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
         private List<Projectile> projectiles;
+
         public List<Projectile> Projectiles
         {
             get
@@ -221,6 +231,15 @@ namespace GameStateManagementSample.Models.GameLogic
             hero.SetGameTime(gameTime);
             camera.Follow(hero);
 
+            if (hero.HealthPoints <= 0)
+            {
+                playerGameStatus = PlayerGameStatus.DEAD;
+                deathAnimationFinished = hero.PlayerDeathAnimation();
+            }
+
+
+
+
             // Updating the positions of the projectiles (arrows) in the world
             if (Projectiles != null)
             {
@@ -234,18 +253,21 @@ namespace GameStateManagementSample.Models.GameLogic
             // Updating the Weapon-Classes necessary awareness of enemies and projectiles in the world.
             hero.ActiveWeapon.Enemies = Enemies;
             Projectiles = hero.ActiveWeapon.Projectiles;
+
+
+
         }
 
         public void HandleInput(KeyboardState keyboardState, PlayerIndex? controllingPlayer, ScreenManager screenManager)
         {
-            if (hero.HealthPoints <= 0)
-            {
-                hero.PlayerDeathAnimation();
 
-                screenManager.AddScreen(new GameOverScreen(true), controllingPlayer);
-            }
-            else
+            if (Keyboard.GetState().IsKeyDown(Keys.K))
+                hero.TakeDamage(25);
+
+
+            if (playerGameStatus == PlayerGameStatus.ALIVE)
             {
+
                 // Movement of the player with collision detection
                 Vector2 north = Vector2.Zero;
                 Vector2 south = Vector2.Zero;
@@ -253,26 +275,16 @@ namespace GameStateManagementSample.Models.GameLogic
                 Vector2 east = Vector2.Zero;
 
                 if (Keyboard.GetState().IsKeyDown(Keys.A))
-                {
                     west.X -= hero.MovementSpeed;
 
-                }
-
                 if (Keyboard.GetState().IsKeyDown(Keys.D))
-                {
                     east.X += hero.MovementSpeed;
 
-                }
-
                 if (Keyboard.GetState().IsKeyDown(Keys.W))
-                {
                     north.Y -= hero.MovementSpeed;
-                }
 
                 if (Keyboard.GetState().IsKeyDown(Keys.S))
-                {
                     south.Y += hero.MovementSpeed;
-                }
 
 
                 bool collisionNorth = false;
@@ -282,7 +294,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
                 foreach (var Room in map.Rooms)
                 {
-                    if(CollisionDetector.hasStructureCollision(Room, hero, north))
+                    if (CollisionDetector.hasStructureCollision(Room, hero, north))
                         collisionNorth = true;
 
                     if (CollisionDetector.hasStructureCollision(Room, hero, south))
@@ -295,11 +307,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         collisionEast = true;
                 }
 
-
-
-
                 Vector2 movement = Vector2.Zero;
-
                 if (!collisionNorth)
                     movement += north;
 
@@ -314,6 +322,18 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
                 hero.Move(movement);
+            }
+            else if(playerGameStatus == PlayerGameStatus.DEAD)
+            {
+                 
+                if (deathAnimationFinished)
+                {
+                    screenManager.AddScreen(new GameOverScreen(playerGameStatus), controllingPlayer);
+                }
+            }
+            else if(playerGameStatus == PlayerGameStatus.WON)
+            {
+                screenManager.AddScreen(new GameOverScreen(playerGameStatus), controllingPlayer);
             }
         }
     }

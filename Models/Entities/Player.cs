@@ -220,9 +220,10 @@ namespace GameStateManagementSample.Models.Entities
         }
 
 
-        public void PlayerDeathAnimation()
+        public bool PlayerDeathAnimation()
         {
             Texture = animationManager.DeathAnimation();
+            return animationManager.DeathAnimationFinished();
         }
     }
 }
