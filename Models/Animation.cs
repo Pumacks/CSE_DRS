@@ -18,6 +18,7 @@ namespace GameStateManagementSample.Models
         private int currentFrame;
         private bool isLooping = true;
 
+        public List<Texture2D> Textures { get => textures; }
 
         public Animation(float animationSpeed)
         {

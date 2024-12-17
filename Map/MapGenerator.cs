@@ -10,7 +10,16 @@ namespace GameStateManagementSample.Models.Map
     {
         private static Random random = new Random();
         Room[] rooms = new Room[5];
+
+        public Room[] Rooms
+        {
+            get => rooms;
+            set => rooms = value;
+        }
+
+
         const int ROOM_DISTANCE = 2100; // Einheitliche Distanz
+
 
 
         public MapGenerator()

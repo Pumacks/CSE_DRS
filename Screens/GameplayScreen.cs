@@ -11,28 +11,16 @@
 
 #region Using Statements
 
-using GameStateManagementSample.Models;
-using GameStateManagementSample.Models.Camera;
-using GameStateManagementSample.Models.Entities;
-using GameStateManagementSample.Models.Helpers;
-using GameStateManagementSample.Models.Items;
-using GameStateManagementSample.Models.Map;
-using GameStateManagementSample.Screens;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.OpenGL;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Xml;
 using Color = Microsoft.Xna.Framework.Color;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using GameStateManagementSample.Models.GameLogic;
 
 #endregion Using Statements
 
@@ -48,93 +36,12 @@ namespace GameStateManagement
         #region Fields
 
         private ContentManager content;
-        private SpriteFont gameFont;
-
-        Texture2D golem;
-        Player hero;
-
-        Camera camera;
-
-        public Camera CameraProperty
-        {
-            get
-            {
-                return this.camera;
-            }
-            set
-            {
-                this.camera = value;
-            }
-        }
-
-
-
-        // Dummy Texture
-        Texture2D _texture;
-        Texture2D ArrowTexture;
-        Texture2D BowTexture;
-        Texture2D SwordTexture;
-        Texture2D InventoryTexture;
-        Texture2D SelectedInventorySlotTexture;
-        Texture2D ActiveWeaponInventorySlotTexture;
-
-        Texture2D MarkerTexture;
-
-        private Vector2 playerPosition = new Vector2(100, 100);
-        private Vector2 enemyPosition = new Vector2(100, 100);
-
-        private Random random = new Random();
         private float pauseAlpha;
 
+        private Engine gameEngine = new Engine();
 
+        private SpriteFont gameFont;
 
-        #region Fields and properties required for keeping track of enemies, player and projectile
-        private List<Enemy> enemies;
-        public List<Enemy> Enemies
-        {
-            get
-            {
-                return this.enemies;
-            }
-            set
-            {
-                this.enemies = value;
-            }
-        }
-        /*
-        private Entity player;
-        public Entity Player
-        {
-            get
-            {
-                return this.player;
-            }
-            set
-            {
-                this.player = value;
-            }
-        }
-        */
-        private List<Projectile> projectiles;
-        public List<Projectile> Projectiles
-        {
-            get
-            {
-                return this.projectiles;
-            }
-            set
-            {
-                this.projectiles = value;
-            }
-        }
-        #endregion Fields and properties required for keeping track of enemies, player and projectile
-
-
-
-
-
-        Room room = new Room();
-        MapGenerator map = new MapGenerator();
 
 
         #endregion Fields
@@ -169,31 +76,20 @@ namespace GameStateManagement
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
 
-            camera = new Camera();
+            gameEngine.LoadContent(ScreenManager);
 
-
-
-            _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
-            _texture.SetData(new Color[] { Color.DarkSlateGray });
-
-            gameFont = content.Load<SpriteFont>("gamefont");
-
-
-
-
-            golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
-
+           
 
             // Creating a List-Object for enemies
-            Enemies = new List<Enemy>();
+           // Enemies = new List<Enemy>();
             //The following is just for testing Textures and rotations.
-            Projectiles = new List<Projectile>();
+           // Projectiles = new List<Projectile>();
 
 
 
-            hero = new Player(100, 5, new Vector2(5000, 5000), golem, gameFont, new List<Item>());
+           // hero = new Player(100, 5, new Vector2(5000, 5000), golem, gameFont, new List<Item>());
 
-            hero.CameraProperty = camera;
+          //  hero.CameraProperty = camera;
 
 
 
@@ -245,9 +141,7 @@ namespace GameStateManagement
 
 
 
-            map.LoadMapTextures(content);
-            map.GenerateMap();
-            hero.LoadContent(content);
+    
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -265,16 +159,10 @@ namespace GameStateManagement
         /// </summary>
         public override void UnloadContent()
         {
-            content.Unload();
+            gameEngine.UnloadContent();
         }
 
         #endregion Initialization
-
-
-
-
-
-
 
 
 
@@ -288,8 +176,7 @@ namespace GameStateManagement
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
-            hero.SetGameTime(gameTime);
-            camera.Follow(hero);
+    
 
             base.Update(gameTime, otherScreenHasFocus, false);
 
@@ -305,9 +192,12 @@ namespace GameStateManagement
 
             if (IsActive)
             {
+
+                gameEngine.Update(gameTime);
+
                 // Apply some random jitter to make the enemy move around.
 
-
+/*
                 // Apply a stabilizing force to stop the enemy moving off the screen.
                 Vector2 targetPosition = new Vector2(
                     ScreenManager.GraphicsDevice.Viewport.Width / 2 - gameFont.MeasureString("Insert Gameplay Here").X / 2,
@@ -331,8 +221,7 @@ namespace GameStateManagement
                         }
                     }
                 }
-
-
+*/
 
 
             }
@@ -368,23 +257,7 @@ namespace GameStateManagement
             }
             else
             {
-
-                if (hero.HealthPoints <= 0)
-                {
-                    hero.PlayerDeathAnimation();
-
-                    ScreenManager.AddScreen(new GameOverScreen(true), ControllingPlayer);
-                }
-                else
-                {
-                    hero.Move();
-                }
-
-                //if (movement.Length() > 1)
-                //{
-                //    movement.Normalize();
-                //}
-
+                gameEngine.HandleInput(keyboardState, ControllingPlayer, ScreenManager);
             }
         }
 
@@ -402,18 +275,10 @@ namespace GameStateManagement
 
 
 
-            spriteBatch.Begin(transformMatrix: camera.Transform);
 
-            // DrawGui Bounding box
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Bottom - 1, hero.BoundingBox.Width, 1), Color.Black);
+            gameEngine.Draw(spriteBatch);
 
-            //room.DrawRoom(spriteBatch);
-            map.DrawMap(spriteBatch);
-            hero.Draw(spriteBatch);
-            spriteBatch.End();
+
 
 
 
@@ -624,8 +489,6 @@ namespace GameStateManagement
                 }
                 spriteBatch.End();
             }
-
-
 
 
 
