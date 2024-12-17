@@ -38,7 +38,7 @@ namespace GameStateManagementSample.Models.Items
                 this.attackSpeed = value;
             }
         }
-        private float weaponRange; // Weapon Range in Pixels. Wie weit der Schwerthieb reicht, oder wie weit Pfeile fliegen können.
+        protected float weaponRange; // Weapon Range in Pixels. Wie weit der Schwerthieb reicht, oder wie weit Pfeile fliegen können.
         public float WeaponRange
         {
             get
@@ -110,10 +110,11 @@ namespace GameStateManagementSample.Models.Items
         */
         #endregion
 
-        public Weapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange) : base (itemName, itemTexture, itemOwner) {
+        public Weapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies) : base (itemName, itemTexture, itemOwner) {
             this.weaponDamage = weaponDamage;
             this.attackSpeed = attackSpeed;
             this.weaponRange = weaponRange;
+            this.enemies = enemies;
             this.lastAttackGameTimeInMilliseconds = 0;
         }
 

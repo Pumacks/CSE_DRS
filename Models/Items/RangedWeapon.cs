@@ -44,7 +44,7 @@ namespace GameStateManagementSample.Models.Items
         }
         #endregion
 
-        public RangedWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, int projectileSpeed, Texture2D projectileTexture, List<Projectile> projectileList) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange) {
+        public RangedWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, int projectileSpeed, Texture2D projectileTexture, List<Projectile> projectileList) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies) {
             this.projectileSpeed = projectileSpeed;
             this.projectileTexture = projectileTexture;
             this.Projectiles = projectileList;
@@ -67,7 +67,8 @@ namespace GameStateManagementSample.Models.Items
                 this.ItemOwner,
                 this.ItemOwner.Position,
                 vector2,
-                projectileSpeed));
+                projectileSpeed,
+                this.weaponRange));
         }
 
         public override void DrawItem(SpriteBatch spriteBatch)
