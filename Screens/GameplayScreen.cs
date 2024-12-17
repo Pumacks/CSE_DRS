@@ -21,6 +21,7 @@ using System.Linq;
 using System.Threading;
 using Color = Microsoft.Xna.Framework.Color;
 using GameStateManagementSample.Models.GameLogic;
+using GameStateManagementSample.Models.Items;
 
 #endregion Using Statements
 
@@ -97,13 +98,7 @@ namespace GameStateManagement
 
 
             // Loading the Texture for Arrows
-            ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
-            BowTexture = content.Load<Texture2D>("Bow1-130x25px");
-            SwordTexture = content.Load<Texture2D>("sword1_130x27px");
-            InventoryTexture = content.Load<Texture2D>("966x138 Inventory Slot Bar v2.1");
-            SelectedInventorySlotTexture = content.Load<Texture2D>("138x138 Inventory Slot v2.1 Selected v3.2");
-            ActiveWeaponInventorySlotTexture = content.Load<Texture2D>("138x138 Inventory Slot Coloured v3.5");
-            MarkerTexture = content.Load<Texture2D>("Marker");
+           
 
             // Placing a few arrows in the world to demonstrate the way they fly:
             // for (int arrowPlacementIndex = 0; arrowPlacementIndex < 100; arrowPlacementIndex++)
@@ -111,32 +106,7 @@ namespace GameStateManagement
             //     Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex*10,200), new Vector2(1000, 500), 500));
             // }
 
-
-            //Giving our Test-Hero a Weapon (bow) at the start, so he can shoot arrows!
-            hero.ActiveWeapon = new RangedWeapon(
-                "Bow of the Gods",
-                BowTexture,
-                hero,
-                20,
-                400,
-                1000,
-                Enemies,
-                1500,
-                ArrowTexture,
-                Projectiles
-            );
-            //Giving our Test-Hero's inventory a Weapon (sword) at the start, so he can choose between sword and bow!
-            hero.Inventory[0] = new MeleeWeapon(
-                "Sword of the Gods",
-                SwordTexture,
-                hero,
-                40,
-                400,
-                250,
-                Enemies
-            );
-
-
+ 
 
 
 
@@ -276,7 +246,7 @@ namespace GameStateManagement
 
 
 
-            gameEngine.Draw(spriteBatch);
+            gameEngine.Draw(spriteBatch, ScreenManager, gameTime);
 
 
 
@@ -287,98 +257,7 @@ namespace GameStateManagement
 
 
 
-
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                texture: this.hero.ActiveWeapon.ItemTexture,
-                position: Vector2.Transform(hero.Position, camera.Transform), // Hier Vector2.Transform(hero.Position,camera.Transform) anstatt new Vector2(ScreenManager.GraphicsDevice.Viewport.Width/2,ScreenManager.GraphicsDevice.Viewport.Height/2)
-                sourceRectangle: null,
-                color: Color.White,
-                rotation: (float)Math.PI / 2 + (float)Math.Atan2(Mouse.GetState().Y - Vector2.Transform(hero.Position, camera.Transform).Y, Mouse.GetState().X - Vector2.Transform(hero.Position, camera.Transform).X),
-                // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
-                // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
-                origin: this.hero.ActiveWeapon is MeleeWeapon ? new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2, this.hero.ActiveWeapon.ItemTexture.Height * 0.75f) : new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2, this.hero.ActiveWeapon.ItemTexture.Height / 2),
-                scale: 1f,
-                effects: SpriteEffects.None,
-                layerDepth: 0f);
-            spriteBatch.End();
-
-            // to draw the inventory
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                texture: InventoryTexture,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.5f, ScreenManager.GraphicsDevice.Viewport.Height - 138),
-                sourceRectangle: null,
-                color: Color.White,
-                rotation: 0f,
-                origin: new Vector2(InventoryTexture.Width / 2, InventoryTexture.Height / 2),
-                scale: 1f,
-                effects: SpriteEffects.None,
-                layerDepth: 0f);
-            spriteBatch.End();
-
-            // to draw the currently selected inventory slot
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                texture: SelectedInventorySlotTexture,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.5f + this.hero.SelectedInventorySlot * 138, ScreenManager.GraphicsDevice.Viewport.Height - 138),
-                sourceRectangle: null,
-                color: Color.White,
-                rotation: 0f,
-                origin: new Vector2(InventoryTexture.Width / 2, InventoryTexture.Height / 2),
-                scale: 1f,
-                effects: SpriteEffects.None,
-                layerDepth: 0f);
-            spriteBatch.End();
-
-            // to draw the active inventory slot
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                texture: ActiveWeaponInventorySlotTexture,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.5f - 276, ScreenManager.GraphicsDevice.Viewport.Height - 138),
-                sourceRectangle: null,
-                color: Color.White,
-                rotation: 0f,
-                origin: new Vector2(InventoryTexture.Width / 2, InventoryTexture.Height / 2),
-                scale: 1f,
-                effects: SpriteEffects.None,
-                layerDepth: 0f);
-            spriteBatch.End();
-
-            // To draw the active weapon's texture in its intended slot
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                texture: this.hero.ActiveWeapon.ItemTexture,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.5f - 690, ScreenManager.GraphicsDevice.Viewport.Height - 138),
-                sourceRectangle: null,
-                color: Color.White,
-                rotation: 0.785398f,
-                origin: new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2, this.hero.ActiveWeapon.ItemTexture.Height / 2),
-                scale: 1f,
-                effects: SpriteEffects.None,
-                layerDepth: 0f);
-            spriteBatch.End();
-
-            // to draw each item in the inventory into their intended slots
-            for (int inventorySlotCounter = 0; inventorySlotCounter < this.hero.Inventory.Length; inventorySlotCounter++)
-            {
-                if (this.hero.Inventory[inventorySlotCounter] != null)
-                {
-                    spriteBatch.Begin();
-                    spriteBatch.Draw(
-                        texture: this.hero.Inventory[inventorySlotCounter].ItemTexture,
-                        position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.5f - 414 + inventorySlotCounter * 138, ScreenManager.GraphicsDevice.Viewport.Height - 138),
-                        sourceRectangle: null,
-                        color: Color.White,
-                        rotation: 0.785398f,
-                        origin: new Vector2(this.hero.Inventory[inventorySlotCounter].ItemTexture.Width / 2, this.hero.Inventory[inventorySlotCounter].ItemTexture.Height / 2),
-                        scale: 1f,
-                        effects: SpriteEffects.None,
-                        layerDepth: 0f);
-                    spriteBatch.End();
-                }
-            }
-
+ 
 
 
 
@@ -398,98 +277,7 @@ namespace GameStateManagement
             //     layerDepth: 0f);
             // spriteBatch.End();
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Total ms: " + gameTime.TotalGameTime.TotalMilliseconds.ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f, ScreenManager.GraphicsDevice.Viewport.Height - 250),
-                Color.Red
-            );
-            spriteBatch.End();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Hero Position: " + hero.Position.ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f, ScreenManager.GraphicsDevice.Viewport.Height - 300),
-                Color.Red
-            );
-            spriteBatch.End();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Hero Transformed Position: " + Vector2.Transform(hero.Position, camera.Transform).ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f, ScreenManager.GraphicsDevice.Viewport.Height - 350),
-                Color.Red
-            );
-            spriteBatch.End();
-
-
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                // text: "M.Cursor Transformed Inverted: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.CameraProperty.Transform)),
-                text: "Mouse aiming at: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.CameraProperty.Transform)),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f, ScreenManager.GraphicsDevice.Viewport.Height - 400),
-                Color.Red
-            );
-            spriteBatch.End();
-
-
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "selectedInventorySlot: " + this.hero.SelectedInventorySlot,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f, ScreenManager.GraphicsDevice.Viewport.Height - 450),
-                Color.Red
-            );
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Mouse Wheel Value: " + Mouse.GetState().ScrollWheelValue,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f, ScreenManager.GraphicsDevice.Viewport.Height - 500),
-                Color.Red
-            );
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Mouse Wheel PREVIOUS Value: " + Mouse.GetState().ScrollWheelValue,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f, ScreenManager.GraphicsDevice.Viewport.Height - 550),
-                Color.Red
-            );
-            spriteBatch.End();
-
-
-
-
-
-            if (Projectiles != null)
-            {
-                spriteBatch.Begin();
-                int projectileIndex;
-                for (projectileIndex = 0; projectileIndex < Projectiles.Count; projectileIndex++)
-                {
-                    spriteBatch.Draw(
-                        texture: ArrowTexture,
-                        position: Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition, camera.Transform), // Hier Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,camera.Transform) anstatt Projectiles[projectileIndex].CurrentProjectilePosition
-                        sourceRectangle: null,
-                        color: Color.White,
-                        //rotation: (float) projectileIndex*2*(float)Math.PI/100, //normally it depends on the shooting direction of the arrow. This line is currently just for testing purposes.
-                        rotation: Projectiles[projectileIndex].ProjectileRotationFloatValue,
-                        origin: new Vector2(ArrowTexture.Width / 2, ArrowTexture.Height / 2),
-                        scale: 1f,
-                        effects: SpriteEffects.None,
-                        layerDepth: 0f
-                        );
-                }
-                spriteBatch.End();
-            }
-
+           
 
 
             // If the game is transitioning on or off, fade it out to black.

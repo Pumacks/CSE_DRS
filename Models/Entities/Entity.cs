@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Numerics;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace GameStateManagementSample.Models.Entities
 {
@@ -68,7 +70,7 @@ namespace GameStateManagementSample.Models.Entities
         }
 
 
-        public abstract void Move();
+        public abstract void Move(Vector2 movment);
         public abstract void Atack();
 
         public abstract void LoadContent(ContentManager content);

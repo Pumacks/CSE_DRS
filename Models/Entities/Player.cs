@@ -34,12 +34,11 @@ namespace GameStateManagementSample.Models.Entities
             GUIObservers.Add(new HealthGUI(this));
         }
 
-        public override void Move()
+         
+        public override void Move(Vector2 movement)
         {
-            Vector2 movement = Vector2.Zero;
             currentKeyboardState = Keyboard.GetState();
             currentMouseState = Mouse.GetState();
-
             #region Atacking Timer
             if (isAtacking)
                 atackTimer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -55,6 +54,7 @@ namespace GameStateManagementSample.Models.Entities
 
 
             #region Keyboard input
+
 
             #region Input: Inventory
 
@@ -176,9 +176,10 @@ namespace GameStateManagementSample.Models.Entities
             {
                 if (currentKeyboardState.IsKeyDown(Keys.X) && !previousKeyboardState.IsKeyDown(Keys.X))
                 {
-                    if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Weapon) { //if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot].GetType() == typeof(Weapon) && Inventory[selectedInventorySlot] is Weapon) {
+                    if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Weapon)
+                    { //if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot].GetType() == typeof(Weapon) && Inventory[selectedInventorySlot] is Weapon) {
                         Weapon toBeSwitchedWeapon = ActiveWeapon;
-                        ActiveWeapon = (Weapon) Inventory[selectedInventorySlot];
+                        ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
                     }
                 }
@@ -188,9 +189,10 @@ namespace GameStateManagementSample.Models.Entities
             {
                 if (currentMouseState.MiddleButton == ButtonState.Pressed && !(previousMouseState.MiddleButton == ButtonState.Pressed))
                 {
-                    if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Weapon) { //if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot].GetType() == typeof(Weapon) && Inventory[selectedInventorySlot] is Weapon) {
+                    if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Weapon)
+                    { //if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot].GetType() == typeof(Weapon) && Inventory[selectedInventorySlot] is Weapon) {
                         Weapon toBeSwitchedWeapon = ActiveWeapon;
-                        ActiveWeapon = (Weapon) Inventory[selectedInventorySlot];
+                        ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
                     }
                 }
@@ -200,87 +202,6 @@ namespace GameStateManagementSample.Models.Entities
 
 
 
-
-
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
-
-                // Attack with activeWeapon
-                this.ActiveWeapon.weaponAttack(this);
-
-
-
-                if (!isAtacking)
-                {
-
-                    isAtacking = true;
-                    Atack();
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                movement.X -= MovementSpeed;
-                flipTexture = true;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                movement.X += MovementSpeed;
-                flipTexture = false;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {
-                movement.Y -= MovementSpeed; ;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                movement.Y += MovementSpeed; ;
-            }
-            #endregion
-
-
-
-            if (isAtacking)
-                Texture = animationManager.AttackAnimation();
-            else if (movement != Vector2.Zero)
-                Texture = animationManager.WalkAnimation();
-            else if (movement == Vector2.Zero)
-                Texture = animationManager.IdleAnimation();
-
-
-
-            boundingBox.X = (int)position.X - Texture.Width / 2;
-            boundingBox.Y = (int)position.Y - Texture.Height / 2;
-            boundingBox.Width = Texture.Width;
-            boundingBox.Height = Texture.Height;
-
-
-
-            position += movement;
-            previousKeyboardState = currentKeyboardState;
-            previousMouseState = currentMouseState;
-        }
-
-        public void Move(Vector2 movement)
-        {
-            #region Atacking Timer
-            if (isAtacking)
-                atackTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (atackTimer >= 0.4)
-            {
-                atackTimer = 0;
-                isAtacking = false;
-            }
-            #endregion
-
-
-
-
-            #region Keyboard input
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
 
@@ -329,6 +250,8 @@ namespace GameStateManagementSample.Models.Entities
 
 
             position += movement;
+            previousKeyboardState = currentKeyboardState;
+            previousMouseState = currentMouseState;
         }
         public override void Atack()
         {
