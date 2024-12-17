@@ -246,52 +246,75 @@ namespace GameStateManagementSample.Models.GameLogic
             }
             else
             {
-
-                Vector2 movement = Vector2.Zero;
+                // Movement of the player with collision detection
+                Vector2 north = Vector2.Zero;
+                Vector2 south = Vector2.Zero;
+                Vector2 west = Vector2.Zero;
+                Vector2 east = Vector2.Zero;
 
                 if (Keyboard.GetState().IsKeyDown(Keys.A))
                 {
-                    movement.X -= hero.MovementSpeed;
+                    west.X -= hero.MovementSpeed;
 
                 }
 
                 if (Keyboard.GetState().IsKeyDown(Keys.D))
                 {
-                    movement.X += hero.MovementSpeed;
+                    east.X += hero.MovementSpeed;
 
                 }
 
                 if (Keyboard.GetState().IsKeyDown(Keys.W))
                 {
-                    movement.Y -= hero.MovementSpeed;
+                    north.Y -= hero.MovementSpeed;
                 }
 
                 if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
-                    movement.Y += hero.MovementSpeed;
+                    south.Y += hero.MovementSpeed;
                 }
 
 
-                bool hasCollision = false;
+                bool collisionNorth = false;
+                bool collisionSouth = false;
+                bool collisionWest = false;
+                bool collisionEast = false;
 
                 foreach (var Room in map.Rooms)
                 {
-                    hasCollision = CollisionDetector.hasStructureCollision(Room, hero, movement);
-                    if (hasCollision)
-                        break;
+                    if(CollisionDetector.hasStructureCollision(Room, hero, north))
+                        collisionNorth = true;
+
+                    if (CollisionDetector.hasStructureCollision(Room, hero, south))
+                        collisionSouth = true;
+
+                    if (CollisionDetector.hasStructureCollision(Room, hero, west))
+                        collisionWest = true;
+
+                    if (CollisionDetector.hasStructureCollision(Room, hero, east))
+                        collisionEast = true;
                 }
 
 
-                if (hasCollision)
-                    movement = Vector2.Zero;
 
+
+                Vector2 movement = Vector2.Zero;
+
+                if (!collisionNorth)
+                    movement += north;
+
+                if (!collisionSouth)
+                    movement += south;
+
+                if (!collisionWest)
+                    movement += west;
+
+                if (!collisionEast)
+                    movement += east;
 
 
                 hero.Move(movement);
             }
         }
-
-
-
     }
 }
