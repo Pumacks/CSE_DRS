@@ -136,15 +136,13 @@ namespace GameStateManagementSample.Models.GameLogic
             Enemies = new List<Enemy>();
             //The following is just for testing Textures and rotations.
             Projectiles = new List<Projectile>();
-            for (int arrowPlacementIndex = 0; arrowPlacementIndex < 100; arrowPlacementIndex++)
-            {
-                Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
-            }
+            //for (int arrowPlacementIndex = 0; arrowPlacementIndex < 100; arrowPlacementIndex++)
+            //{
+            //    Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
+            //}
 
 
- 
-
-
+            
 
             ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
             BowTexture = content.Load<Texture2D>("Bow1-130x25px");
