@@ -55,12 +55,12 @@ namespace GameStateManagementSample.Models.Map
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y -= ROOM_DISTANCE;
 
-                            rooms[randomRoom].blockDirection(0);
-                            rooms[randomRoom].setDoorInDirection(0);
-                            
                             rooms[i].GenerateRoom(random, posOfRoom);
+                            
+                            rooms[randomRoom].blockDirection(0);
                             rooms[i].blockDirection(2);
-                            rooms[i].setDoorInDirection(2);
+                            
+                            rooms[randomRoom].setDoors(0,rooms[i]);
 
                             Console.WriteLine("generated from room " + randomRoom + " in the North" + " on pos " + posOfRoom);
                         }
@@ -79,12 +79,13 @@ namespace GameStateManagementSample.Models.Map
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X += ROOM_DISTANCE;
 
-                            rooms[randomRoom].blockDirection(1);
-                            rooms[randomRoom].setDoorInDirection(1);
-                            
                             rooms[i].GenerateRoom(random, posOfRoom);
+                            
+                            rooms[randomRoom].blockDirection(1);
                             rooms[i].blockDirection(3);
-                            rooms[i].setDoorInDirection(3);
+                            
+
+                            rooms[randomRoom].setDoors(1,rooms[i]);
                             
                             Console.WriteLine("generated from room " + randomRoom + " in the East" + " on pos " + posOfRoom);
                         }
@@ -102,12 +103,12 @@ namespace GameStateManagementSample.Models.Map
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y += ROOM_DISTANCE;
 
-                            rooms[randomRoom].blockDirection(2);
-                            rooms[randomRoom].setDoorInDirection(2);
-
                             rooms[i].GenerateRoom(random, posOfRoom);
+
+                            rooms[randomRoom].blockDirection(2);
                             rooms[i].blockDirection(0);
-                            rooms[i].setDoorInDirection(0);
+
+                            rooms[randomRoom].setDoors(2,rooms[i]);
 
                             Console.WriteLine("generated from room " + randomRoom + " in the South" + " on pos " + posOfRoom);
                         }
@@ -125,12 +126,12 @@ namespace GameStateManagementSample.Models.Map
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X -= ROOM_DISTANCE;
 
-                            rooms[randomRoom].blockDirection(3);
-                            rooms[randomRoom].setDoorInDirection(3);
-                            
                             rooms[i].GenerateRoom(random, posOfRoom);
+                            
+                            rooms[randomRoom].blockDirection(3);
                             rooms[i].blockDirection(1);
-                            rooms[i].setDoorInDirection(1);
+
+                            rooms[randomRoom].setDoors(3,rooms[i]);
                             
                             Console.WriteLine("generated from room " + randomRoom + " in the West" + " on pos " + posOfRoom);
                         }
