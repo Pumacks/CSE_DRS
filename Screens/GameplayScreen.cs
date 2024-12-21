@@ -237,7 +237,7 @@ namespace GameStateManagement
         public override void Draw(GameTime gameTime)
         {
 
-            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
+            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
 
 
             // Our player and enemy are both actually just text strings.
