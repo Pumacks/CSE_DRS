@@ -10,6 +10,9 @@ namespace GameStateManagementSample.Models.Map
     {
         private static Random random = new Random();
         Room[] rooms = new Room[5];
+        bool[,] mapVisual = new bool[10,10];
+        int xmapVisual = 5;
+        int ymapVisual = 5;
 
         public Room[] Rooms
         {
@@ -33,6 +36,8 @@ namespace GameStateManagementSample.Models.Map
         public void GenerateMap()
         {
             rooms[0].GenerateRoom(random, new Vector2(5000, 5000));
+            mapVisual[xmapVisual,ymapVisual] = true;
+            
             int randomdirection;
             int randomRoom;
             Vector2 posOfRoom;
@@ -50,8 +55,10 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(0))
+                        if (!rooms[randomRoom].isDirectionBlockedOn(0) && !mapVisual[xmapVisual,ymapVisual-1])
                         {
+                            ymapVisual -= 1;
+                            mapVisual[xmapVisual,ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y -= ROOM_DISTANCE;
 
@@ -74,8 +81,10 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(1))
+                        if (!rooms[randomRoom].isDirectionBlockedOn(1) && !mapVisual[xmapVisual+1,ymapVisual])
                         {
+                            xmapVisual += 1;
+                            mapVisual[xmapVisual,ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X += ROOM_DISTANCE;
 
@@ -98,8 +107,10 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(2))
+                        if (!rooms[randomRoom].isDirectionBlockedOn(2) && !mapVisual[xmapVisual,ymapVisual+1])
                         {
+                            ymapVisual += 1;
+                            mapVisual[xmapVisual,ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y += ROOM_DISTANCE;
 
@@ -121,8 +132,10 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(3))
+                        if (!rooms[randomRoom].isDirectionBlockedOn(3) && !mapVisual[xmapVisual-1,ymapVisual])
                         {
+                            xmapVisual -= 1;
+                            mapVisual[xmapVisual,ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X -= ROOM_DISTANCE;
 
