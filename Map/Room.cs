@@ -10,10 +10,10 @@ namespace GameStateManagementSample.Models.Map
     {
         enum SkyDirection
         {
-            NORTH,      
-            EAST,      
-            SOUTH, 
-            WEST       
+            NORTH,
+            EAST,
+            SOUTH,
+            WEST
         }
 
         private Tile[,] tiles;
@@ -193,6 +193,9 @@ namespace GameStateManagementSample.Models.Map
                     doorTile.setOtherSideDoor(oppositeDoorTile);
                     oppositeDoorTile.setOtherSideDoor(doorTile);
 
+                    doorTile.TeleportPosition = new Vector2(doorTile.getPos().X + doorTile.getTexture().Width /2 , doorTile.getPos().Y + doorTile.getTexture().Height + 100);
+                    oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X + oppositeDoorTile.getTexture().Width / 2, oppositeDoorTile.getPos().Y - oppositeDoorTile.getTexture().Height);
+
                     roomDoors[0] = doorTile;
                     oppositeRoom.roomDoors[2] = oppositeDoorTile;
                     break;
@@ -215,12 +218,15 @@ namespace GameStateManagementSample.Models.Map
                     doorTile.setOtherSideDoor(oppositeDoorTile);
                     oppositeDoorTile.setOtherSideDoor(doorTile);
 
+                    doorTile.TeleportPosition = new Vector2(doorTile.getPos().X - doorTile.getTexture().Width, doorTile.getPos().Y + doorTile.getTexture().Height / 2);
+                    oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X + oppositeDoorTile.getTexture().Width + 100, oppositeDoorTile.getPos().Y + oppositeDoorTile.getTexture().Height / 2);
+
                     // TODO für westen und osten muss noch das gras tile überschrieben werden
-                    
-                    oppositeRoom.tiles[oppositeMid-1, 0].setTexture(grass);
+
+                    oppositeRoom.tiles[oppositeMid - 1, 0].setTexture(grass);
                     tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
 
-                    
+
                     roomDoors[1] = doorTile;
                     oppositeRoom.roomDoors[3] = oppositeDoorTile;
                     break;
@@ -242,7 +248,9 @@ namespace GameStateManagementSample.Models.Map
                     doorTile.setOtherSideDoor(oppositeDoorTile);
                     oppositeDoorTile.setOtherSideDoor(doorTile);
 
-                    
+                    doorTile.TeleportPosition = new Vector2(doorTile.getPos().X + doorTile.getTexture().Width / 2, doorTile.getPos().Y - doorTile.getTexture().Height);
+                    oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X + doorTile.getTexture().Width / 2, oppositeDoorTile.getPos().Y + oppositeDoorTile.getTexture().Height + 200);
+
                     roomDoors[2] = doorTile;
                     oppositeRoom.roomDoors[0] = oppositeDoorTile;
                     break;
@@ -264,9 +272,13 @@ namespace GameStateManagementSample.Models.Map
                     doorTile.setOtherSideDoor(oppositeDoorTile);
                     oppositeDoorTile.setOtherSideDoor(doorTile);
 
-                    oppositeRoom.tiles[oppositeMid-1, oppositeRoom.GetTiles().GetLength(1) - 1].setTexture(grass);
-                    tiles[mid-1, 0].setTexture(grass);
-                    
+                    doorTile.TeleportPosition = new Vector2(doorTile.getPos().X + doorTile.getTexture().Width + 100, doorTile.getPos().Y + doorTile.getTexture().Height / 2);
+                    oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X - oppositeDoorTile.getTexture().Width, oppositeDoorTile.getPos().Y + oppositeDoorTile.getTexture().Height / 2);
+
+
+                    oppositeRoom.tiles[oppositeMid - 1, oppositeRoom.GetTiles().GetLength(1) - 1].setTexture(grass);
+                    tiles[mid - 1, 0].setTexture(grass);
+
                     roomDoors[3] = doorTile;
                     oppositeRoom.roomDoors[1] = oppositeDoorTile;
                     break;

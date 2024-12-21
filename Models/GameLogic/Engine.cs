@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
@@ -142,7 +143,7 @@ namespace GameStateManagementSample.Models.GameLogic
             //}
 
 
-            
+
 
             ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
             BowTexture = content.Load<Texture2D>("Bow1-130x25px");
@@ -198,7 +199,7 @@ namespace GameStateManagementSample.Models.GameLogic
         }
 
 
-        public void Draw(SpriteBatch spriteBatch ,ScreenManager ScreenManager ,GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch, ScreenManager ScreenManager, GameTime gameTime)
         {
             spriteBatch.Begin(transformMatrix: camera.Transform);
 
@@ -462,6 +463,40 @@ namespace GameStateManagementSample.Models.GameLogic
                     south.Y += hero.MovementSpeed;
 
 
+
+                foreach (var room in map.Rooms)
+                {
+
+                    DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north);
+                    if (door != null)
+                    {
+                        hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        break;
+                    }
+
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, south);
+                    if (door != null)
+                    {
+                        hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        break;
+                    }
+
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, west);
+                    if (door != null)
+                    {
+                        hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        break;
+                    }
+
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, east);
+                    if (door != null)
+                    {
+                        hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        break;
+                    }
+                }
+
+
                 bool collisionNorth = false;
                 bool collisionSouth = false;
                 bool collisionWest = false;
@@ -469,16 +504,16 @@ namespace GameStateManagementSample.Models.GameLogic
 
                 foreach (var Room in map.Rooms)
                 {
-                    if (CollisionDetector.hasStructureCollision(Room, hero, north))
+                    if (CollisionDetector.HasStructureCollision(Room, hero, north))
                         collisionNorth = true;
 
-                    if (CollisionDetector.hasStructureCollision(Room, hero, south))
+                    if (CollisionDetector.HasStructureCollision(Room, hero, south))
                         collisionSouth = true;
 
-                    if (CollisionDetector.hasStructureCollision(Room, hero, west))
+                    if (CollisionDetector.HasStructureCollision(Room, hero, west))
                         collisionWest = true;
 
-                    if (CollisionDetector.hasStructureCollision(Room, hero, east))
+                    if (CollisionDetector.HasStructureCollision(Room, hero, east))
                         collisionEast = true;
                 }
 
@@ -498,15 +533,15 @@ namespace GameStateManagementSample.Models.GameLogic
 
                 hero.Move(movement);
             }
-            else if(playerGameStatus == PlayerGameStatus.DEAD)
+            else if (playerGameStatus == PlayerGameStatus.DEAD)
             {
-                 
+
                 if (deathAnimationFinished)
                 {
                     screenManager.AddScreen(new GameOverScreen(playerGameStatus), controllingPlayer);
                 }
             }
-            else if(playerGameStatus == PlayerGameStatus.WON)
+            else if (playerGameStatus == PlayerGameStatus.WON)
             {
                 screenManager.AddScreen(new GameOverScreen(playerGameStatus), controllingPlayer);
             }
