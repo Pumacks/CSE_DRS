@@ -8,8 +8,19 @@ namespace GameStateManagementSample.Models.Map
 {
     public class Room
     {
+        enum SkyDirection
+        {
+            NORTH,      
+            EAST,      
+            SOUTH, 
+            WEST       
+        }
+
         private Tile[,] tiles;
         private bool[] blocked = new bool[4]; // wird für Map generation genutzt
+        private DoorTile[] roomDoors = new DoorTile[4];
+
+
         private Texture2D grass;
         private Texture2D grass2;
         private Texture2D grass3;
@@ -132,12 +143,13 @@ namespace GameStateManagementSample.Models.Map
                 case 0: // Norden
                     mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
                     tiles[0, mid].setTexture(doorN);
+
                     break;
 
                 case 1: // Osten
                     mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
                     tiles[mid, tiles.GetLength(1) - 1].setTexture(doorE);
-                    tiles[mid-1, tiles.GetLength(1) - 1].setTexture(grass);
+                    tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
                     break;
 
                 case 2: // Süden
@@ -148,8 +160,115 @@ namespace GameStateManagementSample.Models.Map
                 case 3: // Westen
                     mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
                     tiles[mid, 0].setTexture(doorW);
-                    tiles[mid-1, 0].setTexture(grass);
+                    tiles[mid - 1, 0].setTexture(grass);
 
+                    break;
+            }
+        }
+
+        public void setDoors(int direction, Room oppositeRoom)
+        {
+            int mid;
+            int oppositeMid;
+            DoorTile doorTile;
+            DoorTile oppositeDoorTile;
+
+            switch (direction)
+            {
+                case 0: // Norden
+                    mid = (tiles.GetLength(1) / 2);
+                    tiles[0, mid].setTexture(doorN);
+
+                    doorTile = new DoorTile(tiles[0, mid]);
+                    tiles[0, mid] = doorTile;
+
+                    // Für den anderen Raum
+                    oppositeMid = oppositeRoom.GetTiles().GetLength(1) / 2;
+                    oppositeRoom.tiles[oppositeRoom.GetTiles().GetLength(0) - 1, oppositeMid].setTexture(doorS);
+
+                    oppositeDoorTile = new DoorTile(oppositeRoom.GetTiles()[oppositeRoom.GetTiles().GetLength(0) - 1, oppositeMid]);
+                    oppositeRoom.tiles[oppositeRoom.GetTiles().GetLength(0) - 1, oppositeMid] = oppositeDoorTile;
+
+                    // ((DoorTile)tiles[0, mid]).setOtherSideDoor((DoorTile)oppositeRoom.GetTiles()[oppositeRoom.GetTiles().GetLength(0) - 1, oppositeMid]);
+                    doorTile.setOtherSideDoor(oppositeDoorTile);
+                    oppositeDoorTile.setOtherSideDoor(doorTile);
+
+                    roomDoors[0] = doorTile;
+                    oppositeRoom.roomDoors[2] = oppositeDoorTile;
+                    break;
+
+                case 1: // Osten
+                    mid = (tiles.GetLength(0) / 2);
+                    tiles[mid, tiles.GetLength(1) - 1].setTexture(doorE);
+
+                    doorTile = new DoorTile(tiles[mid, tiles.GetLength(1) - 1]);
+                    tiles[mid, tiles.GetLength(1) - 1] = doorTile;
+
+                    // Für den anderen Raum
+                    oppositeMid = oppositeRoom.GetTiles().GetLength(0) / 2;
+                    oppositeRoom.tiles[oppositeMid, 0].setTexture(doorW);
+
+                    oppositeDoorTile = new DoorTile(oppositeRoom.GetTiles()[oppositeMid, 0]);
+                    oppositeRoom.tiles[oppositeMid, 0] = oppositeDoorTile;
+
+
+                    doorTile.setOtherSideDoor(oppositeDoorTile);
+                    oppositeDoorTile.setOtherSideDoor(doorTile);
+
+                    // TODO für westen und osten muss noch das gras tile überschrieben werden
+                    
+                    oppositeRoom.tiles[oppositeMid-1, 0].setTexture(grass);
+                    tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
+
+                    
+                    roomDoors[1] = doorTile;
+                    oppositeRoom.roomDoors[3] = oppositeDoorTile;
+                    break;
+
+                case 2: // Süden
+                    mid = (tiles.GetLength(1) / 2);
+                    tiles[tiles.GetLength(0) - 1, mid].setTexture(doorS);
+
+                    doorTile = new DoorTile(tiles[tiles.GetLength(0) - 1, mid]);
+                    tiles[tiles.GetLength(0) - 1, mid] = doorTile;
+
+                    // Für den anderen Raum
+                    oppositeMid = oppositeRoom.GetTiles().GetLength(1) / 2;
+                    oppositeRoom.tiles[0, oppositeMid].setTexture(doorN);
+
+                    oppositeDoorTile = new DoorTile(oppositeRoom.GetTiles()[0, oppositeMid]);
+                    oppositeRoom.tiles[0, oppositeMid] = oppositeDoorTile;
+
+                    doorTile.setOtherSideDoor(oppositeDoorTile);
+                    oppositeDoorTile.setOtherSideDoor(doorTile);
+
+                    
+                    roomDoors[2] = doorTile;
+                    oppositeRoom.roomDoors[0] = oppositeDoorTile;
+                    break;
+
+                case 3: // Westen
+                    mid = (tiles.GetLength(0) / 2);
+                    tiles[mid, 0].setTexture(doorW);
+
+                    doorTile = new DoorTile(tiles[mid, 0]);
+                    tiles[mid, 0] = doorTile;
+
+                    // Für den anderen Raum
+                    oppositeMid = oppositeRoom.GetTiles().GetLength(0) / 2;
+                    oppositeRoom.tiles[oppositeMid, oppositeRoom.GetTiles().GetLength(1) - 1].setTexture(doorE);
+
+                    oppositeDoorTile = new DoorTile(oppositeRoom.GetTiles()[oppositeMid, oppositeRoom.GetTiles().GetLength(1) - 1]);
+                    oppositeRoom.tiles[oppositeMid, oppositeRoom.GetTiles().GetLength(1) - 1] = oppositeDoorTile;
+
+                    doorTile.setOtherSideDoor(oppositeDoorTile);
+                    oppositeDoorTile.setOtherSideDoor(doorTile);
+
+                    oppositeRoom.tiles[oppositeMid-1, oppositeRoom.GetTiles().GetLength(1) - 1].setTexture(grass);
+                    tiles[mid-1, 0].setTexture(grass);
+                    
+                    roomDoors[3] = doorTile;
+                    oppositeRoom.roomDoors[1] = oppositeDoorTile;
                     break;
             }
         }
