@@ -68,8 +68,6 @@ namespace GameStateManagementSample.Models.Map
                             rooms[i].blockDirection(2);
                             
                             rooms[randomRoom].setDoors(0,rooms[i]);
-
-                            Console.WriteLine("generated from room " + randomRoom + " in the North" + " on pos " + posOfRoom);
                         }
                         else
                             i--;
@@ -95,8 +93,6 @@ namespace GameStateManagementSample.Models.Map
                             
 
                             rooms[randomRoom].setDoors(1,rooms[i]);
-                            
-                            Console.WriteLine("generated from room " + randomRoom + " in the East" + " on pos " + posOfRoom);
                         }
                         else
                             i--;
@@ -120,8 +116,6 @@ namespace GameStateManagementSample.Models.Map
                             rooms[i].blockDirection(0);
 
                             rooms[randomRoom].setDoors(2,rooms[i]);
-
-                            Console.WriteLine("generated from room " + randomRoom + " in the South" + " on pos " + posOfRoom);
                         }
                         else
                             i--;
@@ -145,8 +139,6 @@ namespace GameStateManagementSample.Models.Map
                             rooms[i].blockDirection(1);
 
                             rooms[randomRoom].setDoors(3,rooms[i]);
-                            
-                            Console.WriteLine("generated from room " + randomRoom + " in the West" + " on pos " + posOfRoom);
                         }
                         else
                             i--;
