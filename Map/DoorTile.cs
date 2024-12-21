@@ -8,6 +8,13 @@ namespace GameStateManagementSample.Models.Map
     {
         private DoorTile oppositeDoor;
         private Vector2 teleportPosition;
+        private bool isLastDoor;
+
+        public bool IsLastDoor
+        {
+            get { return isLastDoor; }
+            set { isLastDoor = value; }
+        }
 
         public Vector2 TeleportPosition
         {

@@ -15,7 +15,7 @@ namespace GameStateManagementSample.Models.Helpers
     {
 
 
-        public static DoorTile HasDoorTileCollision(Room room, Entity entity, Vector2 movement)
+        public static DoorTile HasDoorTileCollision(Room room, Entity entity, Vector2 movement,ref MapGenerator map)
         {
             Tile[,] tiles = room.GetTiles();
             int x = (int)entity.Position.X + (int)movement.X - entity.Texture.Width / 2;
@@ -25,6 +25,10 @@ namespace GameStateManagementSample.Models.Helpers
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
+                    if (tiles[i, j] is DoorTile doorTile2 && IsIntersecting(tiles[i, j].BoundingBox, entityBoundingBox) && doorTile2.IsLastDoor)
+                    {
+                        map.GenerateMap();
+                    }
                     if (tiles[i, j] is DoorTile doorTile && IsIntersecting(tiles[i, j].BoundingBox, entityBoundingBox))
                     {
                         return doorTile;

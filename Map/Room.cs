@@ -30,6 +30,10 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D doorE;
         private Texture2D doorS;
         private Texture2D doorW;
+        private Texture2D stoneDoorN;
+        private Texture2D stoneDoorE;
+        private Texture2D stoneDoorS;
+        private Texture2D stoneDoorW;
 
         private Random random = new Random();
 
@@ -52,6 +56,12 @@ namespace GameStateManagementSample.Models.Map
             doorE = content.Load<Texture2D>("Map/doorE");
             doorS = content.Load<Texture2D>("Map/doorS");
             doorW = content.Load<Texture2D>("Map/doorW");
+
+            stoneDoorN = content.Load<Texture2D>("Map/2doorN");
+            stoneDoorE = content.Load<Texture2D>("Map/2doorE");
+            stoneDoorS = content.Load<Texture2D>("Map/2doorS");
+            stoneDoorW = content.Load<Texture2D>("Map/2doorW");
+
         }
 
         public void GenerateRoom(Random random, Vector2 roomPos)
@@ -135,35 +145,106 @@ namespace GameStateManagementSample.Models.Map
             return new Tile[width, height];
         }
 
-        public void setDoorInDirection(int direction)
+        public Tile setDoorLastDoor(int direction)
         {
             int mid;
+            DoorTile doorTile;
+
             switch (direction)
             {
                 case 0: // Norden
                     mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
-                    tiles[0, mid].setTexture(doorN);
 
-                    break;
+                    doorTile = new DoorTile(tiles[0, mid]);
+                    doorTile.setTexture(stoneDoorN);
+
+                    doorTile.TeleportPosition = new Vector2(5500, 5500);
+                    doorTile.IsLastDoor = true;
+
+                    tiles[0, mid] = doorTile;
+                    return doorTile;
 
                 case 1: // Osten
                     mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
-                    tiles[mid, tiles.GetLength(1) - 1].setTexture(doorE);
+
+                    doorTile = new DoorTile(tiles[mid, tiles.GetLength(1) - 1]);
+                    doorTile.setTexture(stoneDoorE);
                     tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
-                    break;
+
+                    doorTile.TeleportPosition = new Vector2(5500, 5500);
+                    doorTile.IsLastDoor = true;
+
+                    tiles[mid, tiles.GetLength(1) - 1] = doorTile;
+                    return doorTile;
 
                 case 2: // Süden
                     mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
-                    tiles[tiles.GetLength(0) - 1, mid].setTexture(doorS);
-                    break;
+
+                    doorTile = new DoorTile(tiles[tiles.GetLength(0) - 1, mid]);
+                    doorTile.setTexture(stoneDoorS);
+
+                    doorTile.TeleportPosition = new Vector2(5500, 5500);
+                    doorTile.IsLastDoor = true;
+
+                    tiles[tiles.GetLength(0) - 1, mid] = doorTile;
+                    return doorTile;
 
                 case 3: // Westen
                     mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
-                    tiles[mid, 0].setTexture(doorW);
+
+                    doorTile = new DoorTile(tiles[mid, 0]);
+                    doorTile.setTexture(stoneDoorW);
                     tiles[mid - 1, 0].setTexture(grass);
 
-                    break;
+                    doorTile.TeleportPosition = new Vector2(5500, 5500);
+                    doorTile.IsLastDoor = true;
+
+                    tiles[mid, 0] = doorTile;
+                    return doorTile;
             }
+            if (direction > 3 || direction < 0)
+                throw Exception();
+            return null;
+        }
+        /*
+                public Tile setDoorLastDoor(int direction)
+                {
+                    int mid;
+                    DoorTile doorTile;
+                    switch (direction)
+                    {
+                        case 0: // Norden
+                            mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
+                            doorTile = new DoorTile(tiles[0, mid]);
+
+                            doorTile.setTexture(stoneDoorN);
+                            return tiles[0, mid];
+
+                        case 1: // Osten
+                            mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
+                            tiles[mid, tiles.GetLength(1) - 1].setTexture(stoneDoorE);
+                            tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
+                            return tiles[mid - 1, tiles.GetLength(1) - 1];
+
+                        case 2: // Süden
+                            mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
+                            tiles[tiles.GetLength(0) - 1, mid].setTexture(stoneDoorS);
+                            return tiles[tiles.GetLength(0) - 1, mid];
+
+                        case 3: // Westen
+                            mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
+                            tiles[mid, 0].setTexture(stoneDoorW);
+                            tiles[mid - 1, 0].setTexture(grass);
+                            return tiles[mid - 1, 0];
+                    }
+                    if(direction >3 || direction <0)
+                        throw Exception();
+                    return null;
+                }
+        */
+        private Exception Exception()
+        {
+            throw new NotImplementedException("not a himmelsrichtung mf");
         }
 
         public void setDoors(int direction, Room oppositeRoom)
@@ -193,7 +274,7 @@ namespace GameStateManagementSample.Models.Map
                     doorTile.setOtherSideDoor(oppositeDoorTile);
                     oppositeDoorTile.setOtherSideDoor(doorTile);
 
-                    doorTile.TeleportPosition = new Vector2(doorTile.getPos().X + doorTile.getTexture().Width /2 , doorTile.getPos().Y + doorTile.getTexture().Height + 100);
+                    doorTile.TeleportPosition = new Vector2(doorTile.getPos().X + doorTile.getTexture().Width / 2, doorTile.getPos().Y + doorTile.getTexture().Height + 100);
                     oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X + oppositeDoorTile.getTexture().Width / 2, oppositeDoorTile.getPos().Y - oppositeDoorTile.getTexture().Height);
 
                     roomDoors[0] = doorTile;

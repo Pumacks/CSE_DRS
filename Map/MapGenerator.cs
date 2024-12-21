@@ -10,7 +10,7 @@ namespace GameStateManagementSample.Models.Map
     {
         private static Random random = new Random();
         Room[] rooms = new Room[5];
-        bool[,] mapVisual = new bool[10,10];
+        bool[,] mapVisual = new bool[10, 10];
         int xmapVisual = 5;
         int ymapVisual = 5;
 
@@ -35,9 +35,9 @@ namespace GameStateManagementSample.Models.Map
 
         public void GenerateMap()
         {
-            rooms[0].GenerateRoom(random, new Vector2(5000, 5000));
-            mapVisual[xmapVisual,ymapVisual] = true;
-            
+            rooms[0].GenerateRoom(random, new Vector2(5000,5000));
+            mapVisual[xmapVisual, ymapVisual] = true;
+
             int randomdirection;
             int randomRoom;
             Vector2 posOfRoom;
@@ -55,19 +55,23 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(0) && !mapVisual[xmapVisual,ymapVisual-1])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(0) && !mapVisual[xmapVisual, ymapVisual - 1])
                         {
                             ymapVisual -= 1;
-                            mapVisual[xmapVisual,ymapVisual] = true;
+                            mapVisual[xmapVisual, ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y -= ROOM_DISTANCE;
 
                             rooms[i].GenerateRoom(random, posOfRoom);
-                            
+
                             rooms[randomRoom].blockDirection(0);
                             rooms[i].blockDirection(2);
-                            
-                            rooms[randomRoom].setDoors(0,rooms[i]);
+
+                            rooms[randomRoom].setDoors(0, rooms[i]);
+
+                            if (i == rooms.Length - 1)
+                                rooms[i].setDoorLastDoor(0);
+
                         }
                         else
                             i--;
@@ -79,20 +83,23 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(1) && !mapVisual[xmapVisual+1,ymapVisual])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(1) && !mapVisual[xmapVisual + 1, ymapVisual])
                         {
                             xmapVisual += 1;
-                            mapVisual[xmapVisual,ymapVisual] = true;
+                            mapVisual[xmapVisual, ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X += ROOM_DISTANCE;
 
                             rooms[i].GenerateRoom(random, posOfRoom);
-                            
+
                             rooms[randomRoom].blockDirection(1);
                             rooms[i].blockDirection(3);
-                            
 
-                            rooms[randomRoom].setDoors(1,rooms[i]);
+
+                            rooms[randomRoom].setDoors(1, rooms[i]);
+
+                            if (i == rooms.Length - 1)
+                                rooms[i].setDoorLastDoor(1);
                         }
                         else
                             i--;
@@ -103,10 +110,10 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(2) && !mapVisual[xmapVisual,ymapVisual+1])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(2) && !mapVisual[xmapVisual, ymapVisual + 1])
                         {
                             ymapVisual += 1;
-                            mapVisual[xmapVisual,ymapVisual] = true;
+                            mapVisual[xmapVisual, ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y += ROOM_DISTANCE;
 
@@ -115,7 +122,10 @@ namespace GameStateManagementSample.Models.Map
                             rooms[randomRoom].blockDirection(2);
                             rooms[i].blockDirection(0);
 
-                            rooms[randomRoom].setDoors(2,rooms[i]);
+                            rooms[randomRoom].setDoors(2, rooms[i]);
+
+                            if (i == rooms.Length - 1)
+                                rooms[i].setDoorLastDoor(2);
                         }
                         else
                             i--;
@@ -126,28 +136,34 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(3) && !mapVisual[xmapVisual-1,ymapVisual])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(3) && !mapVisual[xmapVisual - 1, ymapVisual])
                         {
                             xmapVisual -= 1;
-                            mapVisual[xmapVisual,ymapVisual] = true;
+                            mapVisual[xmapVisual, ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X -= ROOM_DISTANCE;
 
                             rooms[i].GenerateRoom(random, posOfRoom);
-                            
+
                             rooms[randomRoom].blockDirection(3);
                             rooms[i].blockDirection(1);
 
-                            rooms[randomRoom].setDoors(3,rooms[i]);
+                            rooms[randomRoom].setDoors(3, rooms[i]);
+
+                            if (i == rooms.Length - 1)
+                                rooms[i].setDoorLastDoor(3);
                         }
                         else
                             i--;
                         break;
                 }
-                
+
             }
         }
 
+        public MapGenerator getMap(){
+            return this;
+        }
         public void DrawMap(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < rooms.Length; i++)

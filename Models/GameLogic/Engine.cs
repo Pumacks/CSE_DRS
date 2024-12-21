@@ -467,31 +467,43 @@ namespace GameStateManagementSample.Models.GameLogic
                 foreach (var room in map.Rooms)
                 {
 
-                    DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north);
+                    DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north, ref map);
                     if (door != null)
                     {
-                        hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        if (!door.IsLastDoor)
+                            hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        else
+                            hero.Position = door.TeleportPosition;
                         break;
                     }
 
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, south);
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, south, ref map);
                     if (door != null)
                     {
-                        hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        if (!door.IsLastDoor)
+                            hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        else
+                            hero.Position = door.TeleportPosition;
                         break;
                     }
 
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, west);
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, west, ref map);
                     if (door != null)
                     {
-                        hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        if (!door.IsLastDoor)
+                            hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        else
+                            hero.Position = door.TeleportPosition;
                         break;
                     }
 
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, east);
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, east, ref map);
                     if (door != null)
                     {
-                        hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        if (!door.IsLastDoor)
+                            hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        else
+                            hero.Position = door.TeleportPosition;
                         break;
                     }
                 }
