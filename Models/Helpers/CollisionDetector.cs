@@ -15,13 +15,32 @@ namespace GameStateManagementSample.Models.Helpers
     {
 
 
-        public static bool hasStructureCollision(Room room, Entity entity, Vector2 movment)
+        public static DoorTile HasDoorTileCollision(Room room, Entity entity, Vector2 movement)
         {
             Tile[,] tiles = room.GetTiles();
-            int x = (int)entity.Position.X+ (int)movment.X - entity.Texture.Width / 2;
+            int x = (int)entity.Position.X + (int)movement.X - entity.Texture.Width / 2;
+            int y = (int)entity.Position.Y + (int)movement.Y - entity.Texture.Height / 2;
+            Rectangle entityBoundingBox = new Rectangle(x, y, entity.Texture.Width, entity.Texture.Height);
+            for (int i = 0; i < tiles.GetLength(0); i++)
+            {
+                for (int j = 0; j < tiles.GetLength(1); j++)
+                {
+                    if (tiles[i, j] is DoorTile doorTile && IsIntersecting(tiles[i, j].BoundingBox, entityBoundingBox))
+                    {
+                        return doorTile;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static bool HasStructureCollision(Room room, Entity entity, Vector2 movment)
+        {
+            Tile[,] tiles = room.GetTiles();
+            int x = (int)entity.Position.X + (int)movment.X - entity.Texture.Width / 2;
             int y = (int)entity.Position.Y + (int)movment.Y - entity.Texture.Height / 2;
 
-            Rectangle entityBoundingBox = new Rectangle(x,y,entity.Texture.Width,entity.Texture.Height);
+            Rectangle entityBoundingBox = new Rectangle(x, y, entity.Texture.Width, entity.Texture.Height);
 
             for (int i = 0; i < tiles.GetLength(0); i++)
             {
@@ -33,8 +52,6 @@ namespace GameStateManagementSample.Models.Helpers
                     }
                 }
             }
-
-
             return false;
         }
 

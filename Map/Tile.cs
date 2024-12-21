@@ -10,7 +10,7 @@ public class Tile
     Texture2D texture;
     bool collision;
 
-    public Rectangle BoundingBox { get; private set; }
+    public Rectangle BoundingBox { get; protected set; }
 
     public bool Collision
     {
@@ -55,5 +55,4 @@ public class Tile
     public void setCollison(bool collision){
         this.collision = collision;
     }
-
 }
