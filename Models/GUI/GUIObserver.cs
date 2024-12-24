@@ -17,6 +17,6 @@ namespace GameStateManagementSample.Models.GUI
 
         public abstract void Update();
 
-        public abstract void Draw(SpriteBatch spriteBatch , SpriteFont spriteFont, Vector2 position);
+        public abstract void Draw(SpriteBatch spriteBatch , SpriteFont spriteFont);
     }
 }
