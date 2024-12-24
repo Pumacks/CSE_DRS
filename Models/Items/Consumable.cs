@@ -1,7 +1,6 @@
 using GameStateManagementSample.Models.Entities;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics.CodeAnalysis;
-
+using Microsoft.Xna.Framework;
 namespace GameStateManagementSample.Models.Items
 {
     public class Consumable : Item
@@ -10,25 +9,29 @@ namespace GameStateManagementSample.Models.Items
         #region attributes, fields and properties
         private int healingAmount;
 
-        public Consumable(string itemName, Texture2D itemTexture, Entity itemOwner) : base(itemName, itemTexture, itemOwner)
+        public Consumable(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, int healingAmount) : base(itemName, itemTexture, itemOwner)
         {
+            Position = position;
+            HealingAmount = healingAmount;
         }
 
         public int HealingAmount
         {
-            get
-            {
-                return this.healingAmount;
-            }
-            set
-            {
-                this.healingAmount = value;
-            }
+            get { return healingAmount; }
+            set { healingAmount = value; }
         }
 
         public override void DrawItem(SpriteBatch spriteBatch)
         {
-            throw new System.NotImplementedException();
+            spriteBatch.Draw(texture: ItemTexture,
+                position: Position,
+                sourceRectangle: null,
+                color: Color.White,
+                rotation: 0f,
+                origin: new Vector2(ItemTexture.Width / 2, ItemTexture.Height / 2),
+                scale: 1f,
+                effects: SpriteEffects.None,
+                layerDepth: 0f);
         }
 
         /*
@@ -39,13 +42,11 @@ Nach Implementierung besagter Mechaniken.
 
         public override void use()
         {
-        //useConsumable(user);
+            ItemOwner.HealthPoints += healingAmount;
         }
 
-   
 
-        public void useConsumable(Entity user) {
-            user.HealthPoints = user.HealthPoints + this.HealingAmount;
-        }
+
+
     }
 }

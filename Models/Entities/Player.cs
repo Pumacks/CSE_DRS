@@ -182,6 +182,13 @@ namespace GameStateManagementSample.Models.Entities
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
                     }
+
+                    else if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Item)
+                    {
+                        Inventory[selectedInventorySlot].use();
+                        Inventory[selectedInventorySlot] = null;
+                        NotifyObservers();
+                    }
                 }
             }
 
@@ -242,14 +249,7 @@ namespace GameStateManagementSample.Models.Entities
 
 
 
-            boundingBox.X = (int)position.X - Texture.Width / 2;
-            boundingBox.Y = (int)position.Y - Texture.Height / 2;
-            boundingBox.Width = Texture.Width;
-            boundingBox.Height = Texture.Height;
-
-
-
-            position += movement;
+            Position += movement;
             previousKeyboardState = currentKeyboardState;
             previousMouseState = currentMouseState;
         }

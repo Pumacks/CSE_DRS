@@ -43,7 +43,16 @@ namespace GameStateManagementSample.Models.Entities
         public GameTime GameTime { get { return gameTime; } set { gameTime = value; } }
         public Rectangle BoundingBox { get { return boundingBox; } }
 
-        public Vector2 Position { get { return this.position; }  set { this.position = value; } } // Hinzugefügt am 09.11.2024 von Stylianos, um es möglich zu machen, den Abstand von Gegnern zum Spieler für Waffenangriffe zu berechnen.
+        public Vector2 Position { 
+            get { return position; }
+            set
+            {
+                position = value;
+                boundingBox = new Rectangle((int)position.X - Texture.Width / 2, (int)position.Y - Texture.Height / 2,
+                    texture.Width, texture.Height);
+            }
+        } 
+
 
         #endregion
 

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameStateManagementSample.Models.Items;
 
 namespace GameStateManagementSample.Models.Helpers
 {
@@ -20,12 +21,12 @@ namespace GameStateManagementSample.Models.Helpers
             Tile[,] tiles = room.GetTiles();
             int x = (int)entity.Position.X + (int)movement.X - entity.Texture.Width / 2;
             int y = (int)entity.Position.Y + (int)movement.Y - entity.Texture.Height / 2;
-            Rectangle entityBoundingBox = new Rectangle(x, y, entity.Texture.Width, entity.Texture.Height);
+            Rectangle entityBoundingBoxAfterMovment = new Rectangle(x, y, entity.Texture.Width, entity.Texture.Height);
             for (int i = 0; i < tiles.GetLength(0); i++)
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
-                    if (tiles[i, j] is DoorTile doorTile && IsIntersecting(tiles[i, j].BoundingBox, entityBoundingBox))
+                    if (tiles[i, j] is DoorTile doorTile && IsIntersecting(tiles[i, j].BoundingBox, entityBoundingBoxAfterMovment))
                     {
                         return doorTile;
                     }
@@ -40,13 +41,13 @@ namespace GameStateManagementSample.Models.Helpers
             int x = (int)entity.Position.X + (int)movment.X - entity.Texture.Width / 2;
             int y = (int)entity.Position.Y + (int)movment.Y - entity.Texture.Height / 2;
 
-            Rectangle entityBoundingBox = new Rectangle(x, y, entity.Texture.Width, entity.Texture.Height);
+            Rectangle entityBoundingBoxAfterMovement = new Rectangle(x, y, entity.Texture.Width, entity.Texture.Height);
 
             for (int i = 0; i < tiles.GetLength(0); i++)
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
-                    if (tiles[i, j].Collision && IsIntersecting(tiles[i, j].BoundingBox, entityBoundingBox))
+                    if (tiles[i, j].Collision && IsIntersecting(tiles[i, j].BoundingBox, entityBoundingBoxAfterMovement))
                     {
                         return true;
                     }
@@ -55,7 +56,17 @@ namespace GameStateManagementSample.Models.Helpers
             return false;
         }
 
-
+        public static Item HasItemCollision(List<Item> items, Entity entity)
+        {
+            foreach (Item item in items)
+            {
+                if (IsIntersecting(item.BoundingBox, entity.BoundingBox))
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
 
         public static bool IsIntersecting(Rectangle objA, Rectangle objB)
         {

@@ -36,6 +36,9 @@ namespace GameStateManagementSample.Models.GameLogic
         Texture2D golem;
         Player hero;
 
+
+        private List<Item> worldConsumables;
+
         private PlayerGameStatus playerGameStatus = PlayerGameStatus.ALIVE;
         private bool deathAnimationFinished = false;
 
@@ -64,7 +67,7 @@ namespace GameStateManagementSample.Models.GameLogic
         Texture2D BowTexture;
 
         Texture2D MarkerTexture;
-
+        Texture2D HealthPotion;
 
         private Random random = new Random();
 
@@ -75,29 +78,16 @@ namespace GameStateManagementSample.Models.GameLogic
         private List<Enemy> enemies;
         public List<Enemy> Enemies
         {
-            get
-            {
-                return enemies;
-            }
-            set
-            {
-                enemies = value;
-            }
+            get{return enemies;}
+            set{enemies = value; }
         }
 
 
         private List<Projectile> projectiles;
-
         public List<Projectile> Projectiles
         {
-            get
-            {
-                return projectiles;
-            }
-            set
-            {
-                projectiles = value;
-            }
+            get { return projectiles;}
+            set{ projectiles = value; }
         }
         #endregion Fields and properties required for keeping track of enemies, player and projectile
 
@@ -118,6 +108,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
             camera = new Camera.Camera();
             map = new MapGenerator();
+            worldConsumables = new List<Item>();
 
             _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
             _texture.SetData(new Color[] { Color.DarkSlateGray });
@@ -152,7 +143,7 @@ namespace GameStateManagementSample.Models.GameLogic
             SelectedInventorySlotTexture = content.Load<Texture2D>("138x138 Inventory Slot v2.1 Selected v3.2");
             ActiveWeaponInventorySlotTexture = content.Load<Texture2D>("138x138 Inventory Slot Coloured v3.5");
             MarkerTexture = content.Load<Texture2D>("Marker");
-
+            HealthPotion = content.Load<Texture2D>("Items/Potions/HealthPotion");
 
 
             //Giving our Test-Hero a Weapon (bow) at the start (without a texture), so he can shoot arrows!
@@ -181,9 +172,6 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
 
-
-
-
             map.LoadMapTextures(content);
             map.GenerateMap();
             hero.LoadContent(content);
@@ -202,18 +190,18 @@ namespace GameStateManagementSample.Models.GameLogic
         public void Draw(SpriteBatch spriteBatch, ScreenManager ScreenManager, GameTime gameTime)
         {
             spriteBatch.Begin(transformMatrix: camera.Transform);
-
-
-            //room.DrawRoom(spriteBatch);
             map.DrawMap(spriteBatch);
             hero.Draw(spriteBatch);
-
-            // DrawGui Bounding box
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, hero.BoundingBox.Width, 1), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.Right - 1, hero.BoundingBox.Y, 1, hero.BoundingBox.Height), Color.Black);
-            spriteBatch.Draw(_texture, new Rectangle(hero.BoundingBox.X, hero.BoundingBox.Bottom - 1, hero.BoundingBox.Width, 1), Color.Black);
             spriteBatch.End();
+
+            // sortMode: SpriteSortMode.Immediate, blendState: BlendState.Opaque
+            spriteBatch.Begin(transformMatrix: camera.Transform);
+            foreach (var consumable in worldConsumables)
+            {
+                consumable.DrawItem(spriteBatch);
+            }
+            spriteBatch.End();
+
 
             // Bows, Projectiles, GameTime
             spriteBatch.Begin();
@@ -414,8 +402,6 @@ namespace GameStateManagementSample.Models.GameLogic
             }
 
 
-
-
             // Updating the positions of the projectiles (arrows) in the world
             if (Projectiles != null)
             {
@@ -432,17 +418,39 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
 
+
+            // Collect pots
+            Item itemToCollect = CollisionDetector.HasItemCollision(worldConsumables, hero);
+            if (itemToCollect != null)
+            {
+                for (int i = 0; i < hero.Inventory.Length; i++)
+                {
+                    if (hero.Inventory[i] == null)
+                    {
+                        itemToCollect.ItemOwner = hero;
+                        hero.Inventory[i] = itemToCollect;
+                        worldConsumables.Remove(itemToCollect);
+                        break;
+                    }
+                }
+            }
+
         }
 
         public void HandleInput(KeyboardState keyboardState, PlayerIndex? controllingPlayer, ScreenManager screenManager)
         {
 
             if (Keyboard.GetState().IsKeyDown(Keys.K))
-                hero.TakeDamage(25);
+                hero.TakeDamage(1);
 
 
             if (playerGameStatus == PlayerGameStatus.ALIVE)
             {
+
+                if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                {
+                    worldConsumables.Add(new Consumable("HealthPotion", HealthPotion, hero, Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.CameraProperty.Transform)), 10));
+                }
 
                 // Movement of the player with collision detection
                 Vector2 north = Vector2.Zero;
@@ -461,8 +469,6 @@ namespace GameStateManagementSample.Models.GameLogic
 
                 if (Keyboard.GetState().IsKeyDown(Keys.S))
                     south.Y += hero.MovementSpeed;
-
-
 
                 foreach (var room in map.Rooms)
                 {
@@ -517,6 +523,8 @@ namespace GameStateManagementSample.Models.GameLogic
                         collisionEast = true;
                 }
 
+
+
                 Vector2 movement = Vector2.Zero;
                 if (!collisionNorth)
                     movement += north;
@@ -532,6 +540,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
                 hero.Move(movement);
+
             }
             else if (playerGameStatus == PlayerGameStatus.DEAD)
             {
