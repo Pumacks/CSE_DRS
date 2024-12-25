@@ -3,22 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 namespace GameStateManagementSample.Models.Items
 {
-    public class Consumable : Item
+    public class HealthPotion : Item
     {
 
         #region attributes, fields and properties
         private int healingAmount;
-
-        public Consumable(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, int healingAmount) : base(itemName, itemTexture, itemOwner)
-        {
-            Position = position;
-            HealingAmount = healingAmount;
-        }
-
         public int HealingAmount
         {
             get { return healingAmount; }
             set { healingAmount = value; }
+        }
+
+        public HealthPotion(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, int healingAmount) : base(itemName, itemTexture, itemOwner)
+        {
+            Position = position;
+            HealingAmount = healingAmount;
         }
 
         public override void DrawItem(SpriteBatch spriteBatch)
@@ -44,9 +43,6 @@ Nach Implementierung besagter Mechaniken.
         {
             ItemOwner.HealthPoints += healingAmount;
         }
-
-
-
 
     }
 }

@@ -449,7 +449,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
                 if (Mouse.GetState().RightButton == ButtonState.Pressed)
                 {
-                    worldConsumables.Add(new Consumable("HealthPotion", HealthPotion, hero, Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.CameraProperty.Transform)), 100));
+                    worldConsumables.Add(new HealthPotion("HealthPotion", HealthPotion, hero, Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.CameraProperty.Transform)), 100));
                 }
 
                 // Movement of the player with collision detection
