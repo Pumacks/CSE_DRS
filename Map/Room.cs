@@ -206,42 +206,7 @@ namespace GameStateManagementSample.Models.Map
                 throw Exception();
             return null;
         }
-        /*
-                public Tile setDoorLastDoor(int direction)
-                {
-                    int mid;
-                    DoorTile doorTile;
-                    switch (direction)
-                    {
-                        case 0: // Norden
-                            mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
-                            doorTile = new DoorTile(tiles[0, mid]);
 
-                            doorTile.setTexture(stoneDoorN);
-                            return tiles[0, mid];
-
-                        case 1: // Osten
-                            mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
-                            tiles[mid, tiles.GetLength(1) - 1].setTexture(stoneDoorE);
-                            tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
-                            return tiles[mid - 1, tiles.GetLength(1) - 1];
-
-                        case 2: // Süden
-                            mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
-                            tiles[tiles.GetLength(0) - 1, mid].setTexture(stoneDoorS);
-                            return tiles[tiles.GetLength(0) - 1, mid];
-
-                        case 3: // Westen
-                            mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
-                            tiles[mid, 0].setTexture(stoneDoorW);
-                            tiles[mid - 1, 0].setTexture(grass);
-                            return tiles[mid - 1, 0];
-                    }
-                    if(direction >3 || direction <0)
-                        throw Exception();
-                    return null;
-                }
-        */
         private Exception Exception()
         {
             throw new NotImplementedException("not a himmelsrichtung mf");

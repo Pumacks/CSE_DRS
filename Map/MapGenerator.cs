@@ -36,6 +36,9 @@ namespace GameStateManagementSample.Models.Map
         public void GenerateMap()
         {
             rooms[0].GenerateRoom(random, new Vector2(5000,5000));
+            mapVisual = new bool[10,10];
+            xmapVisual = 5;
+            ymapVisual = 5;
             mapVisual[xmapVisual, ymapVisual] = true;
 
             int randomdirection;
