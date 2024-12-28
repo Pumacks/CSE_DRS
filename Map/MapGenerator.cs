@@ -13,6 +13,7 @@ namespace GameStateManagementSample.Models.Map
         bool[,] mapVisual = new bool[10, 10];
         int xmapVisual = 5;
         int ymapVisual = 5;
+        int stage = 1;
 
         public Room[] Rooms
         {
@@ -33,9 +34,16 @@ namespace GameStateManagementSample.Models.Map
             }
         }
 
-        public void GenerateMap()
+        
+
+        public void GenerateMap(ContentManager content)
         {
-            rooms[0].GenerateRoom(random, new Vector2(5000,5000));
+            for (int i = 0; i < rooms.Length; i++)
+            {
+                rooms[i] = new Room();
+            }
+            LoadMapTextures(content);
+            rooms[0].GenerateRoom(random, new Vector2(5000,5000),stage);
             mapVisual = new bool[10,10];
             xmapVisual = 5;
             ymapVisual = 5;
@@ -65,7 +73,7 @@ namespace GameStateManagementSample.Models.Map
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y -= ROOM_DISTANCE;
 
-                            rooms[i].GenerateRoom(random, posOfRoom);
+                            rooms[i].GenerateRoom(random, posOfRoom, stage);
 
                             rooms[randomRoom].blockDirection(0);
                             rooms[i].blockDirection(2);
@@ -93,7 +101,7 @@ namespace GameStateManagementSample.Models.Map
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X += ROOM_DISTANCE;
 
-                            rooms[i].GenerateRoom(random, posOfRoom);
+                            rooms[i].GenerateRoom(random, posOfRoom, stage);
 
                             rooms[randomRoom].blockDirection(1);
                             rooms[i].blockDirection(3);
@@ -120,7 +128,7 @@ namespace GameStateManagementSample.Models.Map
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y += ROOM_DISTANCE;
 
-                            rooms[i].GenerateRoom(random, posOfRoom);
+                            rooms[i].GenerateRoom(random, posOfRoom, stage);
 
                             rooms[randomRoom].blockDirection(2);
                             rooms[i].blockDirection(0);
@@ -146,7 +154,7 @@ namespace GameStateManagementSample.Models.Map
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X -= ROOM_DISTANCE;
 
-                            rooms[i].GenerateRoom(random, posOfRoom);
+                            rooms[i].GenerateRoom(random, posOfRoom, stage);
 
                             rooms[randomRoom].blockDirection(3);
                             rooms[i].blockDirection(1);
@@ -173,6 +181,10 @@ namespace GameStateManagementSample.Models.Map
             {
                 rooms[i].DrawRoom(spriteBatch);
             }
+        }
+
+        public void SetStage(int stage){
+            this.stage = stage;
         }
 
         public void LoadMapTextures(ContentManager content)

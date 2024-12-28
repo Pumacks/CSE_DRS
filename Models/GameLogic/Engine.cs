@@ -35,6 +35,7 @@ namespace GameStateManagementSample.Models.GameLogic
         Camera.Camera camera;
         Texture2D golem;
         Player hero;
+        int stage = 1;
 
         private PlayerGameStatus playerGameStatus = PlayerGameStatus.ALIVE;
         private bool deathAnimationFinished = false;
@@ -185,7 +186,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
             map.LoadMapTextures(content);
-            map.GenerateMap();
+            map.GenerateMap(content);
             hero.LoadContent(content);
 
 
@@ -473,7 +474,12 @@ namespace GameStateManagementSample.Models.GameLogic
                         if (!door.IsLastDoor)
                             hero.Position = door.getOtherSideDoor().TeleportPosition;
                         else
+                        {
                             hero.Position = door.TeleportPosition;
+                            stage++;
+                            //map.SetStage(stage);
+                            map.GenerateMap(content);
+                        }
                         break;
                     }
 
@@ -483,7 +489,12 @@ namespace GameStateManagementSample.Models.GameLogic
                         if (!door.IsLastDoor)
                             hero.Position = door.getOtherSideDoor().TeleportPosition;
                         else
+                        {
                             hero.Position = door.TeleportPosition;
+                            stage++;
+                            //map.SetStage(stage);
+                            map.GenerateMap(content);
+                        }
                         break;
                     }
 
@@ -493,7 +504,12 @@ namespace GameStateManagementSample.Models.GameLogic
                         if (!door.IsLastDoor)
                             hero.Position = door.getOtherSideDoor().TeleportPosition;
                         else
+                        {
                             hero.Position = door.TeleportPosition;
+                            stage++;
+                            //map.SetStage(stage);
+                            map.GenerateMap(content);
+                        }
                         break;
                     }
 
@@ -503,7 +519,12 @@ namespace GameStateManagementSample.Models.GameLogic
                         if (!door.IsLastDoor)
                             hero.Position = door.getOtherSideDoor().TeleportPosition;
                         else
+                        {
                             hero.Position = door.TeleportPosition;
+                            stage++;
+                            //map.SetStage(stage);
+                            map.GenerateMap(content);
+                        }
                         break;
                     }
                 }

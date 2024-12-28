@@ -24,6 +24,12 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D grass;
         private Texture2D grass2;
         private Texture2D grass3;
+
+        private Texture2D stone;
+        private Texture2D stone2;
+        private Texture2D stone3;
+        private Texture2D stone4;
+
         private Texture2D hole;
         private Texture2D tree;
         private Texture2D doorN;
@@ -50,6 +56,12 @@ namespace GameStateManagementSample.Models.Map
             grass = content.Load<Texture2D>("Map/grass");
             grass2 = content.Load<Texture2D>("Map/grass2");
             grass3 = content.Load<Texture2D>("Map/grass3");
+
+            stone = content.Load<Texture2D>("Map/stone");
+            stone2 = content.Load<Texture2D>("Map/stone2");
+            stone3 = content.Load<Texture2D>("Map/stone3");
+            stone4 = content.Load<Texture2D>("Map/stone3");
+
             hole = content.Load<Texture2D>("Map/hole");
             tree = content.Load<Texture2D>("Map/tree");
             doorN = content.Load<Texture2D>("Map/doorN");
@@ -64,9 +76,12 @@ namespace GameStateManagementSample.Models.Map
 
         }
 
-        public void GenerateRoom(Random random, Vector2 roomPos)
+        public void GenerateRoom(Random random, Vector2 roomPos, int stage)
         {
             tiles = GenerateRoomArray();
+            if (tiles == null)
+                throw new InvalidOperationException("Tiles array is not initialized.");
+
             int rdmNumber;
             Vector2 tilePos = roomPos;
             for (int i = 0; i < tiles.GetLength(0); i++)
@@ -76,13 +91,27 @@ namespace GameStateManagementSample.Models.Map
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
                     rdmNumber = random.Next(1, 10);
-                    if (rdmNumber <= 6)
-                        tiles[i, j] = new Tile(tilePos, grass, false);
-                    if (rdmNumber > 6 && rdmNumber <= 8)
-                        tiles[i, j] = new Tile(tilePos, grass2, false);
-                    if (rdmNumber > 8 && rdmNumber <= 10)
-                        tiles[i, j] = new Tile(tilePos, grass3, false);
+                    if (stage == 1)
+                    {
+                        if (rdmNumber <= 6)
+                            tiles[i, j] = new Tile(tilePos, grass, false);
+                        if (rdmNumber > 6 && rdmNumber <= 8)
+                            tiles[i, j] = new Tile(tilePos, grass2, false);
+                        if (rdmNumber > 8 && rdmNumber <= 10)
+                            tiles[i, j] = new Tile(tilePos, grass3, false);
+                    }
+                    if (stage == 2)
+                    {
+                        if (rdmNumber <= 2)
+                            tiles[i, j] = new Tile(tilePos, stone, false);
+                        if (rdmNumber > 3 && rdmNumber <= 6)
+                            tiles[i, j] = new Tile(tilePos, stone2, false);
+                        if (rdmNumber > 6 && rdmNumber <= 8)
+                            tiles[i, j] = new Tile(tilePos, stone3, false);
+                        if (rdmNumber > 8 && rdmNumber <= 10)
+                            tiles[i, j] = new Tile(tilePos, stone4, false);
 
+                    }
                     tilePos.X += 100;
                 }
                 tilePos.Y += 100;
