@@ -19,11 +19,12 @@ namespace GameStateManagementSample.Models.Map
         private Tile[,] tiles;
         private bool[] blocked = new bool[4]; // wird für Map generation genutzt
         private DoorTile[] roomDoors = new DoorTile[4];
-
+        private int stage;
 
         private Texture2D grass;
         private Texture2D grass2;
         private Texture2D grass3;
+        private Texture2D grasslvl2;
 
         private Texture2D stone;
         private Texture2D stone2;
@@ -32,6 +33,7 @@ namespace GameStateManagementSample.Models.Map
 
         private Texture2D hole;
         private Texture2D tree;
+        private Texture2D treelvl2;
         private Texture2D doorN;
         private Texture2D doorE;
         private Texture2D doorS;
@@ -57,13 +59,17 @@ namespace GameStateManagementSample.Models.Map
             grass2 = content.Load<Texture2D>("Map/grass2");
             grass3 = content.Load<Texture2D>("Map/grass3");
 
+            grasslvl2 = content.Load<Texture2D>("Map/grasslvl2");
+            treelvl2 = content.Load<Texture2D>("Map/treelvl2");
+
             stone = content.Load<Texture2D>("Map/stone");
             stone2 = content.Load<Texture2D>("Map/stone2");
             stone3 = content.Load<Texture2D>("Map/stone3");
-            stone4 = content.Load<Texture2D>("Map/stone3");
+            stone4 = content.Load<Texture2D>("Map/stone4");
 
             hole = content.Load<Texture2D>("Map/hole");
             tree = content.Load<Texture2D>("Map/tree");
+
             doorN = content.Load<Texture2D>("Map/doorN");
             doorE = content.Load<Texture2D>("Map/doorE");
             doorS = content.Load<Texture2D>("Map/doorS");
@@ -78,6 +84,7 @@ namespace GameStateManagementSample.Models.Map
 
         public void GenerateRoom(Random random, Vector2 roomPos, int stage)
         {
+            this.stage = stage;
             tiles = GenerateRoomArray();
             if (tiles == null)
                 throw new InvalidOperationException("Tiles array is not initialized.");
@@ -104,7 +111,7 @@ namespace GameStateManagementSample.Models.Map
                     {
                         if (rdmNumber <= 2)
                             tiles[i, j] = new Tile(tilePos, stone, false);
-                        if (rdmNumber > 3 && rdmNumber <= 6)
+                        if (rdmNumber > 2 && rdmNumber <= 6)
                             tiles[i, j] = new Tile(tilePos, stone2, false);
                         if (rdmNumber > 6 && rdmNumber <= 8)
                             tiles[i, j] = new Tile(tilePos, stone3, false);
@@ -125,7 +132,10 @@ namespace GameStateManagementSample.Models.Map
                 {
                     if (i == 0 || j == 0 || j == tiles.GetLength(1) - 1 || i == tiles.GetLength(0) - 1)
                     {
-                        tiles[i, j] = new Tile(tilePos, tree, true);
+                        if (stage == 1)
+                            tiles[i, j] = new Tile(tilePos, tree, true);
+                        if (stage == 2)
+                            tiles[i, j] = new Tile(tilePos, treelvl2, true);
                     }
                     tilePos.X += 100;
                 }
@@ -139,7 +149,12 @@ namespace GameStateManagementSample.Models.Map
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
-                    spriteBatch.Draw(grass, tiles[i, j].getPos(), Color.White); //damit die baumtexturen einen gras hintergrund haben
+                    if (stage == 1)
+                        spriteBatch.Draw(grass, tiles[i, j].getPos(), Color.White); //damit die baumtexturen einen gras hintergrund haben
+                    if (stage == 2)
+                        spriteBatch.Draw(grasslvl2, tiles[i, j].getPos(), Color.White); //damit die baumtexturen einen gras hintergrund haben
+
+
                     spriteBatch.Draw(tiles[i, j].getTexture(), tiles[i, j].getPos(), Color.White);
                 }
             }
@@ -148,10 +163,18 @@ namespace GameStateManagementSample.Models.Map
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
-                    if (i == tiles.GetLength(0) - 1)
-                        spriteBatch.Draw(grass, new Vector2(tiles[i, j].getPos().X, tiles[i, j].getPos().Y + 100), Color.White);
+                    if (stage == 1)
+                        if (i == tiles.GetLength(0) - 1)
+                            spriteBatch.Draw(grass, new Vector2(tiles[i, j].getPos().X, tiles[i, j].getPos().Y + 100), Color.White);
                     if (tiles[i, j].getTexture() == tree)
                         spriteBatch.Draw(tiles[i, j].getTexture(), tiles[i, j].getPos(), Color.White);
+
+                    if (stage == 2)
+                        if (i == tiles.GetLength(0) - 1)
+                            spriteBatch.Draw(grasslvl2, new Vector2(tiles[i, j].getPos().X, tiles[i, j].getPos().Y + 100), Color.White);
+                    if (tiles[i, j].getTexture() == treelvl2)
+                        spriteBatch.Draw(tiles[i, j].getTexture(), tiles[i, j].getPos(), Color.White);
+
                 }
 
             }
@@ -198,7 +221,10 @@ namespace GameStateManagementSample.Models.Map
 
                     doorTile = new DoorTile(tiles[mid, tiles.GetLength(1) - 1]);
                     doorTile.setTexture(stoneDoorE);
-                    tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
+                    if (stage == 1)
+                        tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
+                    if (stage == 2)
+                        tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grasslvl2);
 
                     doorTile.TeleportPosition = new Vector2(5500, 5500);
                     doorTile.IsLastDoor = true;
@@ -223,7 +249,10 @@ namespace GameStateManagementSample.Models.Map
 
                     doorTile = new DoorTile(tiles[mid, 0]);
                     doorTile.setTexture(stoneDoorW);
-                    tiles[mid - 1, 0].setTexture(grass);
+                    if (stage == 1)
+                        tiles[mid - 1, 0].setTexture(grass);
+                    if (stage == 2)
+                        tiles[mid - 1, 0].setTexture(grasslvl2);
 
                     doorTile.TeleportPosition = new Vector2(5500, 5500);
                     doorTile.IsLastDoor = true;
@@ -296,11 +325,17 @@ namespace GameStateManagementSample.Models.Map
                     doorTile.TeleportPosition = new Vector2(doorTile.getPos().X - doorTile.getTexture().Width, doorTile.getPos().Y + doorTile.getTexture().Height / 2);
                     oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X + oppositeDoorTile.getTexture().Width + 100, oppositeDoorTile.getPos().Y + oppositeDoorTile.getTexture().Height / 2);
 
-                    // TODO für westen und osten muss noch das gras tile überschrieben werden
 
-                    oppositeRoom.tiles[oppositeMid - 1, 0].setTexture(grass);
-                    tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
-
+                    if (stage == 1)
+                    {
+                        oppositeRoom.tiles[oppositeMid - 1, 0].setTexture(grass);
+                        tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grass);
+                    }
+                    if (stage == 2)
+                    {
+                        oppositeRoom.tiles[oppositeMid - 1, 0].setTexture(grasslvl2);
+                        tiles[mid - 1, tiles.GetLength(1) - 1].setTexture(grasslvl2);
+                    }
 
                     roomDoors[1] = doorTile;
                     oppositeRoom.roomDoors[3] = oppositeDoorTile;
@@ -350,10 +385,16 @@ namespace GameStateManagementSample.Models.Map
                     doorTile.TeleportPosition = new Vector2(doorTile.getPos().X + doorTile.getTexture().Width + 100, doorTile.getPos().Y + doorTile.getTexture().Height / 2);
                     oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X - oppositeDoorTile.getTexture().Width, oppositeDoorTile.getPos().Y + oppositeDoorTile.getTexture().Height / 2);
 
-
-                    oppositeRoom.tiles[oppositeMid - 1, oppositeRoom.GetTiles().GetLength(1) - 1].setTexture(grass);
-                    tiles[mid - 1, 0].setTexture(grass);
-
+                    if (stage == 1)
+                    {
+                        oppositeRoom.tiles[oppositeMid - 1, oppositeRoom.GetTiles().GetLength(1) - 1].setTexture(grass);
+                        tiles[mid - 1, 0].setTexture(grass);
+                    }
+                    if (stage == 2)
+                    {
+                        oppositeRoom.tiles[oppositeMid - 1, oppositeRoom.GetTiles().GetLength(1) - 1].setTexture(grasslvl2);
+                        tiles[mid - 1, 0].setTexture(grasslvl2);
+                    }
                     roomDoors[3] = doorTile;
                     oppositeRoom.roomDoors[1] = oppositeDoorTile;
                     break;

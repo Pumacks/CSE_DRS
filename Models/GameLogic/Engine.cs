@@ -477,7 +477,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
-                            //map.SetStage(stage);
+                            map.SetStage(stage);
                             map.GenerateMap(content);
                         }
                         break;
@@ -492,7 +492,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
-                            //map.SetStage(stage);
+                            map.SetStage(stage);
                             map.GenerateMap(content);
                         }
                         break;
@@ -507,7 +507,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
-                            //map.SetStage(stage);
+                            map.SetStage(stage);
                             map.GenerateMap(content);
                         }
                         break;
@@ -522,7 +522,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
-                            //map.SetStage(stage);
+                            map.SetStage(stage);
                             map.GenerateMap(content);
                         }
                         break;
