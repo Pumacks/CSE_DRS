@@ -56,6 +56,8 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D doorlvl3S;
         private Texture2D doorlvl3W;
 
+        private Texture2D pot;
+
         private Random random = new Random();
 
         public Room()
@@ -105,6 +107,7 @@ namespace GameStateManagementSample.Models.Map
             doorlvl3S = content.Load<Texture2D>("Map/Doorlvl3S");
             doorlvl3W = content.Load<Texture2D>("Map/Doorlvl3W");
 
+            pot = content.Load<Texture2D>("Map/pot");
 
         }
 
@@ -153,6 +156,11 @@ namespace GameStateManagementSample.Models.Map
                         if (rdmNumber > 8 && rdmNumber <= 10)
                             tiles[i, j] = new Tile(tilePos, lvl3floor3, false);
                     }
+                    // for things like pots etc.
+                    rdmNumber = random.Next(1,100);
+                    if(rdmNumber == 15 && i >= 4 && j >= 4 && i <= tiles.GetLength(0)-4 && j <= tiles.GetLength(1)-4 )
+                        tiles[i, j] = new Tile(tilePos, pot, true);
+
                     tilePos.X += 100;
                 }
                 tilePos.Y += 100;
