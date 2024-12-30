@@ -23,7 +23,7 @@ namespace GameStateManagementSample.Models.Entities
         private bool isAtacking = false;
 
 
-        private Vector2 healthPositionGUI = new Vector2(20, 20);
+        
 
         List<GUIObserver> GUIObservers = new();
 
@@ -32,6 +32,7 @@ namespace GameStateManagementSample.Models.Entities
         : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
             GUIObservers.Add(new HealthGUI(this));
+            GUIObservers.Add(new FloatingHealthNumbers(this));
         }
 
          
@@ -182,6 +183,13 @@ namespace GameStateManagementSample.Models.Entities
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
                     }
+
+                    else if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Item)
+                    {
+                        Inventory[selectedInventorySlot].use();
+                        Inventory[selectedInventorySlot] = null;
+                        NotifyObservers();
+                    }
                 }
             }
 
@@ -242,14 +250,7 @@ namespace GameStateManagementSample.Models.Entities
 
 
 
-            boundingBox.X = (int)position.X - Texture.Width / 2;
-            boundingBox.Y = (int)position.Y - Texture.Height / 2;
-            boundingBox.Width = Texture.Width;
-            boundingBox.Height = Texture.Height;
-
-
-
-            position += movement;
+            Position += movement;
             previousKeyboardState = currentKeyboardState;
             previousMouseState = currentMouseState;
         }
@@ -263,6 +264,7 @@ namespace GameStateManagementSample.Models.Entities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             spriteBatch.Draw(texture: Texture,
                             position: position,
                             sourceRectangle: null,
@@ -273,13 +275,14 @@ namespace GameStateManagementSample.Models.Entities
                             effects: flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                             layerDepth: 0f);
             spriteBatch.End();
-            spriteBatch.Begin();
+           
 
             foreach (GUIObserver observer in GUIObservers)
             {
-                observer.Draw(spriteBatch, spriteFont, healthPositionGUI);
+                observer.Draw(spriteBatch, spriteFont);
             }
 
+            spriteBatch.Begin();
         }
 
         public override void LoadContent(ContentManager content)
