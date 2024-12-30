@@ -1,4 +1,5 @@
-﻿using GameStateManagementSample.Models.Items;
+﻿using GameStateManagementSample.Models.GUI;
+using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,6 +22,7 @@ namespace GameStateManagementSample.Models.Entities
         protected GameTime gameTime;
 
 
+        protected List<GUIObserver> GUIObservers = new();
         //Testing Purposes, required to give a Camera to an Entity so that the
         private GameStateManagementSample.Models.Camera.Camera camera;
         public GameStateManagementSample.Models.Camera.Camera CameraProperty { get { return camera; } set { camera = value; } }
@@ -43,7 +45,8 @@ namespace GameStateManagementSample.Models.Entities
         public GameTime GameTime { get { return gameTime; } set { gameTime = value; } }
         public Rectangle BoundingBox { get { return boundingBox; } }
 
-        public Vector2 Position { 
+        public Vector2 Position
+        {
             get { return position; }
             set
             {
@@ -51,12 +54,12 @@ namespace GameStateManagementSample.Models.Entities
                 boundingBox = new Rectangle((int)position.X - Texture.Width / 2, (int)position.Y - Texture.Height / 2,
                     texture.Width, texture.Height);
             }
-        } 
+        }
 
 
         #endregion
 
-        protected AnimationManager animationManager;
+        protected AnimationManager animManager;
         public Entity() { }
 
         public Entity(int healthPoints, float movmentSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
@@ -68,14 +71,12 @@ namespace GameStateManagementSample.Models.Entities
             this.items = items;
             this.spriteFont = spriteFont;
             this.inventory = new Item[7];
-
+            animManager = new AnimationManager(movmentSpeed);
             this.boundingBox = new Rectangle((int)position.X - texture.Width / 2,
-                                             (int)position.Y - texture.Height / 2,
-                                             texture.Width,
-                                             texture.Height);
-            this.spriteFont = spriteFont;
-
-            animationManager = new AnimationManager(MovementSpeed);
+                (int)position.Y - texture.Height / 2,
+                texture.Width,
+                texture.Height);
+            GUIObservers.Add(new FloatingHealthNumbers(this));
         }
 
 
@@ -84,11 +85,40 @@ namespace GameStateManagementSample.Models.Entities
 
         public abstract void LoadContent(ContentManager content);
 
-        public abstract void Draw(SpriteBatch spriteBatch);
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin(transformMatrix: CameraProperty.Transform);
+            spriteBatch.Draw(texture: Texture,
+                            position: position,
+                            sourceRectangle: null,
+                            color: Color.White,
+                            rotation: 0f,
+                            origin: new Vector2(Texture.Width / 2, Texture.Height / 2),
+                            scale: 1f,
+                            effects: flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+                            layerDepth: 0f);
+            spriteBatch.End();
 
 
-        public abstract void TakeDamage(int damage);
+            foreach (GUIObserver observer in GUIObservers)
+            {
+                observer.Draw(spriteBatch, spriteFont);
+            }
+        }
 
+
+        public void TakeDamage(int damage)
+        {
+            HealthPoints -= damage;
+            NotifyObservers();
+        }
+        protected void NotifyObservers()
+        {
+            foreach (GUIObserver observer in GUIObservers)
+            {
+                observer.Update();
+            }
+        }
         public void SetGameTime(GameTime gameTime)
         {
             if (gameTime != null)

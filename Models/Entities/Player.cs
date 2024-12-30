@@ -1,9 +1,11 @@
-﻿using GameStateManagementSample.Models.GUI;
+﻿using GameStateManagementSample.Models.Camera;
+using GameStateManagementSample.Models.GUI;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -25,14 +27,12 @@ namespace GameStateManagementSample.Models.Entities
 
         
 
-        List<GUIObserver> GUIObservers = new();
 
         public Player() { }
         public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
         : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
             GUIObservers.Add(new HealthGUI(this));
-            GUIObservers.Add(new FloatingHealthNumbers(this));
         }
 
          
@@ -242,11 +242,11 @@ namespace GameStateManagementSample.Models.Entities
 
 
             if (isAtacking)
-                Texture = animationManager.AttackAnimation();
+                Texture = animManager.AttackAnimation();
             else if (movement != Vector2.Zero)
-                Texture = animationManager.WalkAnimation();
+                Texture = animManager.WalkAnimation();
             else if (movement == Vector2.Zero)
-                Texture = animationManager.IdleAnimation();
+                Texture = animManager.IdleAnimation();
 
 
 
@@ -260,55 +260,26 @@ namespace GameStateManagementSample.Models.Entities
             // ActiveWeapon.weaponAttack(this, )
         }
 
-        // public 
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-
-            spriteBatch.Draw(texture: Texture,
-                            position: position,
-                            sourceRectangle: null,
-                            color: Color.White,
-                            rotation: 0f,
-                            origin: new Vector2(Texture.Width / 2, Texture.Height / 2),
-                            scale: 1f,
-                            effects: flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-                            layerDepth: 0f);
-            spriteBatch.End();
-           
-
-            foreach (GUIObserver observer in GUIObservers)
-            {
-                observer.Draw(spriteBatch, spriteFont);
-            }
-
-            spriteBatch.Begin();
-        }
 
         public override void LoadContent(ContentManager content)
         {
-            animationManager.loadTextures(content);
-        }
+            for (int i = 0; i <= 17; i++)
+                animManager.walk.addFrame(content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_0" + i.ToString("D2")));
+            for (int i = 0; i <= 11; i++)
+                animManager.attack.addFrame(content.Load<Texture2D>("Player/Atack/Golem_03_Attacking_0" + i.ToString("D2")));
+            for (int i = 0; i <= 11; i++)
+                animManager.idle.addFrame(content.Load<Texture2D>("Player/Idle/Golem_03_Idle_0" + i.ToString("D2")));
+            for (int i = 0; i <= 11; i++)
+                animManager.death.addFrame(content.Load<Texture2D>("Player/Death/Golem_03_Dying_0" + i.ToString("D2")));
 
-        private void NotifyObservers()
-        {
-            foreach (GUIObserver observer in GUIObservers)
-            {
-                observer.Update();
-            }
-
-        }
-        public override void TakeDamage(int damage)
-        {
-            HealthPoints = MathHelper.Max(0, HealthPoints - damage);
-            NotifyObservers();
+            Texture = animManager.IdleAnimation();
         }
 
 
         public bool PlayerDeathAnimation()
         {
-            Texture = animationManager.DeathAnimation();
-            return animationManager.DeathAnimationFinished();
+            Texture = animManager.DeathAnimation();
+            return animManager.DeathAnimationFinished();
         }
     }
 }

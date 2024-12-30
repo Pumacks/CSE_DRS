@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GameStateManagement;
 using GameStateManagementSample.Models.Entities;
@@ -15,8 +16,9 @@ namespace GameStateManagementSample.Models.Items
         #region attributes and properties
         #endregion
 
-        public MeleeWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies) {
-            
+        public MeleeWeapon(String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies) : base(itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies)
+        {
+
         }
 
         public override void use()
@@ -28,15 +30,14 @@ namespace GameStateManagementSample.Models.Items
         public override void attack(Entity owner) // Momentan 360° Angriff auf alle Feinde in Waffenreichweite des Spielers
         {
             //Check for attack-cooldown
-            
+
 
             //Attack
-            
             Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from all Enemies in WeaponRange.
             {
                 if (distance(owner.Position, targetEnemy.Position) <= this.WeaponRange)
                 {
-                    targetEnemy.HealthPoints -= (int)this.WeaponDamage;
+                    targetEnemy.TakeDamage((int)this.WeaponDamage);
                 }
             });
 
@@ -46,5 +47,8 @@ namespace GameStateManagementSample.Models.Items
         {
             throw new NotImplementedException();
         }
+
+
+
     }
 }

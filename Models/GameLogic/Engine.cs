@@ -79,16 +79,16 @@ namespace GameStateManagementSample.Models.GameLogic
         private List<Enemy> enemies;
         public List<Enemy> Enemies
         {
-            get{return enemies;}
-            set{enemies = value; }
+            get { return enemies; }
+            set { enemies = value; }
         }
 
 
         private List<Projectile> projectiles;
         public List<Projectile> Projectiles
         {
-            get { return projectiles;}
-            set{ projectiles = value; }
+            get { return projectiles; }
+            set { projectiles = value; }
         }
         #endregion Fields and properties required for keeping track of enemies, player and projectile
 
@@ -110,9 +110,8 @@ namespace GameStateManagementSample.Models.GameLogic
             camera = new Camera.Camera();
             map = new MapGenerator();
             worldConsumables = new List<Item>();
+            Enemies = new List<Enemy>();
 
-            _texture = new Texture2D(ScreenManager.GraphicsDevice, 1, 1);
-            _texture.SetData(new Color[] { Color.DarkSlateGray });
 
             gameFont = content.Load<SpriteFont>("gamefont");
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
@@ -121,12 +120,6 @@ namespace GameStateManagementSample.Models.GameLogic
             hero.CameraProperty = camera;
 
 
-            // Loading the Texture for Arrows
-            ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
-            BowTexture = content.Load<Texture2D>("Bow1-130x25px");
-            MarkerTexture = content.Load<Texture2D>("Marker");
-            // Creating a List-Object for enemies
-            Enemies = new List<Enemy>();
             //The following is just for testing Textures and rotations.
             Projectiles = new List<Projectile>();
             //for (int arrowPlacementIndex = 0; arrowPlacementIndex < 100; arrowPlacementIndex++)
@@ -134,8 +127,19 @@ namespace GameStateManagementSample.Models.GameLogic
             //    Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
             //}
 
+            Enemy enemyWarrior = new EnemyWarrior(100, 5, new Vector2(5500, 5500), golem, gameFont, new List<Item>());
+            enemyWarrior.CameraProperty = camera;
+
+            Enemy enemyArcher = new EnemyArcher(100, 5, new Vector2(5500, 5800), golem, gameFont, new List<Item>());
+            enemyArcher.CameraProperty = camera;
+
+            Enemy enemySpearman = new EnemySpearman(100, 5, new Vector2(5800, 5800), golem, gameFont, new List<Item>());
+            enemySpearman.CameraProperty = camera;
 
 
+            enemies.Add(enemyWarrior);
+            enemies.Add(enemyArcher);
+            enemies.Add(enemySpearman);
 
             ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
             BowTexture = content.Load<Texture2D>("Bow1-130x25px");
@@ -177,6 +181,7 @@ namespace GameStateManagementSample.Models.GameLogic
             map.GenerateMap(content);
             hero.LoadContent(content);
 
+            enemies.ForEach(enemy1 => enemy1.LoadContent(content));
 
             Thread.Sleep(1000);
         }
@@ -192,8 +197,8 @@ namespace GameStateManagementSample.Models.GameLogic
         {
             spriteBatch.Begin(transformMatrix: camera.Transform);
             map.DrawMap(spriteBatch);
-            hero.Draw(spriteBatch);
             spriteBatch.End();
+
 
             // sortMode: SpriteSortMode.Immediate, blendState: BlendState.Opaque
             spriteBatch.Begin(transformMatrix: camera.Transform);
@@ -202,6 +207,14 @@ namespace GameStateManagementSample.Models.GameLogic
                 consumable.DrawItem(spriteBatch);
             }
             spriteBatch.End();
+
+
+            hero.Draw(spriteBatch);
+            foreach (var enemy in enemies)
+            {
+                enemy.Draw(spriteBatch);
+            }
+
 
 
             // Bows, Projectiles, GameTime
@@ -393,7 +406,21 @@ namespace GameStateManagementSample.Models.GameLogic
 
         public void Update(GameTime gameTime)
         {
+            List<Enemy> deadEnemy = new List<Enemy>();
             hero.SetGameTime(gameTime);
+            foreach (var e in Enemies)
+            {
+                e.SetGameTime(gameTime);
+                if (e.HealthPoints <= 0)
+                    deadEnemy.Add(e);
+            }
+
+            foreach (Enemy e in deadEnemy)
+            {
+                worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
+                Enemies.Remove(e);
+            }
+
             camera.Follow(hero);
 
             if (hero.HealthPoints <= 0)
@@ -419,7 +446,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
 
-
+            CollisionDetector.HasArrowCollision(enemies, Projectiles);
             // Collect pots
             Item itemToCollect = CollisionDetector.HasItemCollision(worldConsumables, hero);
             if (itemToCollect != null)
@@ -448,11 +475,6 @@ namespace GameStateManagementSample.Models.GameLogic
             if (playerGameStatus == PlayerGameStatus.ALIVE)
             {
 
-                if (Mouse.GetState().RightButton == ButtonState.Pressed)
-                {
-                    worldConsumables.Add(new HealthPotion("HealthPotion", HealthPotion, hero, Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.CameraProperty.Transform)), 100));
-                }
-
                 // Movement of the player with collision detection
                 Vector2 north = Vector2.Zero;
                 Vector2 south = Vector2.Zero;
@@ -471,9 +493,14 @@ namespace GameStateManagementSample.Models.GameLogic
                 if (Keyboard.GetState().IsKeyDown(Keys.S))
                     south.Y += hero.MovementSpeed;
 
+
+                bool collisionNorth = false;
+                bool collisionSouth = false;
+                bool collisionWest = false;
+                bool collisionEast = false;
                 foreach (var room in map.Rooms)
                 {
-
+                    #region DoorCollision
                     DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north, ref map);
                     if (door != null)
                     {
@@ -533,30 +560,31 @@ namespace GameStateManagementSample.Models.GameLogic
                         }
                         break;
                     }
-                }
+                    #endregion
 
-
-                bool collisionNorth = false;
-                bool collisionSouth = false;
-                bool collisionWest = false;
-                bool collisionEast = false;
-
-                foreach (var Room in map.Rooms)
-                {
-                    if (CollisionDetector.HasStructureCollision(Room, hero, north))
+                    #region StructureCollision
+                    if (CollisionDetector.HasStructureCollision(room, hero, north))
                         collisionNorth = true;
-
-                    if (CollisionDetector.HasStructureCollision(Room, hero, south))
+                    if (CollisionDetector.HasStructureCollision(room, hero, south))
                         collisionSouth = true;
-
-                    if (CollisionDetector.HasStructureCollision(Room, hero, west))
+                    if (CollisionDetector.HasStructureCollision(room, hero, west))
                         collisionWest = true;
-
-                    if (CollisionDetector.HasStructureCollision(Room, hero, east))
+                    if (CollisionDetector.HasStructureCollision(room, hero, east))
                         collisionEast = true;
+                    #endregion
                 }
 
 
+                #region EnemyCollisionCheck
+                if (CollisionDetector.HasEnemyCollision(hero, enemies, north))
+                    collisionNorth = true;
+                if (CollisionDetector.HasEnemyCollision(hero, enemies, south))
+                    collisionSouth = true;
+                if (CollisionDetector.HasEnemyCollision(hero, enemies, west))
+                    collisionWest = true;
+                if (CollisionDetector.HasEnemyCollision(hero, enemies, east))
+                    collisionEast = true;
+                #endregion
 
                 Vector2 movement = Vector2.Zero;
                 if (!collisionNorth)
@@ -573,6 +601,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
                 hero.Move(movement);
+
 
             }
             else if (playerGameStatus == PlayerGameStatus.DEAD)
