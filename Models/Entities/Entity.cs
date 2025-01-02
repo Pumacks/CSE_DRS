@@ -39,14 +39,14 @@ namespace GameStateManagementSample.Models.Entities
 
         protected List<GUIObserver> GUIObservers = new();
         //Testing Purposes, required to give a Camera to an Entity so that the
-        private Camera.Camera camera;
-        public Camera.Camera CameraProperty { get { return camera; } set { camera = value; } }
+        private Camera camera;
+        public Camera Camera { get { return camera; } set { camera = value; } }
 
 
         protected SpriteFont spriteFont;
 
         // Weapon + Healthpots
-        List<Item> items = new List<Item>();
+        List<Item> items;
         #endregion
 
         #region Properties
@@ -119,7 +119,7 @@ namespace GameStateManagementSample.Models.Entities
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(transformMatrix: CameraProperty.Transform);
+            spriteBatch.Begin(transformMatrix: Camera.Transform);
             spriteBatch.Draw(texture: Texture,
                             position: position,
                             sourceRectangle: null,
@@ -173,12 +173,9 @@ namespace GameStateManagementSample.Models.Entities
 
 
             if (activeWeapon != null)
-            {
-                if (animManager.AttackAnimationFinished() && activeWeapon.ItemOwner.GameTime.TotalGameTime.TotalMilliseconds - activeWeapon.LastAttackGameTimeInMilliseconds >= activeWeapon.AttackSpeed)
-                {
+                if (animManager.AttackAnimationFinished() && GameTime.TotalGameTime.TotalMilliseconds - activeWeapon.LastAttackGameTimeInMilliseconds >= activeWeapon.AttackSpeed)
                     activeWeapon.IsAtacking = false;
-                }
-            }
+            
 
 
 

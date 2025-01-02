@@ -35,7 +35,7 @@ namespace GameStateManagementSample.Models.GameLogic
         private ContentManager content;
         private SpriteFont gameFont;
 
-        Camera.Camera camera;
+        Models.Camera camera;
         Texture2D golem;
         Player hero;
         int stage = 1;
@@ -49,7 +49,7 @@ namespace GameStateManagementSample.Models.GameLogic
         //private Room room;
         private MapGenerator map;
 
-        public Camera.Camera CameraProperty
+        public Models.Camera CameraProperty
         {
             get { return camera; }
             set { camera = value; }
@@ -108,7 +108,7 @@ namespace GameStateManagementSample.Models.GameLogic
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            camera = new Camera.Camera();
+            camera = new Models.Camera();
             map = new MapGenerator();
             worldConsumables = new List<Item>();
             Enemies = new List<Enemy>();
@@ -118,7 +118,7 @@ namespace GameStateManagementSample.Models.GameLogic
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
             hero = new Player(100, 5, new Vector2(5300, 5300), golem, gameFont, new List<Item>());
-            hero.CameraProperty = camera;
+            hero.Camera = camera;
 
 
             //The following is just for testing Textures and rotations.
@@ -129,13 +129,13 @@ namespace GameStateManagementSample.Models.GameLogic
             //}
 
             Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), golem, gameFont, new List<Item>());
-            enemyWarrior.CameraProperty = camera;
+            enemyWarrior.Camera = camera;
 
             Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), golem, gameFont, new List<Item>());
-            enemyArcher.CameraProperty = camera;
+            enemyArcher.Camera = camera;
 
             Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), golem, gameFont, new List<Item>());
-            enemySpearman.CameraProperty = camera;
+            enemySpearman.Camera = camera;
 
 
             enemies.Add(enemyWarrior);
@@ -364,9 +364,9 @@ namespace GameStateManagementSample.Models.GameLogic
             spriteBatch.Begin();
             spriteBatch.DrawString(
                 spriteFont: gameFont,
-                // text: "M.Cursor Transformed Inverted: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.CameraProperty.Transform)),
+                // text: "M.Cursor Transformed Inverted: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.Camera.Transform)),
                 text: "Mouse aiming at: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
-                    Matrix.Invert(hero.CameraProperty.Transform)),
+                    Matrix.Invert(hero.Camera.Transform)),
                 position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
                     ScreenManager.GraphicsDevice.Viewport.Height - 400),
                 Color.Red

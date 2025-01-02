@@ -72,7 +72,7 @@ namespace GameStateManagementSample.Models.GUI
                 else
                 {
                     String str = healthDifference > 0 ? "+" : "";
-                    spriteBatch.Begin(transformMatrix: player.CameraProperty.Transform);
+                    spriteBatch.Begin(transformMatrix: player.Camera.Transform);
                     spriteBatch.DrawString(spriteFont, str + healthDifference.ToString(), player.Position - spriteFont.MeasureString(healthDifference.ToString()) - offset, color);
                     spriteBatch.End();
                 }

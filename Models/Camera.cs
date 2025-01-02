@@ -2,7 +2,7 @@
 using GameStateManagementSample.Models.Entities;
 using Microsoft.Xna.Framework;
 
-namespace GameStateManagementSample.Models.Camera
+namespace GameStateManagementSample.Models
 {
     public class Camera
     {
