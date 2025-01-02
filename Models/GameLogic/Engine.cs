@@ -443,7 +443,6 @@ namespace GameStateManagementSample.Models.GameLogic
             UpdateEnemies(gameTime);
             CollectItems();
 
-            Debug.WriteLine(hero.MovementSpeed);
 
             if (hero.HealthPoints <= 0)
             {
@@ -710,7 +709,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 if (finishedAnim)
                 {
                     Enemies.Remove(e);
-                    // worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
+                    worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
                     worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
                 }
             }
