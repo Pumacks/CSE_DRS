@@ -23,6 +23,7 @@ namespace GameStateManagementSample.Models.Items
             }
             set
             {
+                BoundingBox = new Rectangle((int)value.X - ItemTexture.Width / 2, (int)value.Y - ItemTexture.Height / 2, ItemTexture.Width, ItemTexture.Height);
                 this.currentProjectilePosition = value;
             }
         }
@@ -118,21 +119,21 @@ namespace GameStateManagementSample.Models.Items
             this.currentProjectilePosition = pos;
             this.targetProjectilePosition = target;
             this.velocity = projectileSpeed;
-            this.projectileRotationFloatValue = calculateRotation(pos,target);
-            this.speedVector = calculateSpeedVector(pos,target,projectileSpeed);
+            this.projectileRotationFloatValue = calculateRotation(pos, target);
+            this.speedVector = calculateSpeedVector(pos, target, projectileSpeed);
             // this.projectileTimeToLive = (int)(weaponRange * 1000 / projectileSpeed);
-            this.projectileRange = (int) weaponRange;
+            this.projectileRange = (int)weaponRange;
             this.distanceCovered = 0;
         }
 
         private float calculateRotation(Vector2 start, Vector2 end)
         {
-            if (start != null && end != null && start!=end)
+            if (start != null && end != null && start != end)
             {
                 float deltaX = end.X - start.X;
                 float deltaY = end.Y - start.Y;
 
-                float rotation = (float)Math.PI/2+(float)Math.Atan2(deltaY, deltaX);
+                float rotation = (float)Math.PI / 2 + (float)Math.Atan2(deltaY, deltaX);
 
                 return rotation;
             }
@@ -145,18 +146,18 @@ namespace GameStateManagementSample.Models.Items
 
         private Vector2 calculateSpeedVector(Vector2 start, Vector2 end, int pixelsPerSecond)
         {
-            if (start != null && end != null && start!=end)
+            if (start != null && end != null && start != end)
             {
                 Vector2 dirV = new Vector2(end.X - start.X, end.Y - start.Y); //direction vector
-                float absoluteOfDirectionVector = (float) Math.Sqrt(dirV.X * dirV.X + dirV.Y * dirV.Y);
-                Vector2 unitV = new Vector2(dirV.X/absoluteOfDirectionVector, dirV.Y/absoluteOfDirectionVector);
-                Vector2 speedVector = new Vector2((int)pixelsPerSecond*unitV.X,(int)pixelsPerSecond*unitV.Y);
+                float absoluteOfDirectionVector = (float)Math.Sqrt(dirV.X * dirV.X + dirV.Y * dirV.Y);
+                Vector2 unitV = new Vector2(dirV.X / absoluteOfDirectionVector, dirV.Y / absoluteOfDirectionVector);
+                Vector2 speedVector = new Vector2((int)pixelsPerSecond * unitV.X, (int)pixelsPerSecond * unitV.Y);
                 return speedVector;
             }
             else
             {
                 Console.WriteLine("FEHLER! Für die Funktion calculateSpeedVector waren entweder der Startvektor oder der Zielvektor null, oder die beiden Vektoren waren gleich.");
-                return new Vector2(0,0);
+                return new Vector2(0, 0);
             }
         }
 

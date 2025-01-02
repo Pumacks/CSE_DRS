@@ -12,42 +12,26 @@ namespace GameStateManagementSample.Models
 
     public class AnimationManager
     {
-        float movmentSpeed;
-        Animation walk;
-        Animation attack;
-        Animation idle;
-        Animation death;
+        public Animation walk;
+        public Animation attack;
+        public Animation idle;
+        public Animation death;
 
-        public AnimationManager(float MovmentSpeed)
+        public AnimationManager(float movementSpeed)
         {
-            movmentSpeed = MovmentSpeed;
-            walk = new Animation(movmentSpeed);
- 
-            // attack speed 10
+            
+            walk = new Animation(movementSpeed);
+
             attack = new Animation(5);
 
-            idle = new Animation(4);
+            idle = new Animation(5);
 
-            death = new Animation(4, false);
+            death = new Animation(5, false);
         }
 
 
-        public void loadTextures(ContentManager content)
+        public void setAnimationSpeedBasedOnPictureCount()
         {
-            for (int i = 0; i <= 17; i++)
-                walk.addFrame(content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_0" + i.ToString("D2")));
-
-            for (int i = 0; i <= 11; i++)
-                attack.addFrame(content.Load<Texture2D>("Player/Atack/Golem_03_Attacking_0" + i.ToString("D2")));
-
-            for (int i = 0; i <= 11; i++)
-                idle.addFrame(content.Load<Texture2D>("Player/Idle/Golem_03_Idle_0" + i.ToString("D2")));
-
-
-            for (int i = 0; i <= 11; i++)
-                death.addFrame(content.Load<Texture2D>("Player/Death/Golem_03_Dying_0" + i.ToString("D2")));
-
-
 
         }
 
@@ -74,6 +58,11 @@ namespace GameStateManagementSample.Models
         public bool DeathAnimationFinished()
         {
             return death.GetCurrentFrame() == death.Textures.Last();
+        }
+
+        public bool AttackAnimationFinished()
+        {
+            return attack.IterationFinished();
         }
     }
 

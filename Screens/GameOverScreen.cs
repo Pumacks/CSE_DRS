@@ -1,5 +1,5 @@
 ﻿using GameStateManagement;
-using GameStateManagementSample.Models.Camera;
+using GameStateManagementSample.Models;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework.Content;

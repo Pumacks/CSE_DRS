@@ -1,9 +1,11 @@
-﻿using GameStateManagementSample.Models.GUI;
+﻿using GameStateManagementSample.Models;
+using GameStateManagementSample.Models.GUI;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -12,7 +14,6 @@ namespace GameStateManagementSample.Models.Entities
 {
     public class Player : Entity
     {
-        private double atackTimer = 0;
         private int selectedInventorySlot = 0;
         public int SelectedInventorySlot { get { return this.selectedInventorySlot; } set { selectedInventorySlot = value; } }
         private KeyboardState currentKeyboardState;
@@ -20,35 +21,23 @@ namespace GameStateManagementSample.Models.Entities
         private MouseState currentMouseState;
         private MouseState previousMouseState = Mouse.GetState();
 
-        private bool isAtacking = false;
 
-
-        
-
-        List<GUIObserver> GUIObservers = new();
 
         public Player() { }
         public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
         : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
             GUIObservers.Add(new HealthGUI(this));
-            GUIObservers.Add(new FloatingHealthNumbers(this));
         }
 
-         
+
         public override void Move(Vector2 movement)
         {
             currentKeyboardState = Keyboard.GetState();
             currentMouseState = Mouse.GetState();
             #region Atacking Timer
-            if (isAtacking)
-                atackTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (atackTimer >= 0.4)
-            {
-                atackTimer = 0;
-                isAtacking = false;
-            }
+
             #endregion
 
 
@@ -212,42 +201,13 @@ namespace GameStateManagementSample.Models.Entities
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-
                 // Attack with activeWeapon
-                this.ActiveWeapon.weaponAttack(this);
-
-
-
-                if (!isAtacking)
-                {
-                    isAtacking = true;
-                    Atack();
-                }
+                Atack();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
 
-                flipTexture = true;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                
-                flipTexture = false;
-            }
 
             #endregion
-
-
-
-            if (isAtacking)
-                Texture = animationManager.AttackAnimation();
-            else if (movement != Vector2.Zero)
-                Texture = animationManager.WalkAnimation();
-            else if (movement == Vector2.Zero)
-                Texture = animationManager.IdleAnimation();
-
 
 
             Position += movement;
@@ -256,59 +216,26 @@ namespace GameStateManagementSample.Models.Entities
         }
         public override void Atack()
         {
-            Trace.WriteLine("Atack: " + ActiveWeapon + atackTimer);
-            // ActiveWeapon.weaponAttack(this, )
+            ActiveWeapon.weaponAttack(this);
         }
 
-        // public 
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-
-            spriteBatch.Draw(texture: Texture,
-                            position: position,
-                            sourceRectangle: null,
-                            color: Color.White,
-                            rotation: 0f,
-                            origin: new Vector2(Texture.Width / 2, Texture.Height / 2),
-                            scale: 1f,
-                            effects: flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-                            layerDepth: 0f);
-            spriteBatch.End();
-           
-
-            foreach (GUIObserver observer in GUIObservers)
-            {
-                observer.Draw(spriteBatch, spriteFont);
-            }
-
-            spriteBatch.Begin();
-        }
 
         public override void LoadContent(ContentManager content)
         {
-            animationManager.loadTextures(content);
+            for (int i = 0; i <= 17; i++)
+                animManager.walk.addFrame(content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_0" + i.ToString("D2")));
+            for (int i = 0; i <= 11; i++)
+                animManager.attack.addFrame(content.Load<Texture2D>("Player/Atack/Golem_03_Attacking_0" + i.ToString("D2")));
+            for (int i = 0; i <= 11; i++)
+                animManager.idle.addFrame(content.Load<Texture2D>("Player/Idle/Golem_03_Idle_0" + i.ToString("D2")));
+            for (int i = 0; i <= 11; i++)
+                animManager.death.addFrame(content.Load<Texture2D>("Player/Death/Golem_03_Dying_0" + i.ToString("D2")));
+            animManager.walk.ChangeAnimationDuration(3);
+            animManager.attack.ChangeAnimationDuration(2);
+            animManager.idle.ChangeAnimationDuration(2);
+            animManager.death.ChangeAnimationDuration(8);
+            Texture = animManager.IdleAnimation();
         }
 
-        private void NotifyObservers()
-        {
-            foreach (GUIObserver observer in GUIObservers)
-            {
-                observer.Update();
-            }
-
-        }
-        public override void TakeDamage(int damage)
-        {
-            HealthPoints = MathHelper.Max(0, HealthPoints - damage);
-            NotifyObservers();
-        }
-
-
-        public bool PlayerDeathAnimation()
-        {
-            Texture = animationManager.DeathAnimation();
-            return animationManager.DeathAnimationFinished();
-        }
     }
 }

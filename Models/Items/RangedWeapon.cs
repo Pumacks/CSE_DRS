@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Mime;
 using System.Reflection.Metadata;
-using GameStateManagementSample.Models.Camera;
+using GameStateManagementSample.Models;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.World;
 using Microsoft.Xna.Framework;
@@ -58,7 +58,7 @@ namespace GameStateManagementSample.Models.Items
         public override void attack(Entity owner)
         {
 
-            Vector2 vector2 = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(owner.CameraProperty.Transform));
+            Vector2 vector2 = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(owner.Camera.Transform));
 
             Projectiles.Add(
             new Projectile(
