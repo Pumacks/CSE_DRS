@@ -563,6 +563,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             stage++;
                             map.SetStage(stage);
                             map.GenerateMap(content);
+                            ClearItemsOnStageChange();
                         }
 
                         break;
@@ -579,6 +580,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             stage++;
                             map.SetStage(stage);
                             map.GenerateMap(content);
+                            ClearItemsOnStageChange();
                         }
 
                         break;
@@ -595,6 +597,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             stage++;
                             map.SetStage(stage);
                             map.GenerateMap(content);
+                            ClearItemsOnStageChange();
                         }
 
                         break;
@@ -611,6 +614,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             stage++;
                             map.SetStage(stage);
                             map.GenerateMap(content);
+                            ClearItemsOnStageChange();
                         }
 
                         break;
@@ -674,6 +678,12 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 screenManager.AddScreen(new GameOverScreen(playerGameStatus), controllingPlayer);
             }
+        }
+
+        private void ClearItemsOnStageChange()
+        {
+            worldConsumables.Clear();
+            //enemies.Clear();
         }
 
 
