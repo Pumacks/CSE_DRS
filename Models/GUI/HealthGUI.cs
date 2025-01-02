@@ -8,7 +8,9 @@ namespace GameStateManagementSample.Models.GUI
     public class HealthGUI : GUIObserver
     {
         int healthPoints;
-        private Vector2 healthPositionGUI = new Vector2(20, 20);
+        public Texture2D Texture { get; set; }
+        private Vector2 textPosition = new Vector2(95, 35);
+        private Vector2 TexturePosition = new Vector2(50, 50);
         Color color = new Color(73, 255, 0); // init with green color
         public HealthGUI(Entity player) : base(player)
         {
@@ -31,7 +33,19 @@ namespace GameStateManagementSample.Models.GUI
         public override void Draw(SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(spriteFont, "HP   " + healthPoints.ToString(), healthPositionGUI, color);
+            if (Texture != null)
+            {
+                spriteBatch.Draw(texture: Texture,
+                    position: TexturePosition,
+                    sourceRectangle: null,
+                    color: Color.White,
+                    rotation: 0f,
+                    origin: new Vector2(Texture.Width / 2, Texture.Height / 2),
+                    scale: 1f,
+                    effects: SpriteEffects.None,
+                    layerDepth: 0f);
+            }
+            spriteBatch.DrawString(spriteFont, healthPoints.ToString(), textPosition, color);
             spriteBatch.End();
         }
     }

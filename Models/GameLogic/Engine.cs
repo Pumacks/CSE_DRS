@@ -711,7 +711,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 {
                     Enemies.Remove(e);
                     // worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
-                    worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 3f, 10));
+                    worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
                 }
             }
         }

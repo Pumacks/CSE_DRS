@@ -172,6 +172,8 @@ namespace GameStateManagementSample.Models.Entities
             FlipTexture();
 
             #region SpeedPotionEffect
+            
+           
             if (speedPotionDuration > 0)
             {
                 MovementSpeed = speedPotionBoost + defaultMvSpeed;

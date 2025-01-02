@@ -232,7 +232,7 @@ namespace GameStateManagementSample.Models.Entities
                 animManager.idle.addFrame(content.Load<Texture2D>("Player/idle_frames/idle" + i));
             for (int i = 0; i <= 4; i++)
                 animManager.death.addFrame(content.Load<Texture2D>("Player/death_frames/death" + i));
-           
+
 
             animManager.walk.ChangeAnimationDuration(3);
             animManager.attack.ChangeAnimationDuration(3);
@@ -240,6 +240,13 @@ namespace GameStateManagementSample.Models.Entities
             animManager.death.ChangeAnimationDuration(8);
             animManager.shot.ChangeAnimationDuration(2);
             Texture = animManager.IdleAnimation();
+
+
+            foreach (var observer in GUIObservers)
+            {
+                if (observer is HealthGUI healthGUI)
+                    healthGUI.Texture = content.Load<Texture2D>("Player/HPTexture");
+            }
         }
 
         public override void FlipTexture()
@@ -247,7 +254,7 @@ namespace GameStateManagementSample.Models.Entities
             // Filip texture based on mouse position
             Vector2 mousePos = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
                 Matrix.Invert(Camera.Transform));
-           
+
             if (mousePos.X > Position.X)
                 flipTexture = false;
             else if (mousePos.X < Position.X)
