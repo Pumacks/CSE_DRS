@@ -18,6 +18,7 @@ namespace GameStateManagementSample.Models.Entities
         Idle,
         Walk,
         Attack,
+        Shot,
         Death
     }
 
@@ -34,6 +35,10 @@ namespace GameStateManagementSample.Models.Entities
         protected Rectangle boundingBox;
         protected bool flipTexture;
         protected GameTime gameTime;
+
+        private float speedPotionBoost;
+        private float speedPotionDuration;
+        private float defaultMvSpeed;
 
         private AnimState animState = AnimState.Idle;
 
@@ -98,6 +103,7 @@ namespace GameStateManagementSample.Models.Entities
         {
             this.HealthPoints = healthPoints;
             this.MovementSpeed = movmentSpeed;
+            this.defaultMvSpeed = movmentSpeed;
             this.position = playerPosition;
             this.texture = texture;
             this.items = items;
@@ -158,32 +164,41 @@ namespace GameStateManagementSample.Models.Entities
             return animManager.DeathAnimationFinished();
         }
 
-
+        public abstract void FlipTexture();
 
         public void Update(GameTime gametime)
         {
             GameTime = gametime;
+            FlipTexture();
 
-            // Filip texture based on direction
-            if (lastPosition.X < Position.X)
-                flipTexture = false;
-            else if (lastPosition.X > Position.X)
-                flipTexture = true;
-            //-------
+            #region SpeedPotionEffect
+            if (speedPotionDuration > 0)
+            {
+                MovementSpeed = speedPotionBoost + defaultMvSpeed;
+                speedPotionDuration -= (float)gametime.ElapsedGameTime.TotalSeconds;
+
+                if(speedPotionDuration <= 0)
+                    MovementSpeed = defaultMvSpeed;
+            }
+            #endregion
 
 
-            if (activeWeapon != null)
+            if (activeWeapon != null && activeWeapon is MeleeWeapon)
                 if (animManager.AttackAnimationFinished() && GameTime.TotalGameTime.TotalMilliseconds - activeWeapon.LastAttackGameTimeInMilliseconds >= activeWeapon.AttackSpeed)
                     activeWeapon.IsAtacking = false;
-            
 
+            if (activeWeapon != null && activeWeapon is RangedWeapon)
+                if (animManager.ShotAnimationFinished() && GameTime.TotalGameTime.TotalMilliseconds - activeWeapon.LastAttackGameTimeInMilliseconds >= activeWeapon.AttackSpeed)
+                    activeWeapon.IsAtacking = false;
 
 
 
             if (HealthPoints <= 0)
                 animState = AnimState.Death;
-            else if (activeWeapon is { IsAtacking: true })
+            else if (activeWeapon is { IsAtacking: true } && activeWeapon is MeleeWeapon)
                 animState = AnimState.Attack;
+            else if (activeWeapon is { IsAtacking: true } && activeWeapon is RangedWeapon)
+                animState = AnimState.Shot;
             else if (Position == LastPostion)
                 animState = AnimState.Idle;
             else if (Position != LastPostion)
@@ -211,10 +226,18 @@ namespace GameStateManagementSample.Models.Entities
                 case AnimState.Death:
                     Texture = animManager.DeathAnimation();
                     break;
+
+                case AnimState.Shot:
+                    Texture = animManager.ShotAnimation();
+                    break;
             }
         }
 
-
+        public void UseSpeedPotion(SpeedPotion potion)
+        {
+            speedPotionBoost = potion.MovmentSpeedBoost;
+            speedPotionDuration = potion.SecondsDuration;
+        }
 
     }
 }

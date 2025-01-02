@@ -27,6 +27,15 @@ namespace GameStateManagementSample.Models.Entities
         {
             Console.WriteLine("AI Atack:" + ActiveWeapon);
         }
+        public override void FlipTexture()
+        {
+            // Filip texture based on direction
+            if (lastPosition.X < Position.X)
+                flipTexture = false;
+            else if (lastPosition.X > Position.X)
+                flipTexture = true;
+            //-------
+        }
 
     }
 }

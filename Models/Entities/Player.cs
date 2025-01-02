@@ -222,20 +222,37 @@ namespace GameStateManagementSample.Models.Entities
 
         public override void LoadContent(ContentManager content)
         {
-            for (int i = 0; i <= 17; i++)
-                animManager.walk.addFrame(content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_0" + i.ToString("D2")));
-            for (int i = 0; i <= 11; i++)
-                animManager.attack.addFrame(content.Load<Texture2D>("Player/Atack/Golem_03_Attacking_0" + i.ToString("D2")));
-            for (int i = 0; i <= 11; i++)
-                animManager.idle.addFrame(content.Load<Texture2D>("Player/Idle/Golem_03_Idle_0" + i.ToString("D2")));
-            for (int i = 0; i <= 11; i++)
-                animManager.death.addFrame(content.Load<Texture2D>("Player/Death/Golem_03_Dying_0" + i.ToString("D2")));
+            for (int i = 0; i <= 7; i++)
+                animManager.walk.addFrame(content.Load<Texture2D>("Player/walk_frames/walk" + i));
+            for (int i = 0; i <= 4; i++)
+                animManager.attack.addFrame(content.Load<Texture2D>("Player/attack_frames/attack" + i));
+            for (int i = 8; i <= 13; i++)
+                animManager.shot.addFrame(content.Load<Texture2D>("Player/shot_frames/shot" + i));
+            for (int i = 0; i <= 8; i++)
+                animManager.idle.addFrame(content.Load<Texture2D>("Player/idle_frames/idle" + i));
+            for (int i = 0; i <= 4; i++)
+                animManager.death.addFrame(content.Load<Texture2D>("Player/death_frames/death" + i));
+           
+
             animManager.walk.ChangeAnimationDuration(3);
-            animManager.attack.ChangeAnimationDuration(2);
+            animManager.attack.ChangeAnimationDuration(3);
             animManager.idle.ChangeAnimationDuration(2);
             animManager.death.ChangeAnimationDuration(8);
+            animManager.shot.ChangeAnimationDuration(2);
             Texture = animManager.IdleAnimation();
         }
 
+        public override void FlipTexture()
+        {
+            // Filip texture based on mouse position
+            Vector2 mousePos = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
+                Matrix.Invert(Camera.Transform));
+           
+            if (mousePos.X > Position.X)
+                flipTexture = false;
+            else if (mousePos.X < Position.X)
+                flipTexture = true;
+            //-------
+        }
     }
 }

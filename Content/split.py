@@ -2,12 +2,13 @@
 import os
 from PIL import Image
 
+img_name = "walk"
 # Load the sprite sheet
-sprite_sheet_path = r".\Skeleton_Spearman\Walk.png"  # Update this path to your sprite sheet location
+sprite_sheet_path = f".\Player\{img_name}.png"  # Update this path to your sprite sheet location
 sprite_sheet = Image.open(sprite_sheet_path)
 
 # Define the output directory
-output_dir = os.path.join(os.path.dirname(sprite_sheet_path), "walk_frames")  # Save frames in a subdirectory of the sprite sheet's folder
+output_dir = os.path.join(os.path.dirname(sprite_sheet_path), f"{img_name}_frames")  # Save frames in a subdirectory of the sprite sheet's folder
 
 # Create the output folder if it doesn't exist
 os.makedirs(output_dir, exist_ok=True)
@@ -30,7 +31,7 @@ for i in range(frame_count):
     frame = sprite_sheet.crop((left, upper, right, lower))
     
     # Save the frame as a new image
-    output_path = os.path.join(output_dir, f"walk{i}.png")
+    output_path = os.path.join(output_dir, f"{img_name}{i}.png")
     frame.save(output_path)
     output_paths.append(output_path)
 

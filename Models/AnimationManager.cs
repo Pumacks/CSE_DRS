@@ -14,6 +14,7 @@ namespace GameStateManagementSample.Models
     {
         public Animation walk;
         public Animation attack;
+        public Animation shot;
         public Animation idle;
         public Animation death;
 
@@ -27,17 +28,20 @@ namespace GameStateManagementSample.Models
             idle = new Animation(5);
 
             death = new Animation(5, false);
+
+            shot = new Animation(5);
         }
 
 
-        public void setAnimationSpeedBasedOnPictureCount()
-        {
-
-        }
 
         public Texture2D AttackAnimation()
         {
             return attack.GetCurrentFrame();
+        }
+
+        public Texture2D ShotAnimation()
+        {
+            return shot.GetCurrentFrame();
         }
 
         public Texture2D WalkAnimation()
@@ -57,13 +61,21 @@ namespace GameStateManagementSample.Models
 
         public bool DeathAnimationFinished()
         {
-            return death.GetCurrentFrame() == death.Textures.Last();
+            // return death.GetCurrentFrame() == death.Textures.Last();
+            return death.IterationFinished();
         }
 
         public bool AttackAnimationFinished()
         {
             return attack.IterationFinished();
         }
+
+        public bool ShotAnimationFinished()
+        {
+            return shot.IterationFinished();
+        }
+
+
     }
 
 }
