@@ -29,7 +29,7 @@ namespace GameStateManagementSample.Models.Entities
             animManager.walk.ChangeAnimationDuration(3);
             animManager.attack.ChangeAnimationDuration(2);
             animManager.idle.ChangeAnimationDuration(2);
-            animManager.death.ChangeAnimationDuration(8);
+            animManager.death.ChangeAnimationDuration(15);
             Texture = animManager.IdleAnimation();
             Position += Vector2.Zero;
         }
