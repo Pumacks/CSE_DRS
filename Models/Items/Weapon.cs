@@ -74,6 +74,7 @@ namespace GameStateManagementSample.Models.Items
                 this.weaponRotationFloatValue = value;
             }
         }
+        public bool IsAtacking { get; set; }
         // Testzwecke:
         private List<Enemy> enemies;
         public List<Enemy> Enemies
@@ -87,8 +88,8 @@ namespace GameStateManagementSample.Models.Items
                 this.enemies = value;
             }
         }
-        private  List<Projectile> projectiles;
-        public  List<Projectile> Projectiles
+        private List<Projectile> projectiles;
+        public List<Projectile> Projectiles
         {
             get
             {
@@ -110,7 +111,8 @@ namespace GameStateManagementSample.Models.Items
         */
         #endregion
 
-        public Weapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies) : base (itemName, itemTexture, itemOwner) {
+        public Weapon(String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies) : base(itemName, itemTexture, itemOwner)
+        {
             this.weaponDamage = weaponDamage;
             this.attackSpeed = attackSpeed;
             this.weaponRange = weaponRange;
@@ -122,7 +124,7 @@ namespace GameStateManagementSample.Models.Items
         // {
         //     Vector2 start = ItemOwner.Position;
         //     Vector2 end = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-            
+
         //         float deltaX = end.X - start.X;
         //         float deltaY = end.Y - start.Y;
 
@@ -136,22 +138,30 @@ namespace GameStateManagementSample.Models.Items
             throw new System.NotImplementedException();
         }
 
-        public void weaponAttack(Entity owner) {
+        public void weaponAttack(Entity owner)
+        {
             // Weapon Attack Timer, depending on the weapon's attack speed
-            if ((owner.GameTime.TotalGameTime.TotalMilliseconds - attackSpeed >= lastAttackGameTimeInMilliseconds) || lastAttackGameTimeInMilliseconds == 0) {
+            if ((owner.GameTime.TotalGameTime.TotalMilliseconds - attackSpeed >= lastAttackGameTimeInMilliseconds) || lastAttackGameTimeInMilliseconds == 0)
+            {
+                IsAtacking = true;
                 lastAttackGameTimeInMilliseconds = (float)owner.GameTime.TotalGameTime.TotalMilliseconds;
                 attack(owner);
             }
+           
         }
 
         public abstract void attack(Entity owner);
 
-        public int distance(Vector2 first, Vector2 second) {
-            Vector2 combined = new Vector2(first.X-second.X, first.Y-second.Y);
-            int distance = (int) Math.Sqrt(combined.X*combined.X + combined.Y*combined.Y);
-            if (distance >= 0) {
+        public int distance(Vector2 first, Vector2 second)
+        {
+            Vector2 combined = new Vector2(first.X - second.X, first.Y - second.Y);
+            int distance = (int)Math.Sqrt(combined.X * combined.X + combined.Y * combined.Y);
+            if (distance >= 0)
+            {
                 return distance;
-            } else {
+            }
+            else
+            {
                 Console.WriteLine("Rückgabewert der Funktion distance ist negativ!");
                 return -1;
             }

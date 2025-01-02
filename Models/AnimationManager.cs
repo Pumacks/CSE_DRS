@@ -12,29 +12,26 @@ namespace GameStateManagementSample.Models
 
     public class AnimationManager
     {
-        float movmentSpeed;
         public Animation walk;
         public Animation attack;
         public Animation idle;
         public Animation death;
 
-        public AnimationManager(float MovmentSpeed)
+        public AnimationManager(float movementSpeed)
         {
-            movmentSpeed = MovmentSpeed;
-            walk = new Animation(movmentSpeed);
- 
-            // attack speed 10
+            
+            walk = new Animation(movementSpeed);
+
             attack = new Animation(5);
 
-            idle = new Animation(4);
+            idle = new Animation(5);
 
-            death = new Animation(4, false);
+            death = new Animation(5, false);
         }
 
 
-        public void loadTextures(ContentManager content)
+        public void setAnimationSpeedBasedOnPictureCount()
         {
- 
 
         }
 
@@ -61,6 +58,11 @@ namespace GameStateManagementSample.Models
         public bool DeathAnimationFinished()
         {
             return death.GetCurrentFrame() == death.Textures.Last();
+        }
+
+        public bool AttackAnimationFinished()
+        {
+            return attack.IterationFinished();
         }
     }
 

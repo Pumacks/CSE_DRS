@@ -111,11 +111,9 @@ namespace GameStateManagementSample.Models.Items
                 this.distanceCovered = value;
             }
         }
-
-        public int Damage { get; set; }
         #endregion
 
-        public Projectile(String itemName, Texture2D itemTexture, Entity itemOwner, Vector2 pos, Vector2 target, int projectileSpeed, float weaponRange, int damage) : base(itemName, itemTexture, itemOwner)
+        public Projectile(String itemName, Texture2D itemTexture, Entity itemOwner, Vector2 pos, Vector2 target, int projectileSpeed, float weaponRange) : base(itemName, itemTexture, itemOwner)
         {
             this.ItemName = "Projectile Nr. " + ++projectileNumber;
             this.currentProjectilePosition = pos;
@@ -126,7 +124,6 @@ namespace GameStateManagementSample.Models.Items
             // this.projectileTimeToLive = (int)(weaponRange * 1000 / projectileSpeed);
             this.projectileRange = (int)weaponRange;
             this.distanceCovered = 0;
-            Damage = damage;
         }
 
         private float calculateRotation(Vector2 start, Vector2 end)

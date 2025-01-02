@@ -31,6 +31,10 @@ namespace GameStateManagementSample.Models.Entities
                 animManager.idle.addFrame(content.Load<Texture2D>("Skeleton_Spearman/idle_frames/idle" + i.ToString()));
             for (int i = 0; i <= 4; i++)
                 animManager.death.addFrame(content.Load<Texture2D>("Skeleton_Spearman/death_frames/death" + i.ToString()));
+            animManager.walk.ChangeAnimationDuration(3);
+            animManager.attack.ChangeAnimationDuration(2);
+            animManager.idle.ChangeAnimationDuration(2);
+            animManager.death.ChangeAnimationDuration(8);
             Texture = animManager.IdleAnimation();
             Position += Vector2.Zero;
         }

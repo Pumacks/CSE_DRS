@@ -68,8 +68,7 @@ namespace GameStateManagementSample.Models.Items
                 this.ItemOwner.Position,
                 vector2,
                 projectileSpeed,
-                this.weaponRange, 
-                10));
+                this.weaponRange));
         }
 
         public override void DrawItem(SpriteBatch spriteBatch)

@@ -14,7 +14,6 @@ namespace GameStateManagementSample.Models.Entities
 {
     public class Player : Entity
     {
-        private double atackTimer = 0;
         private int selectedInventorySlot = 0;
         public int SelectedInventorySlot { get { return this.selectedInventorySlot; } set { selectedInventorySlot = value; } }
         private KeyboardState currentKeyboardState;
@@ -22,10 +21,6 @@ namespace GameStateManagementSample.Models.Entities
         private MouseState currentMouseState;
         private MouseState previousMouseState = Mouse.GetState();
 
-        private bool isAtacking = false;
-
-
-        
 
 
         public Player() { }
@@ -35,20 +30,14 @@ namespace GameStateManagementSample.Models.Entities
             GUIObservers.Add(new HealthGUI(this));
         }
 
-         
+
         public override void Move(Vector2 movement)
         {
             currentKeyboardState = Keyboard.GetState();
             currentMouseState = Mouse.GetState();
             #region Atacking Timer
-            if (isAtacking)
-                atackTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (atackTimer >= 0.4)
-            {
-                atackTimer = 0;
-                isAtacking = false;
-            }
+
             #endregion
 
 
@@ -212,42 +201,13 @@ namespace GameStateManagementSample.Models.Entities
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-
                 // Attack with activeWeapon
-                this.ActiveWeapon.weaponAttack(this);
-
-
-
-                if (!isAtacking)
-                {
-                    isAtacking = true;
-                    Atack();
-                }
+                Atack();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
 
-                flipTexture = true;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                
-                flipTexture = false;
-            }
 
             #endregion
-
-
-
-            if (isAtacking)
-                Texture = animManager.AttackAnimation();
-            else if (movement != Vector2.Zero)
-                Texture = animManager.WalkAnimation();
-            else if (movement == Vector2.Zero)
-                Texture = animManager.IdleAnimation();
-
 
 
             Position += movement;
@@ -256,8 +216,7 @@ namespace GameStateManagementSample.Models.Entities
         }
         public override void Atack()
         {
-            Trace.WriteLine("Atack: " + ActiveWeapon + atackTimer);
-            // ActiveWeapon.weaponAttack(this, )
+            ActiveWeapon.weaponAttack(this);
         }
 
 
@@ -271,15 +230,12 @@ namespace GameStateManagementSample.Models.Entities
                 animManager.idle.addFrame(content.Load<Texture2D>("Player/Idle/Golem_03_Idle_0" + i.ToString("D2")));
             for (int i = 0; i <= 11; i++)
                 animManager.death.addFrame(content.Load<Texture2D>("Player/Death/Golem_03_Dying_0" + i.ToString("D2")));
-
+            animManager.walk.ChangeAnimationDuration(3);
+            animManager.attack.ChangeAnimationDuration(2);
+            animManager.idle.ChangeAnimationDuration(2);
+            animManager.death.ChangeAnimationDuration(8);
             Texture = animManager.IdleAnimation();
         }
 
-
-        public bool PlayerDeathAnimation()
-        {
-            Texture = animManager.DeathAnimation();
-            return animManager.DeathAnimationFinished();
-        }
     }
 }

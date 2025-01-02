@@ -21,7 +21,7 @@ namespace GameStateManagementSample.Models.Entities
 
         public override void Move(Vector2 movment)
         {
-            Console.WriteLine("AI Move");
+            Position += movment;
         }
         public override void Atack()
         {

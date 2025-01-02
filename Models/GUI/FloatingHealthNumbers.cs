@@ -20,13 +20,13 @@ namespace GameStateManagementSample.Models.GUI
 
         private Health healthStatus;
 
-        private double maxTime = 200;
+        private double maxTimems = 2000;
         private Vector2 offset;
 
         public FloatingHealthNumbers(Entity entity) : base(entity)
         {
             healthPoints = entity.HealthPoints;
-            offset = new Vector2(-30, (entity.Texture.Width / 4) -5);
+            offset = new Vector2(-20, (entity.Texture.Width / 4) -5);
         }
 
         public override void Update()
@@ -37,7 +37,7 @@ namespace GameStateManagementSample.Models.GUI
             if (oldHealthPoints != healthPoints)
             {
                 healthChanged = true;
-                maxTime = 2000;
+                maxTimems = 2000;
                 if (oldHealthPoints < healthPoints)
                 {
                     if (healthStatus == Health.Damage)
@@ -62,19 +62,20 @@ namespace GameStateManagementSample.Models.GUI
         {
             if (healthChanged)
             {
-                maxTime -= player.GameTime.ElapsedGameTime.Milliseconds;
-                if (maxTime <= 0)
+                maxTimems -= player.GameTime.ElapsedGameTime.Milliseconds;
+                if (maxTimems <= 0)
                 {
                     healthChanged = false;
-                    maxTime = 2000;
+                    maxTimems = 2000;
                     healthDifference = 0;
                 }
-
-                String str = healthDifference > 0 ? "+" : "";
-                spriteBatch.Begin(transformMatrix: player.CameraProperty.Transform);
-                spriteBatch.DrawString(spriteFont, str + healthDifference.ToString(), player.Position - spriteFont.MeasureString(healthDifference.ToString()) - offset, color);
-
-                spriteBatch.End();
+                else
+                {
+                    String str = healthDifference > 0 ? "+" : "";
+                    spriteBatch.Begin(transformMatrix: player.CameraProperty.Transform);
+                    spriteBatch.DrawString(spriteFont, str + healthDifference.ToString(), player.Position - spriteFont.MeasureString(healthDifference.ToString()) - offset, color);
+                    spriteBatch.End();
+                }
             }
         }
     }

@@ -14,7 +14,7 @@ namespace GameStateManagementSample.Models.Helpers
 {
     public class CollisionDetector
     {
-        public static void HasArrowCollision(List<Enemy> enemies, List<Projectile> projectiles)
+        public static void HasArrowCollision(Entity entity, List<Enemy> enemies, List<Projectile> projectiles)
         {
             List<Projectile> projectilesWithCollision = new List<Projectile>();
 
@@ -26,7 +26,7 @@ namespace GameStateManagementSample.Models.Helpers
                     {
                         if (IsIntersecting(projectile.BoundingBox, enemy.BoundingBox))
                         {
-                            enemy.TakeDamage(projectile.Damage);
+                            enemy.TakeDamage((int)entity.ActiveWeapon.WeaponDamage);
                             Trace.WriteLine(enemy.HealthPoints);
                             projectilesWithCollision.Add(projectile);
                         }

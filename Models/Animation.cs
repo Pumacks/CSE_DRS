@@ -17,16 +17,17 @@ namespace GameStateManagementSample.Models
         private float timeCounter;
         private int currentFrame;
         private bool isLooping = true;
+        private float totalDuration;
 
         public List<Texture2D> Textures { get => textures; }
+ 
 
-        public Animation(float animationSpeed)
+        public Animation(float totalDuration)
         {
             this.timeCounter = 0;
             this.currentFrame = 0;
-
-            // The bigger the number the faster the an
-            this.animationSpeed = animationSpeed;
+            this.animationSpeed = 1;
+            this.totalDuration = totalDuration;
         }
 
         public Animation(float animationSpeed, bool loop) : this(animationSpeed)
@@ -51,6 +52,8 @@ namespace GameStateManagementSample.Models
         public void addFrame(Texture2D texture)
         {
             textures.Add(texture);
+            if (textures.Count > 0 && totalDuration != 0)
+                animationSpeed = textures.Count / totalDuration;
         }
 
         public void ChangeToNextFrame()
@@ -66,6 +69,17 @@ namespace GameStateManagementSample.Models
             {
                 currentFrame = 0;
             }
+        }
+
+        public bool IterationFinished()
+        {
+            return currentFrame == textures.Count - 1;
+        }
+
+        public void ChangeAnimationDuration(float duration)
+        {
+            if (textures.Count > 0 && duration != 0)
+                animationSpeed = textures.Count / duration;
         }
 
     }
