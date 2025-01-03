@@ -203,6 +203,13 @@ namespace GameStateManagementSample.Models.Entities
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
                     }
+
+                    else if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Item)
+                    {
+                        Inventory[selectedInventorySlot].use();
+                        Inventory[selectedInventorySlot] = null;
+                        NotifyObservers();
+                    }
                 }
             }
 

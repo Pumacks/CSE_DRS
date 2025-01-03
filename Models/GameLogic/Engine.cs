@@ -67,7 +67,7 @@ namespace GameStateManagementSample.Models.GameLogic
         Texture2D ActiveWeaponInventorySlotTexture;
         Texture2D BowTexture;
 
-        Texture2D MarkerTexture;
+        // Texture2D MarkerTexture;
         Texture2D HealthPotion;
 
         private Random random = new Random();
@@ -79,16 +79,16 @@ namespace GameStateManagementSample.Models.GameLogic
         private List<Enemy> enemies;
         public List<Enemy> Enemies
         {
-            get{return enemies;}
-            set{enemies = value; }
+            get { return enemies; }
+            set { enemies = value; }
         }
 
 
         private List<Projectile> projectiles;
         public List<Projectile> Projectiles
         {
-            get { return projectiles;}
-            set{ projectiles = value; }
+            get { return projectiles; }
+            set { projectiles = value; }
         }
         #endregion Fields and properties required for keeping track of enemies, player and projectile
 
@@ -121,14 +121,19 @@ namespace GameStateManagementSample.Models.GameLogic
             hero.CameraProperty = camera;
 
 
-            // Loading the Texture for Arrows
-            ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
-            BowTexture = content.Load<Texture2D>("Bow1-130x25px");
-            MarkerTexture = content.Load<Texture2D>("Marker");
+
+
+
+
+
             // Creating a List-Object for enemies
             Enemies = new List<Enemy>();
-            //The following is just for testing Textures and rotations.
+            // Creating a List-Object for projectiles
             Projectiles = new List<Projectile>();
+
+
+
+            //The following is just for testing Textures and rotations.
             //for (int arrowPlacementIndex = 0; arrowPlacementIndex < 100; arrowPlacementIndex++)
             //{
             //    Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
@@ -136,14 +141,14 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
 
-
+            // Loading the textures for various items and other elements
             ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
             BowTexture = content.Load<Texture2D>("Bow1-130x25px");
             SwordTexture = content.Load<Texture2D>("sword1_130x27px");
             InventoryTexture = content.Load<Texture2D>("966x138 Inventory Slot Bar v2.1");
             SelectedInventorySlotTexture = content.Load<Texture2D>("138x138 Inventory Slot v2.1 Selected v3.2");
             ActiveWeaponInventorySlotTexture = content.Load<Texture2D>("138x138 Inventory Slot Coloured v3.5");
-            MarkerTexture = content.Load<Texture2D>("Marker");
+            //MarkerTexture = content.Load<Texture2D>("Marker");
             HealthPotion = content.Load<Texture2D>("Items/Potions/HealthPotion");
 
 
@@ -211,7 +216,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 position: Vector2.Transform(hero.Position, camera.Transform), // Hier Vector2.Transform(hero.Position,camera.Transform) anstatt new Vector2(ScreenManager.GraphicsDevice.Viewport.Width/2,ScreenManager.GraphicsDevice.Viewport.Height/2)
                 sourceRectangle: null,
                 color: Color.White,
-                rotation: (float)Math.PI / 2 + (float)Math.Atan2(Mouse.GetState().Y - Vector2.Transform(hero.Position, camera.Transform).Y, Mouse.GetState().X - Vector2.Transform(hero.Position, camera.Transform).X),
+                rotation: this.hero.ActiveWeapon.WeaponRotationFloatValue,
                 // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
                 // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
                 origin: this.hero.ActiveWeapon is MeleeWeapon ? new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2, this.hero.ActiveWeapon.ItemTexture.Height * 0.75f) : new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2, this.hero.ActiveWeapon.ItemTexture.Height / 2),
@@ -337,6 +342,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
 
+            /*
             spriteBatch.Begin();
             spriteBatch.DrawString(
                 spriteFont: gameFont,
@@ -363,6 +369,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 Color.Red
             );
             spriteBatch.End();
+            */
 
 
 
@@ -403,19 +410,75 @@ namespace GameStateManagementSample.Models.GameLogic
             }
 
 
-            // Updating the positions of the projectiles (arrows) in the world
+            // Updating the values of all projectiles (arrows) in the world, whether they collide, when they disappear, etc.
             if (Projectiles != null)
             {
+                Projectile theProjectile;
                 int projectileUpdateIndex;
                 for (projectileUpdateIndex = 0; projectileUpdateIndex < Projectiles.Count; projectileUpdateIndex++)
                 {
-                    Projectiles[projectileUpdateIndex].CurrentProjectilePosition += Projectiles[projectileUpdateIndex].SpeedVector / 60;
+                    theProjectile = Projectiles[projectileUpdateIndex];
+                    if (Projectiles[projectileUpdateIndex].DistanceCovered >= Projectiles[projectileUpdateIndex].ProjectileRange)
+                    {
+                        Projectiles.RemoveAt(projectileUpdateIndex);
+                    }
+                    else
+                    {
+                        // Updating each arrow's position
+                        if (!theProjectile.IsStuck) theProjectile.CurrentProjectilePosition += Projectiles[projectileUpdateIndex].SpeedVector / 60;
+                        // Updating each arrow's covered distance
+                        if (!theProjectile.IsStuck) Projectiles[projectileUpdateIndex].DistanceCovered += Projectiles[projectileUpdateIndex].Velocity / 60;
+
+                        // Updating each arrow's hitbox
+                        if (!theProjectile.IsStuck) Projectiles[projectileUpdateIndex].ProjectileHitBox = new Rectangle(
+                            (int)theProjectile.CurrentProjectilePosition.X - theProjectile.ProjectileTexture.Width / 2,
+                            (int)theProjectile.CurrentProjectilePosition.Y - theProjectile.ProjectileTexture.Height - theProjectile.ProjectileTexture.Width / 2,
+                            theProjectile.ProjectileTexture.Width,
+                            theProjectile.ProjectileTexture.Width
+                        );
+
+                        // For each Projectile, checks collision between arrow and enemy hitbox with every enemy (yes, Projectiles * Enemies calculations, O(n²), bad but not extremely bad)
+                        Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from the first Enemy whose hitbox intersects the arrow's hitbox.
+                        {
+                            if (!theProjectile.IsStuck) // <---------- notice this
+                                if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
+                                {
+                                    targetEnemy.HealthPoints -= theProjectile.ProjectileDamage;
+                                    Projectiles.RemoveAt(projectileUpdateIndex);
+                                }
+                        });
+
+                        // Checking whether the projectiles collide with any tiles in the map. Sadly this check is currently not possible for only the current room of the player, but only for all rooms.
+                        for (int roomNumber = 0; roomNumber < map.Rooms.Length; roomNumber++)
+                        {
+                            Room currentRoom = map.Rooms[roomNumber];
+                            for (int tileCounterX = 0; tileCounterX < currentRoom.GetTiles().GetLength(0); tileCounterX++)
+                            {
+                                for (int tileCounterY = 0; tileCounterY < currentRoom.GetTiles().GetLength(1); tileCounterY++)
+                                {
+                                    Tile currentTile = currentRoom.GetTiles()[tileCounterX, tileCounterY];
+                                    if (currentTile.Collision)
+                                        if (theProjectile.ProjectileHitBox.Intersects(currentTile.BoundingBox))
+                                            theProjectile.IsStuck = true;
+                                    // At this point, this is O(n³), but that's okay for our purpose, especially since it's all small numbers. And it's still polynomial.
+                                }
+                            }
+                        }
+
+
+                    }
                 }
             }
 
+            // Updating the rotation value of weapons for displaying them correctly
+            hero.ActiveWeapon.WeaponRotationFloatValue = (float)Math.PI / 2 + (float)Math.Atan2(Mouse.GetState().Y - Vector2.Transform(hero.Position, camera.Transform).Y, Mouse.GetState().X - Vector2.Transform(hero.Position, camera.Transform).X);
+
+
+
             // Updating the Weapon-Classes necessary awareness of enemies and projectiles in the world.
-            hero.ActiveWeapon.Enemies = Enemies;
-            Projectiles = hero.ActiveWeapon.Projectiles;
+            // THIS CAN (and probably should) BE DELETED (if you read this while merging and are unsure, just delete these two lines and two comments)
+            // hero.ActiveWeapon.Enemies = Enemies;
+            // Projectiles = hero.ActiveWeapon.Projectiles;
 
 
 
@@ -483,6 +546,10 @@ namespace GameStateManagementSample.Models.GameLogic
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
+
+                            // The enemies and projectiles need to get cleared between stages because we're entering new rooms where the old enemies and projectiles don't exist, and this happens at similar coordinates.
+                            clearEnemiesAndProjectiles();
+
                             map.SetStage(stage);
                             map.GenerateMap(content);
                         }
@@ -498,6 +565,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
+                            clearEnemiesAndProjectiles();
                             map.SetStage(stage);
                             map.GenerateMap(content);
                         }
@@ -513,6 +581,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
+                            clearEnemiesAndProjectiles();
                             map.SetStage(stage);
                             map.GenerateMap(content);
                         }
@@ -528,6 +597,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
+                            clearEnemiesAndProjectiles();
                             map.SetStage(stage);
                             map.GenerateMap(content);
                         }
@@ -587,6 +657,12 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 screenManager.AddScreen(new GameOverScreen(playerGameStatus), controllingPlayer);
             }
+        }
+
+        public void clearEnemiesAndProjectiles()
+        {
+            Enemies.Clear();
+            Projectiles.Clear();
         }
     }
 }
