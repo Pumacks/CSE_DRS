@@ -28,6 +28,7 @@ namespace GameStateManagementSample.Models.Entities
         : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
             GUIObservers.Add(new HealthGUI(this));
+            GUIObservers.Add(new SpeedBuffGUI(this));
         }
 
 
@@ -246,6 +247,8 @@ namespace GameStateManagementSample.Models.Entities
             {
                 if (observer is HealthGUI healthGUI)
                     healthGUI.Texture = content.Load<Texture2D>("Player/HPTexture");
+                if (observer is SpeedBuffGUI speedBuffGUI)
+                    speedBuffGUI.Texture = content.Load<Texture2D>("Player/RunTexture");
             }
         }
 

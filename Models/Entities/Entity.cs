@@ -68,6 +68,7 @@ namespace GameStateManagementSample.Models.Entities
             }
         }
         public float MovementSpeed { get; set; }
+        public float SpeedPotionDuration { get => speedPotionDuration; }
         public Texture2D Texture { get { return texture; } set { texture = value; } }
 
         public Weapon ActiveWeapon { get { return activeWeapon; } set { activeWeapon = value; } }
@@ -181,6 +182,8 @@ namespace GameStateManagementSample.Models.Entities
 
                 if(speedPotionDuration <= 0)
                     MovementSpeed = defaultMvSpeed;
+
+                NotifyObservers();
             }
             #endregion
 
