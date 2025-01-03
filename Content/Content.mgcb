@@ -152,6 +152,30 @@
 /processorParam:TextureFormat=Color
 /build:Items/Potions/HealthPotion.png
 
+#begin Items/Potions/SpeedPotion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Items/Potions/SpeedPotion.png
+
+#begin Items/Projectile/Arrow.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Items/Projectile/Arrow.png
+
 #begin Map/2doorE.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -531,7 +555,7 @@
 /processorParam:TextureFormat=Compressed
 /build:menufont.spritefont
 
-#begin Player/Atack/Golem_03_Attacking_000.png
+#begin Player/attack_frames/attack0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -541,9 +565,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_000.png
+/build:Player/attack_frames/attack0.png
 
-#begin Player/Atack/Golem_03_Attacking_001.png
+#begin Player/attack_frames/attack1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -553,9 +577,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_001.png
+/build:Player/attack_frames/attack1.png
 
-#begin Player/Atack/Golem_03_Attacking_002.png
+#begin Player/attack_frames/attack2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -565,9 +589,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_002.png
+/build:Player/attack_frames/attack2.png
 
-#begin Player/Atack/Golem_03_Attacking_003.png
+#begin Player/attack_frames/attack3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -577,9 +601,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_003.png
+/build:Player/attack_frames/attack3.png
 
-#begin Player/Atack/Golem_03_Attacking_004.png
+#begin Player/attack_frames/attack4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -589,9 +613,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_004.png
+/build:Player/attack_frames/attack4.png
 
-#begin Player/Atack/Golem_03_Attacking_005.png
+#begin Player/attack.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -601,9 +625,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_005.png
+/build:Player/attack.png
 
-#begin Player/Atack/Golem_03_Attacking_006.png
+#begin Player/death_frames/death0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -613,9 +637,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_006.png
+/build:Player/death_frames/death0.png
 
-#begin Player/Atack/Golem_03_Attacking_007.png
+#begin Player/death_frames/death1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -625,9 +649,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_007.png
+/build:Player/death_frames/death1.png
 
-#begin Player/Atack/Golem_03_Attacking_008.png
+#begin Player/death_frames/death2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -637,9 +661,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_008.png
+/build:Player/death_frames/death2.png
 
-#begin Player/Atack/Golem_03_Attacking_009.png
+#begin Player/death_frames/death3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -649,9 +673,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_009.png
+/build:Player/death_frames/death3.png
 
-#begin Player/Atack/Golem_03_Attacking_010.png
+#begin Player/death_frames/death4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -661,9 +685,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_010.png
+/build:Player/death_frames/death4.png
 
-#begin Player/Atack/Golem_03_Attacking_011.png
+#begin Player/death.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -673,9 +697,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Atack/Golem_03_Attacking_011.png
+/build:Player/death.png
 
-#begin Player/Death/Golem_03_Dying_000.png
+#begin Player/HPTexture.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -685,9 +709,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_000.png
+/build:Player/HPTexture.png
 
-#begin Player/Death/Golem_03_Dying_001.png
+#begin Player/idle_frames/idle0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -697,9 +721,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_001.png
+/build:Player/idle_frames/idle0.png
 
-#begin Player/Death/Golem_03_Dying_002.png
+#begin Player/idle_frames/idle1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -709,9 +733,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_002.png
+/build:Player/idle_frames/idle1.png
 
-#begin Player/Death/Golem_03_Dying_003.png
+#begin Player/idle_frames/idle2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -721,9 +745,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_003.png
+/build:Player/idle_frames/idle2.png
 
-#begin Player/Death/Golem_03_Dying_004.png
+#begin Player/idle_frames/idle3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -733,9 +757,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_004.png
+/build:Player/idle_frames/idle3.png
 
-#begin Player/Death/Golem_03_Dying_005.png
+#begin Player/idle_frames/idle4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -745,9 +769,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_005.png
+/build:Player/idle_frames/idle4.png
 
-#begin Player/Death/Golem_03_Dying_006.png
+#begin Player/idle_frames/idle5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -757,9 +781,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_006.png
+/build:Player/idle_frames/idle5.png
 
-#begin Player/Death/Golem_03_Dying_007.png
+#begin Player/idle_frames/idle6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -769,9 +793,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_007.png
+/build:Player/idle_frames/idle6.png
 
-#begin Player/Death/Golem_03_Dying_008.png
+#begin Player/idle_frames/idle7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -781,9 +805,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_008.png
+/build:Player/idle_frames/idle7.png
 
-#begin Player/Death/Golem_03_Dying_009.png
+#begin Player/idle_frames/idle8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -793,9 +817,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_009.png
+/build:Player/idle_frames/idle8.png
 
-#begin Player/Death/Golem_03_Dying_010.png
+#begin Player/idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -805,9 +829,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_010.png
+/build:Player/idle.png
 
-#begin Player/Death/Golem_03_Dying_011.png
+#begin Player/RunTexture.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -817,9 +841,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_011.png
+/build:Player/RunTexture.png
 
-#begin Player/Death/Golem_03_Dying_012.png
+#begin Player/shot_frames/shot0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -829,9 +853,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_012.png
+/build:Player/shot_frames/shot0.png
 
-#begin Player/Death/Golem_03_Dying_013.png
+#begin Player/shot_frames/shot1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -841,9 +865,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_013.png
+/build:Player/shot_frames/shot1.png
 
-#begin Player/Death/Golem_03_Dying_014.png
+#begin Player/shot_frames/shot10.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -853,9 +877,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Death/Golem_03_Dying_014.png
+/build:Player/shot_frames/shot10.png
 
-#begin Player/GolemWalkLeft.png
+#begin Player/shot_frames/shot11.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -865,9 +889,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/GolemWalkLeft.png
+/build:Player/shot_frames/shot11.png
 
-#begin Player/GolemWalkRight.png
+#begin Player/shot_frames/shot12.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -877,9 +901,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/GolemWalkRight.png
+/build:Player/shot_frames/shot12.png
 
-#begin Player/Idle/Golem_03_Idle_000.png
+#begin Player/shot_frames/shot13.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -889,9 +913,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_000.png
+/build:Player/shot_frames/shot13.png
 
-#begin Player/Idle/Golem_03_Idle_001.png
+#begin Player/shot_frames/shot2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -901,9 +925,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_001.png
+/build:Player/shot_frames/shot2.png
 
-#begin Player/Idle/Golem_03_Idle_002.png
+#begin Player/shot_frames/shot3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -913,9 +937,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_002.png
+/build:Player/shot_frames/shot3.png
 
-#begin Player/Idle/Golem_03_Idle_003.png
+#begin Player/shot_frames/shot4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -925,9 +949,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_003.png
+/build:Player/shot_frames/shot4.png
 
-#begin Player/Idle/Golem_03_Idle_004.png
+#begin Player/shot_frames/shot5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -937,9 +961,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_004.png
+/build:Player/shot_frames/shot5.png
 
-#begin Player/Idle/Golem_03_Idle_005.png
+#begin Player/shot_frames/shot6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -949,9 +973,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_005.png
+/build:Player/shot_frames/shot6.png
 
-#begin Player/Idle/Golem_03_Idle_006.png
+#begin Player/shot_frames/shot7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -961,9 +985,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_006.png
+/build:Player/shot_frames/shot7.png
 
-#begin Player/Idle/Golem_03_Idle_007.png
+#begin Player/shot_frames/shot8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -973,9 +997,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_007.png
+/build:Player/shot_frames/shot8.png
 
-#begin Player/Idle/Golem_03_Idle_008.png
+#begin Player/shot_frames/shot9.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -985,9 +1009,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_008.png
+/build:Player/shot_frames/shot9.png
 
-#begin Player/Idle/Golem_03_Idle_009.png
+#begin Player/shot.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -997,9 +1021,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_009.png
+/build:Player/shot.png
 
-#begin Player/Idle/Golem_03_Idle_010.png
+#begin Player/walk_frames/walk0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1009,9 +1033,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_010.png
+/build:Player/walk_frames/walk0.png
 
-#begin Player/Idle/Golem_03_Idle_011.png
+#begin Player/walk_frames/walk1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1021,9 +1045,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle/Golem_03_Idle_011.png
+/build:Player/walk_frames/walk1.png
 
-#begin Player/WalkLeft/Golem_03_Walking_000.png
+#begin Player/walk_frames/walk2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1033,9 +1057,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_000.png
+/build:Player/walk_frames/walk2.png
 
-#begin Player/WalkLeft/Golem_03_Walking_001.png
+#begin Player/walk_frames/walk3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1045,9 +1069,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_001.png
+/build:Player/walk_frames/walk3.png
 
-#begin Player/WalkLeft/Golem_03_Walking_002.png
+#begin Player/walk_frames/walk4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1057,9 +1081,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_002.png
+/build:Player/walk_frames/walk4.png
 
-#begin Player/WalkLeft/Golem_03_Walking_003.png
+#begin Player/walk_frames/walk5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1069,9 +1093,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_003.png
+/build:Player/walk_frames/walk5.png
 
-#begin Player/WalkLeft/Golem_03_Walking_004.png
+#begin Player/walk_frames/walk6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1081,9 +1105,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_004.png
+/build:Player/walk_frames/walk6.png
 
-#begin Player/WalkLeft/Golem_03_Walking_005.png
+#begin Player/walk_frames/walk7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1093,9 +1117,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_005.png
+/build:Player/walk_frames/walk7.png
 
-#begin Player/WalkLeft/Golem_03_Walking_006.png
+#begin Player/walk.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1105,355 +1129,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_006.png
-
-#begin Player/WalkLeft/Golem_03_Walking_007.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_007.png
-
-#begin Player/WalkLeft/Golem_03_Walking_008.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_008.png
-
-#begin Player/WalkLeft/Golem_03_Walking_009.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_009.png
-
-#begin Player/WalkLeft/Golem_03_Walking_010.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_010.png
-
-#begin Player/WalkLeft/Golem_03_Walking_011.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_011.png
-
-#begin Player/WalkLeft/Golem_03_Walking_012.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_012.png
-
-#begin Player/WalkLeft/Golem_03_Walking_013.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_013.png
-
-#begin Player/WalkLeft/Golem_03_Walking_014.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_014.png
-
-#begin Player/WalkLeft/Golem_03_Walking_015.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_015.png
-
-#begin Player/WalkLeft/Golem_03_Walking_016.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_016.png
-
-#begin Player/WalkLeft/Golem_03_Walking_017.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkLeft/Golem_03_Walking_017.png
-
-#begin Player/WalkRight/Golem_03_Walking_000.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_000.png
-
-#begin Player/WalkRight/Golem_03_Walking_001.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_001.png
-
-#begin Player/WalkRight/Golem_03_Walking_002.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_002.png
-
-#begin Player/WalkRight/Golem_03_Walking_003.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_003.png
-
-#begin Player/WalkRight/Golem_03_Walking_004.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_004.png
-
-#begin Player/WalkRight/Golem_03_Walking_005.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_005.png
-
-#begin Player/WalkRight/Golem_03_Walking_006.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_006.png
-
-#begin Player/WalkRight/Golem_03_Walking_007.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_007.png
-
-#begin Player/WalkRight/Golem_03_Walking_008.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_008.png
-
-#begin Player/WalkRight/Golem_03_Walking_009.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_009.png
-
-#begin Player/WalkRight/Golem_03_Walking_010.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_010.png
-
-#begin Player/WalkRight/Golem_03_Walking_011.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_011.png
-
-#begin Player/WalkRight/Golem_03_Walking_012.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_012.png
-
-#begin Player/WalkRight/Golem_03_Walking_013.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_013.png
-
-#begin Player/WalkRight/Golem_03_Walking_014.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_014.png
-
-#begin Player/WalkRight/Golem_03_Walking_015.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_015.png
-
-#begin Player/WalkRight/Golem_03_Walking_016.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_016.png
-
-#begin Player/WalkRight/Golem_03_Walking_017.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Player/WalkRight/Golem_03_Walking_017.png
+/build:Player/walk.png
 
 #begin Skeleton_Archer/Arrow.png
 /importer:TextureImporter
@@ -2019,30 +1695,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Spearman/Attack_1.png
 
-#begin Skeleton_Spearman/Attack_1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Attack_1.png
-
-#begin Skeleton_Spearman/Attack_2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Attack_2.png
-
 #begin Skeleton_Spearman/Attack_2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2102,18 +1754,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Spearman/attack_frames/attack3.png
-
-#begin Skeleton_Spearman/Dead.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Dead.png
 
 #begin Skeleton_Spearman/Dead.png
 /importer:TextureImporter
@@ -2198,30 +1838,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Spearman/Fall.png
-
-#begin Skeleton_Spearman/Fall.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Fall.png
-
-#begin Skeleton_Spearman/Hurt.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Hurt.png
 
 #begin Skeleton_Spearman/Hurt.png
 /importer:TextureImporter
@@ -2331,30 +1947,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Spearman/Idle.png
 
-#begin Skeleton_Spearman/Idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Idle.png
-
-#begin Skeleton_Spearman/Protect.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Protect.png
-
 #begin Skeleton_Spearman/Protect.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2378,30 +1970,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Spearman/Run.png
-
-#begin Skeleton_Spearman/Run.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Run.png
-
-#begin Skeleton_Spearman/Run+attack.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Run+attack.png
 
 #begin Skeleton_Spearman/Run+attack.png
 /importer:TextureImporter
@@ -2498,18 +2066,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Spearman/walk_frames/walk6.png
-
-#begin Skeleton_Spearman/Walk.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Spearman/Walk.png
 
 #begin Skeleton_Spearman/Walk.png
 /importer:TextureImporter

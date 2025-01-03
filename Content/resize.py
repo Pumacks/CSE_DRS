@@ -25,9 +25,10 @@ def resize():
  
 
 def resize2():
-    input_dir = r".\Skeleton_Spearman\attack_frames"  # Update this path to your input folder
+    name = "attack_frames"
+    input_dir = rf'.\Player\{name}'  # Update this path to your input folder
     
-    output_dir = os.path.join(input_dir, "attack_frames")  # Create a subfolder for processed frames
+    output_dir = os.path.join(input_dir, name)  # Create a subfolder for processed frames
     # Create the output folder if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     # Desired size for all images

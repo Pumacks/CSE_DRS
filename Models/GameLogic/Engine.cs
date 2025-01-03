@@ -36,7 +36,7 @@ namespace GameStateManagementSample.Models.GameLogic
         private SpriteFont gameFont;
 
         Models.Camera camera;
-        Texture2D golem;
+        Texture2D initTexture;
         Player hero;
         int stage = 1;
 
@@ -66,6 +66,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
         Texture2D MarkerTexture;
         Texture2D HealthPotion;
+        Texture2D SpeedPotion;
 
         private Random random = new Random();
 
@@ -115,9 +116,9 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
             gameFont = content.Load<SpriteFont>("gamefont");
-            golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
+            initTexture = content.Load<Texture2D>("Player/idle_frames/idle0");
 
-            hero = new Player(100, 5, new Vector2(5300, 5300), golem, gameFont, new List<Item>());
+            hero = new Player(100, 5, new Vector2(5300, 5300), initTexture, gameFont, new List<Item>());
             hero.Camera = camera;
 
 
@@ -128,13 +129,13 @@ namespace GameStateManagementSample.Models.GameLogic
             //    Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
             //}
 
-            Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), golem, gameFont, new List<Item>());
+            Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>());
             enemyWarrior.Camera = camera;
 
-            Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), golem, gameFont, new List<Item>());
+            Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), initTexture, gameFont, new List<Item>());
             enemyArcher.Camera = camera;
 
-            Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), golem, gameFont, new List<Item>());
+            Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>());
             enemySpearman.Camera = camera;
 
 
@@ -142,7 +143,8 @@ namespace GameStateManagementSample.Models.GameLogic
             enemies.Add(enemyArcher);
             enemies.Add(enemySpearman);
 
-            ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
+            //ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
+            ArrowTexture = content.Load<Texture2D>("Items/Projectile/Arrow");
             BowTexture = content.Load<Texture2D>("Bow1-130x25px");
             SwordTexture = content.Load<Texture2D>("sword1_130x27px");
             InventoryTexture = content.Load<Texture2D>("966x138 Inventory Slot Bar v2.1");
@@ -150,7 +152,7 @@ namespace GameStateManagementSample.Models.GameLogic
             ActiveWeaponInventorySlotTexture = content.Load<Texture2D>("138x138 Inventory Slot Coloured v3.5");
             MarkerTexture = content.Load<Texture2D>("Marker");
             HealthPotion = content.Load<Texture2D>("Items/Potions/HealthPotion");
-
+            SpeedPotion = content.Load<Texture2D>("Items/Potions/SpeedPotion");
 
             //Giving our Test-Hero a Weapon (bow) at the start (without a texture), so he can shoot arrows!
             hero.ActiveWeapon = new RangedWeapon(
@@ -220,27 +222,27 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
             // Bows, Projectiles, GameTime
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                texture: this.hero.ActiveWeapon.ItemTexture,
-                position: Vector2.Transform(hero.Position,
-                    camera.Transform), // Hier Vector2.Transform(hero.Position,camera.Transform) anstatt new Vector2(ScreenManager.GraphicsDevice.Viewport.Width/2,ScreenManager.GraphicsDevice.Viewport.Height/2)
-                sourceRectangle: null,
-                color: Color.White,
-                rotation: (float)Math.PI / 2 +
-                          (float)Math.Atan2(Mouse.GetState().Y - Vector2.Transform(hero.Position, camera.Transform).Y,
-                              Mouse.GetState().X - Vector2.Transform(hero.Position, camera.Transform).X),
-                // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
-                // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
-                origin: this.hero.ActiveWeapon is MeleeWeapon
-                    ? new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2,
-                        this.hero.ActiveWeapon.ItemTexture.Height * 0.75f)
-                    : new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2,
-                        this.hero.ActiveWeapon.ItemTexture.Height / 2),
-                scale: 1f,
-                effects: SpriteEffects.None,
-                layerDepth: 0f);
-            spriteBatch.End();
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(
+            //    texture: this.hero.ActiveWeapon.ItemTexture,
+            //    position: Vector2.Transform(hero.Position,
+            //        camera.Transform), // Hier Vector2.Transform(hero.Position,camera.Transform) anstatt new Vector2(ScreenManager.GraphicsDevice.Viewport.Width/2,ScreenManager.GraphicsDevice.Viewport.Height/2)
+            //    sourceRectangle: null,
+            //    color: Color.White,
+            //    rotation: (float)Math.PI / 2 +
+            //              (float)Math.Atan2(Mouse.GetState().Y - Vector2.Transform(hero.Position, camera.Transform).Y,
+            //                  Mouse.GetState().X - Vector2.Transform(hero.Position, camera.Transform).X),
+            //    // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
+            //    // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
+            //    origin: this.hero.ActiveWeapon is MeleeWeapon
+            //        ? new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2,
+            //            this.hero.ActiveWeapon.ItemTexture.Height * 0.75f)
+            //        : new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2,
+            //            this.hero.ActiveWeapon.ItemTexture.Height / 2),
+            //    scale: 1f,
+            //    effects: SpriteEffects.None,
+            //    layerDepth: 0f);
+            //spriteBatch.End();
 
 
             // to draw the inventory
@@ -440,6 +442,7 @@ namespace GameStateManagementSample.Models.GameLogic
             camera.Follow(hero);
             UpdateEnemies(gameTime);
             CollectItems();
+
 
             if (hero.HealthPoints <= 0)
             {
@@ -707,6 +710,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 {
                     Enemies.Remove(e);
                     worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
+                    worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
                 }
             }
         }

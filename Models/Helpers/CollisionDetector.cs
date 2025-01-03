@@ -27,7 +27,6 @@ namespace GameStateManagementSample.Models.Helpers
                         if (IsIntersecting(projectile.BoundingBox, enemy.BoundingBox))
                         {
                             enemy.TakeDamage((int)entity.ActiveWeapon.WeaponDamage);
-                            Trace.WriteLine(enemy.HealthPoints);
                             projectilesWithCollision.Add(projectile);
                         }
                     }
