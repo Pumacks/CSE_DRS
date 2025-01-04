@@ -22,7 +22,7 @@ namespace GameStateManagementSample.Models.Map
         }
 
 
-        const int ROOM_DISTANCE = 2100; // Einheitliche Distanz
+        const int ROOM_DISTANCE = 5000; // Einheitliche Distanz
 
 
 

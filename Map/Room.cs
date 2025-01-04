@@ -241,8 +241,8 @@ namespace GameStateManagementSample.Models.Map
 
         private Tile[,] GenerateRoomArray()
         {
-            int width = random.Next(10, 19);
-            int height = random.Next(10, 19);
+            int width = random.Next(18, 25);
+            int height = random.Next(18, 25);
             if (width % 2 == 0)
                 width += 1;
             if (height % 2 == 0)
