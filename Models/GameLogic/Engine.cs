@@ -14,6 +14,7 @@ using System.Threading;
 using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using Microsoft.Xna.Framework.Audio;
 
 
 enum PlayerGameStatus
@@ -70,6 +71,19 @@ namespace GameStateManagementSample.Models.GameLogic
         // Texture2D MarkerTexture;
         Texture2D HealthPotion;
 
+
+
+        public SoundEffect bowEquip1;
+        public SoundEffect bowEquip2;
+        public SoundEffect bowShoot1;
+        public SoundEffect bowShoot2;
+        public SoundEffect bowShoot3;
+        public SoundEffect swordEquip1;
+        public SoundEffect swordSwing1;
+        public SoundEffect swordSwing2;
+        public SoundEffect swordHit1;
+        public SoundEffect swordHit2;
+
         private Random random = new Random();
 
 
@@ -117,7 +131,7 @@ namespace GameStateManagementSample.Models.GameLogic
             gameFont = content.Load<SpriteFont>("gamefont");
             golem = content.Load<Texture2D>("Player/WalkRight/Golem_03_Walking_000");
 
-            hero = new Player(100, 5, new Vector2(5300, 5300), golem, gameFont, new List<Item>());
+            hero = new Player(100, 5, new Vector2(5300, 5300), golem, gameFont, new List<Item>(), this);
             hero.CameraProperty = camera;
 
 
@@ -152,6 +166,19 @@ namespace GameStateManagementSample.Models.GameLogic
             HealthPotion = content.Load<Texture2D>("Items/Potions/HealthPotion");
 
 
+            // Loading Sound Effects
+            bowEquip1 = content.Load<SoundEffect>("649332__sonofxaudio__bow_draw_fast01");
+            bowEquip2 = content.Load<SoundEffect>("649337__sonofxaudio__bow_draw_fast02");
+            bowShoot1 = content.Load<SoundEffect>("649335__sonofxaudio__arrow_loose01");
+            bowShoot2 = content.Load<SoundEffect>("649334__sonofxaudio__arrow_loose02");
+            bowShoot3 = content.Load<SoundEffect>("649333__sonofxaudio__arrow_loose03");
+            swordEquip1 = content.Load<SoundEffect>("draw-sword1-44724");
+            swordSwing1 = content.Load<SoundEffect>("sword-swing-whoosh-sound-effect-1-241824");
+            swordSwing2 = content.Load<SoundEffect>("sword-swing-whoosh-sound-effect-2-241823");
+            // swordHit1 = content.Load<SoundEffect>("");
+            // swordHit2 = content.Load<SoundEffect>("");
+
+
             //Giving our Test-Hero a Weapon (bow) at the start (without a texture), so he can shoot arrows!
             hero.ActiveWeapon = new RangedWeapon(
                 "Bow of the Gods",
@@ -163,7 +190,8 @@ namespace GameStateManagementSample.Models.GameLogic
                 Enemies,
                 1500,
                 ArrowTexture,
-                Projectiles
+                Projectiles,
+                this
             );
             //Giving our Test-Hero's inventory a Weapon (sword) at the start, so he can choose between sword and bow!
             hero.Inventory[0] = new MeleeWeapon(
@@ -173,7 +201,8 @@ namespace GameStateManagementSample.Models.GameLogic
                 40,
                 400,
                 250,
-                Enemies
+                Enemies,
+                this
             );
 
 
@@ -449,6 +478,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         });
 
                         // Checking whether the projectiles collide with any tiles in the map. Sadly this check is currently not possible for only the current room of the player, but only for all rooms.
+                        if (!theProjectile.IsStuck)
                         for (int roomNumber = 0; roomNumber < map.Rooms.Length; roomNumber++)
                         {
                             Room currentRoom = map.Rooms[roomNumber];
@@ -459,7 +489,10 @@ namespace GameStateManagementSample.Models.GameLogic
                                     Tile currentTile = currentRoom.GetTiles()[tileCounterX, tileCounterY];
                                     if (currentTile.Collision)
                                         if (theProjectile.ProjectileHitBox.Intersects(currentTile.BoundingBox))
+                                        {
                                             theProjectile.IsStuck = true;
+                                        }
+                                            
                                     // At this point, this is O(n³), but that's okay for our purpose, especially since it's all small numbers. And it's still polynomial.
                                 }
                             }
@@ -664,5 +697,10 @@ namespace GameStateManagementSample.Models.GameLogic
             Enemies.Clear();
             Projectiles.Clear();
         }
+
+        // public void playSoundBowEquip1()
+        // {
+        //     bowEquip1.Play();
+        // }
     }
 }

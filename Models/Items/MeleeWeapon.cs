@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GameStateManagement;
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,7 +16,7 @@ namespace GameStateManagementSample.Models.Items
         #region attributes and properties
         #endregion
 
-        public MeleeWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies) {
+        public MeleeWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, Engine engine) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies, engine) {
             
         }
 
@@ -39,6 +40,14 @@ namespace GameStateManagementSample.Models.Items
             //     }
             // });
 
+            Random random = new Random();
+
+            if (random.Next(0,2) == 0)
+            gameEngine.swordSwing1.Play();
+            else
+            gameEngine.swordSwing2.Play();
+
+
             Vector2 vectorWeaponToCursor = vectorToTarget();
             float lengthWeaponToCursor = (float) Math.Sqrt(vectorWeaponToCursor.X*vectorWeaponToCursor.X + vectorWeaponToCursor.Y*vectorWeaponToCursor.Y);
             Vector2 unitVectorWeaponToCursor = new Vector2(vectorWeaponToCursor.X / lengthWeaponToCursor,vectorWeaponToCursor.Y / lengthWeaponToCursor);
@@ -56,7 +65,9 @@ namespace GameStateManagementSample.Models.Items
                     double angle = Math.Acos(scalarProduct) * (180.0 / Math.PI);
 
                     if (angle <= 52)
-                    targetEnemy.HealthPoints -= (int)this.WeaponDamage;
+                    {
+                        targetEnemy.HealthPoints -= (int)this.WeaponDamage;
+                    }
                 }
             });
 

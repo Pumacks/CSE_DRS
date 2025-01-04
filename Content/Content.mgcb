@@ -37,6 +37,36 @@
 /processorParam:TextureFormat=Color
 /build:138x138 Inventory Slot v2.1 Selected v3.2.png
 
+#begin 649332__sonofxaudio__bow_draw_fast01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:649332__sonofxaudio__bow_draw_fast01.wav
+
+#begin 649333__sonofxaudio__arrow_loose03.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:649333__sonofxaudio__arrow_loose03.wav
+
+#begin 649334__sonofxaudio__arrow_loose02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:649334__sonofxaudio__arrow_loose02.wav
+
+#begin 649335__sonofxaudio__arrow_loose01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:649335__sonofxaudio__arrow_loose01.wav
+
+#begin 649337__sonofxaudio__bow_draw_fast02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:649337__sonofxaudio__bow_draw_fast02.wav
+
 #begin 966x138 Inventory Slot Bar v2.1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -109,6 +139,12 @@
 /processorParam:TextureFormat=Color
 /build:Bow1-130x25px.png
 
+#begin draw-sword1-44724.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:draw-sword1-44724.wav
+
 #begin gamefont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -139,6 +175,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:gradient.png
+
+#begin Items/Potions/HealthPotion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Items/Potions/HealthPotion.png
 
 #begin Map/2doorE.png
 /importer:TextureImporter
@@ -187,18 +235,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Map/2doorW.png
-
-#begin Items/Potions/HealthPotion.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Items/Potions/HealthPotion.png
 
 #begin Map/doorE.png
 /importer:TextureImporter
@@ -1454,6 +1490,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Player/WalkRight/Golem_03_Walking_017.png
+
+#begin sword-swing-whoosh-sound-effect-1-241824.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sword-swing-whoosh-sound-effect-1-241824.wav
+
+#begin sword-swing-whoosh-sound-effect-2-241823.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sword-swing-whoosh-sound-effect-2-241823.wav
 
 #begin sword1_130x27px.png
 /importer:TextureImporter

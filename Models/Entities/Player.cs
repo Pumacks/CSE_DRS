@@ -1,4 +1,5 @@
-﻿using GameStateManagementSample.Models.GUI;
+﻿using GameStateManagementSample.Models.GameLogic;
+using GameStateManagementSample.Models.GUI;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -6,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Diagnostics;
+using GameStateManagement;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -19,6 +21,7 @@ namespace GameStateManagementSample.Models.Entities
         private KeyboardState previousKeyboardState = Keyboard.GetState();
         private MouseState currentMouseState;
         private MouseState previousMouseState = Mouse.GetState();
+        private Engine gameEngine;
 
         private bool isAtacking = false;
 
@@ -28,11 +31,12 @@ namespace GameStateManagementSample.Models.Entities
         List<GUIObserver> GUIObservers = new();
 
         public Player() { }
-        public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
+        public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Engine engine)
         : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
             GUIObservers.Add(new HealthGUI(this));
             GUIObservers.Add(new FloatingHealthNumbers(this));
+            gameEngine = engine;
         }
 
          
@@ -179,6 +183,18 @@ namespace GameStateManagementSample.Models.Entities
                 {
                     if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Weapon)
                     { //if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot].GetType() == typeof(Weapon) && Inventory[selectedInventorySlot] is Weapon) {
+                        if (Inventory[selectedInventorySlot] is RangedWeapon)
+                        {
+                            // Engine.playSoundBowEquip1();
+                            // GameplayScreen.GameEngine.bowEquip1.Play();
+                            gameEngine.bowEquip1.Play();
+                        }
+                        if (Inventory[selectedInventorySlot] is MeleeWeapon)
+                        {
+                            // Engine.playSoundBowEquip1();
+                            // GameplayScreen.GameEngine.bowEquip1.Play();
+                            gameEngine.swordEquip1.Play();
+                        }                      
                         Weapon toBeSwitchedWeapon = ActiveWeapon;
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
@@ -199,6 +215,18 @@ namespace GameStateManagementSample.Models.Entities
                 {
                     if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot] is Weapon)
                     { //if (Inventory[selectedInventorySlot] != null && Inventory[selectedInventorySlot].GetType() == typeof(Weapon) && Inventory[selectedInventorySlot] is Weapon) {
+                        if (Inventory[selectedInventorySlot] is RangedWeapon)
+                        {
+                            // Engine.playSoundBowEquip1();
+                            // GameplayScreen.GameEngine.bowEquip1.Play();
+                            gameEngine.bowEquip1.Play();
+                        }
+                        if (Inventory[selectedInventorySlot] is MeleeWeapon)
+                        {
+                            // Engine.playSoundBowEquip1();
+                            // GameplayScreen.GameEngine.bowEquip1.Play();
+                            gameEngine.swordEquip1.Play();
+                        }                
                         Weapon toBeSwitchedWeapon = ActiveWeapon;
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
