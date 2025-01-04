@@ -66,9 +66,9 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(0) && !mapVisual[xmapVisual, ymapVisual - 1])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(0) && !mapVisual[xmapVisual -1, ymapVisual])
                         {
-                            ymapVisual -= 1;
+                            xmapVisual -= 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y -= ROOM_DISTANCE;
@@ -94,9 +94,9 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(1) && !mapVisual[xmapVisual + 1, ymapVisual])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(1) && !mapVisual[xmapVisual, ymapVisual+1])
                         {
-                            xmapVisual += 1;
+                            ymapVisual += 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X += ROOM_DISTANCE;
@@ -121,9 +121,9 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(2) && !mapVisual[xmapVisual, ymapVisual + 1])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(2) && !mapVisual[xmapVisual +1, ymapVisual])
                         {
-                            ymapVisual += 1;
+                            xmapVisual += 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y += ROOM_DISTANCE;
@@ -147,9 +147,9 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(3) && !mapVisual[xmapVisual - 1, ymapVisual])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(3) && !mapVisual[xmapVisual, ymapVisual-1])
                         {
-                            xmapVisual -= 1;
+                            ymapVisual -= 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X -= ROOM_DISTANCE;
