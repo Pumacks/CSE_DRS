@@ -83,6 +83,8 @@ namespace GameStateManagementSample.Models.GameLogic
             set { enemies = value; }
         }
 
+        private Ai ai;
+
 
         private List<Projectile> projectiles;
 
@@ -178,7 +180,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 Enemies
             );
 
-
+            ai = new Ai();
 
             map.LoadMapTextures(content);
             map.GenerateMap(content);
@@ -694,9 +696,29 @@ namespace GameStateManagementSample.Models.GameLogic
         {
             List<Enemy> deadEnemy = new List<Enemy>();
 
+
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                // Temporäre Variable, um das Listenobjekt zu bearbeiten
+                Enemy tempEnemy = enemies[i];
+
+                // Aktualisiere die Distanz und lasse den Feind dem Spieler folgen
+                ai.FollowPlayer(ref tempEnemy);  // Übergabe mit ref
+                ai.UpdateDistanceToHero(hero.Position);
+
+                // Aktualisiere den Feind
+                tempEnemy.Update(gameTime);
+
+                // Änderungen zurück in die Liste schreiben
+                enemies[i] = tempEnemy;
+
+                // Prüfe, ob der Feind tot ist
+                if (tempEnemy.HealthPoints <= 0)
+                    deadEnemy.Add(tempEnemy);
+            }
+
             foreach (var e in Enemies)
             {
-
                 e.Update(gameTime);
                 if (e.HealthPoints <= 0)
                     deadEnemy.Add(e);
@@ -708,6 +730,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 bool finishedAnim = e.PlayDeathAnimation();
                 if (finishedAnim)
                 {
+                    Console.WriteLine("Enemy wird removed");
                     Enemies.Remove(e);
                     worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
                     worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
