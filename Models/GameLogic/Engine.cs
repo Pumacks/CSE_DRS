@@ -703,18 +703,15 @@ namespace GameStateManagementSample.Models.GameLogic
                 Enemy tempEnemy = enemies[i];
 
                 // Aktualisiere die Distanz und lasse den Feind dem Spieler folgen
+                ai.UpdateDistanceToHero(hero.Position, enemies[i].Position);
                 ai.FollowPlayer(ref tempEnemy);  // Übergabe mit ref
-                ai.UpdateDistanceToHero(hero.Position);
 
                 // Aktualisiere den Feind
-                tempEnemy.Update(gameTime);
+                // tempEnemy.Update(gameTime);
 
                 // Änderungen zurück in die Liste schreiben
                 enemies[i] = tempEnemy;
 
-                // Prüfe, ob der Feind tot ist
-                if (tempEnemy.HealthPoints <= 0)
-                    deadEnemy.Add(tempEnemy);
             }
 
             foreach (var e in Enemies)
