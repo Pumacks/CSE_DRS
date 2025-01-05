@@ -26,6 +26,10 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D grass3;
         private Texture2D tree;
 
+        private Texture2D grassElement1;
+        private Texture2D grassElement2;
+        private Texture2D grassElement3;
+
         private Texture2D grasslvl2;
         private Texture2D stone;
         private Texture2D stone2;
@@ -68,13 +72,14 @@ namespace GameStateManagementSample.Models.Map
             }
         }
 
+
         public void LoadTextures(ContentManager content)
         {
             //lvl1 grass
             grass = content.Load<Texture2D>("Map/grass");
             grass2 = content.Load<Texture2D>("Map/grass2");
             grass3 = content.Load<Texture2D>("Map/grass3");
-            
+
             //lvl2 grass
             stone = content.Load<Texture2D>("Map/stone");
             stone2 = content.Load<Texture2D>("Map/stone2");
@@ -82,15 +87,15 @@ namespace GameStateManagementSample.Models.Map
             stone4 = content.Load<Texture2D>("Map/stone4");
             grasslvl2 = content.Load<Texture2D>("Map/grasslvl2");
             treelvl2 = content.Load<Texture2D>("Map/treelvl2");
-            
+
             //lvl3 grass
             lvl3floor1 = content.Load<Texture2D>("Map/lvl3floor1");
             lvl3floor2 = content.Load<Texture2D>("Map/lvl3floor2");
             lvl3floor3 = content.Load<Texture2D>("Map/lvl3floor3");
             treelvl3 = content.Load<Texture2D>("Map/treelvl3");
-            
+
             hole = content.Load<Texture2D>("Map/hole");
-            tree = content.Load<Texture2D>("Map/tree");
+            tree = content.Load<Texture2D>("Map/Tree1_scaled");
 
             doorN = content.Load<Texture2D>("Map/doorN");
             doorE = content.Load<Texture2D>("Map/doorE");
@@ -157,8 +162,8 @@ namespace GameStateManagementSample.Models.Map
                             tiles[i, j] = new Tile(tilePos, lvl3floor3, false);
                     }
                     // for things like pots etc.
-                    rdmNumber = random.Next(1,100);
-                    if(rdmNumber == 15 && i >= 4 && j >= 4 && i <= tiles.GetLength(0)-4 && j <= tiles.GetLength(1)-4 )
+                    rdmNumber = random.Next(1, 100);
+                    if (rdmNumber == 15 && i >= 4 && j >= 4 && i <= tiles.GetLength(0) - 4 && j <= tiles.GetLength(1) - 4)
                         tiles[i, j] = new Tile(tilePos, pot, true);
 
                     tilePos.X += 100;

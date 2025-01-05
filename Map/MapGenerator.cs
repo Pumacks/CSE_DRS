@@ -55,12 +55,12 @@ namespace GameStateManagementSample.Models.Map
 
             for (int i = 1; i < rooms.Length; i++)
             {
-                randomdirection = random.Next(1, 5);
+                randomdirection = random.Next(0, 4);
                 randomRoom = random.Next(0, i);
 
                 switch (randomdirection) //direction 0 = north, 1 = east, 2 = south, 3 = west
                 {
-                    case 1: // North
+                    case 0: // North
                         if (rooms[randomRoom].allDirectionsBlocked())
                         {
                             i--;
@@ -88,7 +88,7 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                         break;
 
-                    case 2: // East
+                    case 1: // East
                         if (rooms[randomRoom].allDirectionsBlocked())
                         {
                             i--;
@@ -115,7 +115,7 @@ namespace GameStateManagementSample.Models.Map
                         else
                             i--;
                         break;
-                    case 3: // South
+                    case 2: // South
                         if (rooms[randomRoom].allDirectionsBlocked())
                         {
                             i--;
@@ -141,7 +141,7 @@ namespace GameStateManagementSample.Models.Map
                         else
                             i--;
                         break;
-                    case 4: // West
+                    case 3: // West
                         if (rooms[randomRoom].allDirectionsBlocked())
                         {
                             i--;
