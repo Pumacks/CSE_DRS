@@ -11,14 +11,12 @@ namespace GameStateManagementSample.Models.Entities
 {
     public class Ai
     {
-        private Enemy enemy;
         float distanceXToPlayer;
         float distanceYToPlayer;
 
-
         public Ai() { }
 
-        public void FollowPlayer(ref Enemy enemy)
+        public virtual void FollowPlayer(ref Enemy enemy)
         {
             Vector2 movingDirection = Vector2.Zero;
 

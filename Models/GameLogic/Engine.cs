@@ -699,6 +699,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
             for (int i = 0; i < enemies.Count; i++)
             {
+                /*
                 // Temporäre Variable, um das Listenobjekt zu bearbeiten
                 Enemy tempEnemy = enemies[i];
 
@@ -711,11 +712,16 @@ namespace GameStateManagementSample.Models.GameLogic
 
                 // Änderungen zurück in die Liste schreiben
                 enemies[i] = tempEnemy;
+                enemies[i].UpdateDistanceToHero(hero.Position);
+                enemies[i].FollowPlayer();
+*/
 
             }
 
             foreach (var e in Enemies)
             {
+                e.UpdateDistanceToHero(hero.Position);
+                e.FollowPlayer2(map.Rooms[0]);
                 e.Update(gameTime);
                 if (e.HealthPoints <= 0)
                     deadEnemy.Add(e);
@@ -727,7 +733,6 @@ namespace GameStateManagementSample.Models.GameLogic
                 bool finishedAnim = e.PlayDeathAnimation();
                 if (finishedAnim)
                 {
-                    Console.WriteLine("Enemy wird removed");
                     Enemies.Remove(e);
                     worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
                     worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
