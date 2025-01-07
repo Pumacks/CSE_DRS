@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using GameStateManagement;
 using System.Collections.Generic;
+using GameStateManagementSample.Models.GameLogic;
 
 
 namespace GameStateManagementSample.Models.Items
@@ -31,6 +32,7 @@ namespace GameStateManagementSample.Models.Items
             }
         }
         private Texture2D projectileTexture;
+        
         public Texture2D ProjectileTexture
         {
             get
@@ -44,7 +46,7 @@ namespace GameStateManagementSample.Models.Items
         }
         #endregion
 
-        public RangedWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, int projectileSpeed, Texture2D projectileTexture, List<Projectile> projectileList) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies) {
+        public RangedWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, int projectileSpeed, Texture2D projectileTexture, List<Projectile> projectileList, Engine engine) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies, engine) {
             this.projectileSpeed = projectileSpeed;
             this.projectileTexture = projectileTexture;
             this.Projectiles = projectileList;
@@ -58,6 +60,21 @@ namespace GameStateManagementSample.Models.Items
         public override void attack(Entity owner)
         {
 
+            Random random = new Random();
+            int randomInt = random.Next(0,3);
+            if (randomInt == 0)
+            gameEngine.bowShoot1.Play();
+            else if (randomInt == 1)
+            gameEngine.bowShoot2.Play();
+            else
+            gameEngine.bowShoot3.Play();
+            // if (random.Next(0,3) == 0)
+            // gameEngine.bowShoot1.Play();
+            // else if (random.Next(0,2) == 0)
+            // gameEngine.bowShoot2.Play();
+            // else
+            // gameEngine.bowShoot3.Play();
+
             Vector2 vector2 = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(owner.Camera.Transform));
 
             Projectiles.Add(
@@ -68,7 +85,8 @@ namespace GameStateManagementSample.Models.Items
                 this.ItemOwner.Position,
                 vector2,
                 projectileSpeed,
-                this.weaponRange));
+                this.weaponRange,
+                this.weaponDamage));
         }
 
         public override void DrawItem(SpriteBatch spriteBatch)
