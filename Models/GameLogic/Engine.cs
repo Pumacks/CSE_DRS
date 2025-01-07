@@ -522,7 +522,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             if (!theProjectile.IsStuck) // <---------- notice this
                                 if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
                                 {
-                                    targetEnemy.HealthPoints -= theProjectile.ProjectileDamage;
+                                    targetEnemy.TakeDamage(theProjectile.ProjectileDamage);
                                     Projectiles.RemoveAt(projectileUpdateIndex);
                                 }
                         });

@@ -67,7 +67,7 @@ namespace GameStateManagementSample.Models.Items
 
                     if (angle <= 52)
                     {
-                        targetEnemy.HealthPoints -= (int)this.WeaponDamage;
+                        targetEnemy.TakeDamage((int)WeaponDamage);
                     }
                 }
             });
