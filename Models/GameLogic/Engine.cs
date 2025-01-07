@@ -523,7 +523,7 @@ namespace GameStateManagementSample.Models.GameLogic
                                 if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
                                 {
                                     targetEnemy.TakeDamage(theProjectile.ProjectileDamage);
-                                    Projectiles.RemoveAt(projectileUpdateIndex);
+                                    Projectiles.Remove(theProjectile); // Projectiles.RemoveAt(projectileUpdateIndex); <--- ist fehleranfällig für IndexOutOfBoundsException
                                 }
                         });
 
