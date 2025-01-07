@@ -26,7 +26,8 @@ namespace GameStateManagementSample.Models.Entities
 
         public override void Move(Vector2 movement)
         {
-            Position += movement;
+            if (animState != AnimState.Death)
+                Position += movement;
         }
         public override void Atack()
         {
@@ -104,7 +105,7 @@ namespace GameStateManagementSample.Models.Entities
                 movingDirection.X -= MovementSpeed;
                 if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
                     colWest = true;
-                if(!colWest)
+                if (!colWest)
                     Move(movingDirection);
             }
             if (distanceYToPlayer > 120 && distanceYToPlayer < 500)
@@ -112,7 +113,7 @@ namespace GameStateManagementSample.Models.Entities
                 movingDirection.Y += MovementSpeed;
                 if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
                     colSouth = true;
-                if(!colSouth)
+                if (!colSouth)
                     Move(movingDirection);
             }
             if (distanceYToPlayer < -120 && distanceYToPlayer > -500)
@@ -120,7 +121,7 @@ namespace GameStateManagementSample.Models.Entities
                 movingDirection.Y -= MovementSpeed;
                 if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
                     colNorth = true;
-                if(!colNorth)
+                if (!colNorth)
                     Move(movingDirection);
             }
 
