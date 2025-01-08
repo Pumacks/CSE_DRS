@@ -35,7 +35,7 @@ namespace GameStateManagementSample.Models.Items
             }
             set
             {
-                BoundingBox = new Rectangle((int)value.X - ItemTexture.Width / 2, (int)value.Y - ItemTexture.Height / 2, ItemTexture.Width, ItemTexture.Height);
+                //BoundingBox = new Rectangle((int)value.X - ItemTexture.Width / 2, (int)value.Y - ItemTexture.Height / 2, ItemTexture.Width, ItemTexture.Height);
                 this.currentProjectilePosition = value;
                 // Update hitbox here too?
             }
