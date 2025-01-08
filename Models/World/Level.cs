@@ -9,6 +9,7 @@ namespace GameStateManagementSample.Models.World
     public class Level
     {
 
+        // This entire class can be scrapped. It's all in Engine.
         #region attributes, fields and properties
         private List<Enemy> enemies;
         public List<Enemy> Enemies

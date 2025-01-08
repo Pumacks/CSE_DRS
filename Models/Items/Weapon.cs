@@ -7,6 +7,7 @@ using GameStateManagementSample.Models.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using GameStateManagementSample.Models.GameLogic;
 
 namespace GameStateManagementSample.Models.Items
 {
@@ -14,7 +15,7 @@ namespace GameStateManagementSample.Models.Items
     {
 
         #region attributes, fields and properties
-        private float weaponDamage; // Der Schaden, den jeder Schwerthieb oder jeder Pfeilschuss verursacht.
+        protected float weaponDamage; // Der Schaden, den jeder Schwerthieb oder jeder Pfeilschuss verursacht.
         public float WeaponDamage
         {
             get
@@ -26,7 +27,7 @@ namespace GameStateManagementSample.Models.Items
                 this.weaponDamage = value;
             }
         }
-        private float attackSpeed; // Weapon Attack speed in milliseconds between attacks (1000 means 1 attack per second, 200 means 5 attacks per second, etc.). Wieviele Schwerthiebe oder Pfeilschüsse pro Zeiteinheit erfolgen können.
+        protected float attackSpeed; // Weapon Attack speed in milliseconds between attacks (1000 means 1 attack per second, 200 means 5 attacks per second, etc.). Wieviele Schwerthiebe oder Pfeilschüsse pro Zeiteinheit erfolgen können.
         public float AttackSpeed
         {
             get
@@ -62,7 +63,7 @@ namespace GameStateManagementSample.Models.Items
                 this.lastAttackGameTimeInMilliseconds = value;
             }
         }
-        private float weaponRotationFloatValue; //Is this needed? I doubt so.
+        private float weaponRotationFloatValue;
         public float WeaponRotationFloatValue
         {
             get
@@ -100,6 +101,7 @@ namespace GameStateManagementSample.Models.Items
                 this.projectiles = value;
             }
         }
+        protected Engine gameEngine;
         /*
         Die Überlegung ist an dieser Stelle, wie kompliziert wir die Waffenlogik machen wollen.
         Um eine Art Balance zu haben sollten Nahkampf und Fernkampf sich ausgleichende Vor-, und Nachteile haben. Gleichzeitig soll keines davon den sicheren Tod bedeuten (Man sollte vielleicht mit dem Schwert angreifend außer Reichweite bleiben können).
@@ -111,13 +113,14 @@ namespace GameStateManagementSample.Models.Items
         */
         #endregion
 
-        public Weapon(String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies) : base(itemName, itemTexture, itemOwner)
-        {
+        public Weapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, Engine engine) : base (itemName, itemTexture, itemOwner) {
             this.weaponDamage = weaponDamage;
             this.attackSpeed = attackSpeed;
             this.weaponRange = weaponRange;
             this.enemies = enemies;
             this.lastAttackGameTimeInMilliseconds = 0;
+            this.weaponRotationFloatValue = 0;
+            gameEngine = engine;
         }
 
         // public float calculateWeaponRotation()
@@ -165,6 +168,13 @@ namespace GameStateManagementSample.Models.Items
                 Console.WriteLine("Rückgabewert der Funktion distance ist negativ!");
                 return -1;
             }
+        }
+
+        public Vector2 vectorToTarget() {
+            Vector2 startVector = this.ItemOwner.Position;
+            Vector2 targetVector = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(this.ItemOwner.Camera.Transform));
+            Vector2 resultVector = new Vector2(targetVector.X-startVector.X,targetVector.Y-startVector.Y);
+            return resultVector;
         }
     }
 }

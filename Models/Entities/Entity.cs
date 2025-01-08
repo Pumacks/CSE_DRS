@@ -13,7 +13,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace GameStateManagementSample.Models.Entities
 {
-    enum AnimState
+    public enum AnimState
     {
         Idle,
         Walk,
@@ -40,7 +40,7 @@ namespace GameStateManagementSample.Models.Entities
         private float speedPotionDuration;
         private float defaultMvSpeed;
 
-        private AnimState animState = AnimState.Idle;
+        protected AnimState animState = AnimState.Idle;
 
         protected List<GUIObserver> GUIObservers = new();
         //Testing Purposes, required to give a Camera to an Entity so that the

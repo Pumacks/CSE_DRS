@@ -14,6 +14,18 @@ namespace GameStateManagementSample.Models.Items
 
         #region attributes, fields and properties
         public static int projectileNumber = 0;
+        private Rectangle projectileHitBox;
+        public Rectangle ProjectileHitBox
+        {
+            get
+            {
+                return this.projectileHitBox;
+            }
+            set
+            {
+                this.projectileHitBox = value;
+            }
+        }
         private Vector2 currentProjectilePosition;
         public Vector2 CurrentProjectilePosition
         {
@@ -23,8 +35,9 @@ namespace GameStateManagementSample.Models.Items
             }
             set
             {
-                BoundingBox = new Rectangle((int)value.X - ItemTexture.Width / 2, (int)value.Y - ItemTexture.Height / 2, ItemTexture.Width, ItemTexture.Height);
+                //BoundingBox = new Rectangle((int)value.X - ItemTexture.Width / 2, (int)value.Y - ItemTexture.Height / 2, ItemTexture.Width, ItemTexture.Height);
                 this.currentProjectilePosition = value;
+                // Update hitbox here too?
             }
         }
         private Vector2 targetProjectilePosition;
@@ -111,19 +124,66 @@ namespace GameStateManagementSample.Models.Items
                 this.distanceCovered = value;
             }
         }
+        private Texture2D projectileTexture;
+        public Texture2D ProjectileTexture
+        {
+            get
+            {
+                return this.projectileTexture;
+            }
+            set
+            {
+                this.projectileTexture = value;
+            }
+        }
+        private int projectileDamage;
+        public int ProjectileDamage
+        {
+            get
+            {
+                return this.projectileDamage;
+            }
+            set
+            {
+                this.projectileDamage = value;
+            }
+        }
+        private bool isStuck = false;
+        public bool IsStuck
+        {
+            get
+            {
+                return this.isStuck;
+            }
+            set
+            {
+                this.isStuck = value;
+            }
+        }
         #endregion
 
-        public Projectile(String itemName, Texture2D itemTexture, Entity itemOwner, Vector2 pos, Vector2 target, int projectileSpeed, float weaponRange) : base(itemName, itemTexture, itemOwner)
+        public Projectile(String itemName, Texture2D itemTexture, Entity itemOwner, Vector2 pos, Vector2 target, int projectileSpeed, float weaponRange, float weaponDamage) : base(itemName, itemTexture, itemOwner)
         {
             this.ItemName = "Projectile Nr. " + ++projectileNumber;
             this.currentProjectilePosition = pos;
             this.targetProjectilePosition = target;
-            this.velocity = projectileSpeed;
+
             this.projectileRotationFloatValue = calculateRotation(pos, target);
             this.speedVector = calculateSpeedVector(pos, target, projectileSpeed);
             // this.projectileTimeToLive = (int)(weaponRange * 1000 / projectileSpeed);
+
+            this.velocity = projectileSpeed;
             this.projectileRange = (int)weaponRange;
+            this.projectileDamage = (int) weaponDamage;
             this.distanceCovered = 0;
+
+            this.projectileTexture = itemTexture;
+
+            this.projectileHitBox = new Rectangle( // The hitbox shall only be a small rectangle at the tip of the arrow.
+                (int) currentProjectilePosition.X - projectileTexture.Width / 2,
+                (int) currentProjectilePosition.Y - projectileTexture.Height / 2,
+                projectileTexture.Width,
+                projectileTexture.Width);
         }
 
         private float calculateRotation(Vector2 start, Vector2 end)

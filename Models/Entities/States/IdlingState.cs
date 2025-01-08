@@ -2,17 +2,17 @@
 
 public class IdlingState : IEnemyState
 {
-    public void Execute()
+    public void Execute(Enemy enemy)
     {
         throw new System.NotImplementedException();
     }
 
-    public void Enter()
+    public void Enter(Enemy enemy)
     {
         throw new System.NotImplementedException();
     }
 
-    public void Exit()
+    public void Exit(Enemy enemy)
     {
         throw new System.NotImplementedException();
     }
