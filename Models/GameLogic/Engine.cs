@@ -281,6 +281,32 @@ namespace GameStateManagementSample.Models.GameLogic
             //spriteBatch.End();
 
 
+
+            if (Projectiles != null)
+            {
+                spriteBatch.Begin();
+                int projectileIndex;
+                for (projectileIndex = 0; projectileIndex < Projectiles.Count; projectileIndex++)
+                {
+                    spriteBatch.Draw(
+                        texture: ArrowTexture,
+                        position: Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,
+                            camera.Transform), // Hier Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,camera.Transform) anstatt Projectiles[projectileIndex].CurrentProjectilePosition
+                        sourceRectangle: null,
+                        color: Color.White,
+                        //rotation: (float) projectileIndex*2*(float)Math.PI/100, //normally it depends on the shooting direction of the arrow. This line is currently just for testing purposes.
+                        rotation: Projectiles[projectileIndex].ProjectileRotationFloatValue,
+                        origin: new Vector2(ArrowTexture.Width / 2, ArrowTexture.Height / 2),
+                        scale: 1f,
+                        effects: SpriteEffects.None,
+                        layerDepth: 0f
+                    );
+                }
+
+                spriteBatch.End();
+            }
+
+
             // to draw the inventory
             spriteBatch.Begin();
             spriteBatch.Draw(
@@ -444,32 +470,6 @@ namespace GameStateManagementSample.Models.GameLogic
             );
             spriteBatch.End();
             */
-
-
-
-            if (Projectiles != null)
-            {
-                spriteBatch.Begin();
-                int projectileIndex;
-                for (projectileIndex = 0; projectileIndex < Projectiles.Count; projectileIndex++)
-                {
-                    spriteBatch.Draw(
-                        texture: ArrowTexture,
-                        position: Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,
-                            camera.Transform), // Hier Vector2.Transform(Projectiles[projectileIndex].CurrentProjectilePosition,camera.Transform) anstatt Projectiles[projectileIndex].CurrentProjectilePosition
-                        sourceRectangle: null,
-                        color: Color.White,
-                        //rotation: (float) projectileIndex*2*(float)Math.PI/100, //normally it depends on the shooting direction of the arrow. This line is currently just for testing purposes.
-                        rotation: Projectiles[projectileIndex].ProjectileRotationFloatValue,
-                        origin: new Vector2(ArrowTexture.Width / 2, ArrowTexture.Height / 2),
-                        scale: 1f,
-                        effects: SpriteEffects.None,
-                        layerDepth: 0f
-                    );
-                }
-
-                spriteBatch.End();
-            }
 
         }
 
