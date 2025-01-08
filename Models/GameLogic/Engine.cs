@@ -811,32 +811,10 @@ namespace GameStateManagementSample.Models.GameLogic
         {
             List<Enemy> deadEnemy = new List<Enemy>();
 
-
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                /*
-                // Temporäre Variable, um das Listenobjekt zu bearbeiten
-                Enemy tempEnemy = enemies[i];
-
-                // Aktualisiere die Distanz und lasse den Feind dem Spieler folgen
-                ai.UpdateDistanceToHero(hero.Position, enemies[i].Position);
-                ai.FollowPlayer(ref tempEnemy);  // Übergabe mit ref
-
-                // Aktualisiere den Feind
-                // tempEnemy.Update(gameTime);
-
-                // Änderungen zurück in die Liste schreiben
-                enemies[i] = tempEnemy;
-                enemies[i].UpdateDistanceToHero(hero.Position);
-                enemies[i].FollowPlayer();
-*/
-
-            }
-
             foreach (var e in Enemies)
             {
                 e.UpdateDistanceToHero(hero.Position);
-                e.FollowPlayer2(map.Rooms[0]);
+                e.FollowPlayer(map.Rooms[0]);
                 e.Update(gameTime);
                 if (e.HealthPoints <= 0)
                     deadEnemy.Add(e);

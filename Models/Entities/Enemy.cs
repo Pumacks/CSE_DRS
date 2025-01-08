@@ -43,54 +43,10 @@ namespace GameStateManagementSample.Models.Entities
             //-------
         }
 
-
-        // AI
-        public virtual void FollowPlayer()
-        {
-            Vector2 movingDirection = Vector2.Zero;
-
-            if (distanceXToPlayer > 120 && distanceXToPlayer < 500)
-            {
-                movingDirection.X += MovementSpeed;
-                Move(movingDirection);
-            }
-            if (distanceXToPlayer < -120 && distanceXToPlayer > -500)
-            {
-                movingDirection.X -= MovementSpeed;
-                Move(movingDirection);
-            }
-            if (distanceYToPlayer > 120 && distanceYToPlayer < 500)
-            {
-                movingDirection.Y += MovementSpeed;
-                Move(movingDirection);
-            }
-            if (distanceYToPlayer < -120 && distanceYToPlayer > -500)
-            {
-                movingDirection.Y -= MovementSpeed;
-                Move(movingDirection);
-            }
-        }
-
-        public virtual void FollowPlayer2(Room room)
+        public virtual void FollowPlayer(Room room)
         {
             Vector2 movingDirection = Vector2.Zero;
             bool colNorth = false, colEast = false, colSouth = false, colWest = false;
-
-            /*
-            #region StructureCollision
-
-            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                colNorth = true;
-            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                colSouth = true;
-            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                colWest = true;
-            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                colEast = true;
-
-            #endregion
-            */
-
 
             if (distanceXToPlayer > 120 && distanceXToPlayer < 500)
             {
