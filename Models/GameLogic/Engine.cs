@@ -511,7 +511,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         // Updating each arrow's hitbox
                         if (!theProjectile.IsStuck) Projectiles[projectileUpdateIndex].ProjectileHitBox = new Rectangle(
                             (int)theProjectile.CurrentProjectilePosition.X - theProjectile.ProjectileTexture.Width / 2,
-                            (int)theProjectile.CurrentProjectilePosition.Y - theProjectile.ProjectileTexture.Height - theProjectile.ProjectileTexture.Width / 2,
+                            (int)theProjectile.CurrentProjectilePosition.Y - theProjectile.ProjectileTexture.Height / 2,
                             theProjectile.ProjectileTexture.Width,
                             theProjectile.ProjectileTexture.Width
                         );

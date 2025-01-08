@@ -181,7 +181,7 @@ namespace GameStateManagementSample.Models.Items
 
             this.projectileHitBox = new Rectangle( // The hitbox shall only be a small rectangle at the tip of the arrow.
                 (int) currentProjectilePosition.X - projectileTexture.Width / 2,
-                (int) currentProjectilePosition.Y - projectileTexture.Height - projectileTexture.Width / 2,
+                (int) currentProjectilePosition.Y - projectileTexture.Height / 2,
                 projectileTexture.Width,
                 projectileTexture.Width);
         }
