@@ -1,7 +1,10 @@
+using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace GameStateManagementSample.Models.Map
@@ -61,7 +64,9 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D doorlvl3W;
 
         private Texture2D pot;
-
+        private Texture2D initTexture; // for Enemy
+        private SpriteFont gameFont;
+            
         private Random random = new Random();
 
         public Room()
@@ -112,12 +117,16 @@ namespace GameStateManagementSample.Models.Map
             doorlvl3S = content.Load<Texture2D>("Map/Doorlvl3S");
             doorlvl3W = content.Load<Texture2D>("Map/Doorlvl3W");
 
+            
+            gameFont = content.Load<SpriteFont>("gamefont");
+            initTexture = content.Load<Texture2D>("Player/idle_frames/idle0");
             pot = content.Load<Texture2D>("Map/pot");
 
         }
 
-        public void GenerateRoom(Random random, Vector2 roomPos, int stage)
+        public void GenerateRoom(Random random, Vector2 roomPos, int stage, ref List<Enemy> enemies)
         {
+            
             this.stage = stage;
             tiles = GenerateRoomArray();
             if (tiles == null)
@@ -165,6 +174,17 @@ namespace GameStateManagementSample.Models.Map
                     rdmNumber = random.Next(1, 100);
                     if (rdmNumber == 15 && i >= 4 && j >= 4 && i <= tiles.GetLength(0) - 4 && j <= tiles.GetLength(1) - 4)
                         tiles[i, j] = new Tile(tilePos, pot, true);
+                    if (rdmNumber >= 90 && i >= 4 && j >= 4 && i <= tiles.GetLength(0) - 3 && j <= tiles.GetLength(1) - 3)
+                    {
+                        if (rdmNumber >= 90 && rdmNumber <= 93)
+                            enemies.Add(new EnemyWarrior(100, 1, tilePos, initTexture, gameFont, new List<Item>()));
+                        if (rdmNumber >= 94 && rdmNumber <= 97)
+                            enemies.Add(new EnemySpearman(100, 1, tilePos, initTexture, gameFont, new List<Item>()));
+                        if (rdmNumber >= 98 && rdmNumber <= 100)
+                            enemies.Add(new EnemyArcher(100, 1, tilePos, initTexture, gameFont, new List<Item>()));
+
+                    }
+
 
                     tilePos.X += 100;
                 }

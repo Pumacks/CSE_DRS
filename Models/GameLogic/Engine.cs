@@ -149,21 +149,6 @@ namespace GameStateManagementSample.Models.GameLogic
             //{
             //    Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
             //}
-
-            Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>());
-            enemyWarrior.Camera = camera;
-
-            Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), initTexture, gameFont, new List<Item>());
-            enemyArcher.Camera = camera;
-
-            Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>());
-            enemySpearman.Camera = camera;
-
-
-            enemies.Add(enemyWarrior);
-            enemies.Add(enemyArcher);
-            enemies.Add(enemySpearman);
-
             //ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
             ArrowTexture = content.Load<Texture2D>("Items/Projectile/Arrow");
             BowTexture = content.Load<Texture2D>("Bow1-130x25px");
@@ -217,9 +202,9 @@ namespace GameStateManagementSample.Models.GameLogic
             ai = new Ai();
 
             map.LoadMapTextures(content);
-            map.GenerateMap(content);
+            map.GenerateMap(content, ref enemies);
             hero.LoadContent(content);
-
+            enemies.ForEach(enem => enem.Camera =camera);
             enemies.ForEach(enemy1 => enemy1.LoadContent(content));
 
             Thread.Sleep(1000);
@@ -668,7 +653,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             clearEnemiesAndProjectiles();
 
                             map.SetStage(stage);
-                            map.GenerateMap(content);
+                            map.GenerateMap(content, ref enemies);
                             ClearItemsOnStageChange();
                         }
 
@@ -686,7 +671,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             stage++;
                             clearEnemiesAndProjectiles();
                             map.SetStage(stage);
-                            map.GenerateMap(content);
+                            map.GenerateMap(content, ref enemies);
                             ClearItemsOnStageChange();
                         }
 
@@ -704,7 +689,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             stage++;
                             clearEnemiesAndProjectiles();
                             map.SetStage(stage);
-                            map.GenerateMap(content);
+                            map.GenerateMap(content, ref enemies);
                             ClearItemsOnStageChange();
                         }
 
@@ -722,7 +707,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             stage++;
                             clearEnemiesAndProjectiles();
                             map.SetStage(stage);
-                            map.GenerateMap(content);
+                            map.GenerateMap(content, ref enemies);
                             ClearItemsOnStageChange();
                         }
 
