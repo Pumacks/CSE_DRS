@@ -18,8 +18,10 @@ namespace GameStateManagementSample.Models.Entities
         float distanceXToPlayer;
         float distanceYToPlayer;
 
-        float reductionDistance = 120;
+        float reductionDistance = 150;
         float recognitionDistance = 1100;
+        float howLong = 100;
+        float fleeAt = 60;
 
         public Enemy() { }
 
@@ -47,40 +49,95 @@ namespace GameStateManagementSample.Models.Entities
             //-------
         }
 
+
+        public virtual void Idling(Room room)
+        {
+
+            if (howLong > 0)
+            {
+                moveWest(room, 0.5f);
+                if (howLong == 1)
+                    howLong = -100;
+                howLong--;
+
+            }
+            if (howLong < 0)
+            {
+                moveEast(room, 0.5f);
+                if (howLong == -1)
+                    howLong = 100;
+                howLong++;
+            }
+
+        }
+
+        public virtual void Flee(Room room){
+            
+        }
+
         public virtual void FollowPlayer(Room room)
         {
             if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance))
             {
-                moveSouthEast(room);
+                if(HealthPoints <= fleeAt)
+                    moveNorthWest(room);
+                else
+                    moveSouthEast(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance))
             {
-                moveSouthWest(room);
+                if(HealthPoints <= fleeAt)
+                    moveNorthEast(room);
+                else
+                    moveSouthWest(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance))
             {
-                moveNorthEast(room);
+                if(HealthPoints <= fleeAt)
+                    moveSouthWest(room);
+                else
+                    moveNorthEast(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance))
             {
-                moveNorthWest(room);
+                if(HealthPoints <= fleeAt)
+                    moveSouthEast(room);
+                else
+                    moveNorthWest(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance) && distanceYToPlayer > -recognitionDistance && distanceYToPlayer < recognitionDistance)
             {
-                moveEast(room);
+                if(HealthPoints <= fleeAt)
+                    moveWest(room);
+                else
+                    moveEast(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance) && distanceYToPlayer > -recognitionDistance && distanceYToPlayer < recognitionDistance)
             {
-                moveWest(room);
+                if(HealthPoints <= fleeAt)
+                    moveEast(room);
+                else
+                    moveWest(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance) && distanceXToPlayer > -recognitionDistance && distanceXToPlayer < recognitionDistance)
             {
-                moveSouth(room);
+                if(HealthPoints <= fleeAt)
+                    moveNorth(room);
+                else
+                    moveSouth(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && distanceXToPlayer > -recognitionDistance && distanceXToPlayer < recognitionDistance)
             {
-                moveNorth(room);
+                if(HealthPoints <= fleeAt)
+                    moveSouth(room);
+                else
+                    moveNorth(room);
             }
+            else if(recognitionDistance < distanceXToPlayer && recognitionDistance < distanceYToPlayer || -recognitionDistance > distanceXToPlayer && -recognitionDistance < distanceYToPlayer){
+                Idling(room);
+                HealthPoints += 1;
+            }
+                
 
         }
 
@@ -164,6 +221,16 @@ namespace GameStateManagementSample.Models.Entities
                 Move(movingDirection);
             }
         }
+        private void moveEast(Room room, float movementspeedMultiplicator)
+        {
+            Vector2 movingDirection = Vector2.Zero;
+            movingDirection.X += MovementSpeed * movementspeedMultiplicator;
+
+            if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
+            {
+                Move(movingDirection);
+            }
+        }
         private void moveSouth(Room room)
         {
             Vector2 movingDirection = Vector2.Zero;
@@ -178,6 +245,16 @@ namespace GameStateManagementSample.Models.Entities
         {
             Vector2 movingDirection = Vector2.Zero;
             movingDirection.X -= MovementSpeed;
+
+            if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
+            {
+                Move(movingDirection);
+            }
+        }
+        private void moveWest(Room room, float movementspeedMultiplicator)
+        {
+            Vector2 movingDirection = Vector2.Zero;
+            movingDirection.X -= MovementSpeed * movementspeedMultiplicator;
 
             if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
             {
