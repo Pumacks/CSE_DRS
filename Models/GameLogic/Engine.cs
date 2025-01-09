@@ -788,8 +788,8 @@ namespace GameStateManagementSample.Models.GameLogic
                 if (hero.HasKey)
                 {
                     hero.Position = door.TeleportPosition;
-                    hero.HasKey = false;
                     stage++;
+                    hero.UseKey();
                     map.SetStage(stage);
                     map.GenerateMap(content);
                     ClearItemsOnStageChange();
