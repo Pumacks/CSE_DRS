@@ -15,6 +15,7 @@ using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Microsoft.Xna.Framework.Audio;
+using System.Runtime.Serialization;
 
 
 enum PlayerGameStatus
@@ -204,7 +205,7 @@ namespace GameStateManagementSample.Models.GameLogic
             map.LoadMapTextures(content);
             map.GenerateMap(content, ref enemies);
             hero.LoadContent(content);
-            enemies.ForEach(enem => enem.Camera =camera);
+            enemies.ForEach(enem => enem.Camera = camera);
             enemies.ForEach(enemy1 => enemy1.LoadContent(content));
 
             Thread.Sleep(1000);
@@ -514,24 +515,24 @@ namespace GameStateManagementSample.Models.GameLogic
 
                         // Checking whether the projectiles collide with any tiles in the map. Sadly this check is currently not possible for only the current room of the player, but only for all rooms.
                         if (!theProjectile.IsStuck)
-                        for (int roomNumber = 0; roomNumber < map.Rooms.Length; roomNumber++)
-                        {
-                            Room currentRoom = map.Rooms[roomNumber];
-                            for (int tileCounterX = 0; tileCounterX < currentRoom.GetTiles().GetLength(0); tileCounterX++)
+                            for (int roomNumber = 0; roomNumber < map.Rooms.Length; roomNumber++)
                             {
-                                for (int tileCounterY = 0; tileCounterY < currentRoom.GetTiles().GetLength(1); tileCounterY++)
+                                Room currentRoom = map.Rooms[roomNumber];
+                                for (int tileCounterX = 0; tileCounterX < currentRoom.GetTiles().GetLength(0); tileCounterX++)
                                 {
-                                    Tile currentTile = currentRoom.GetTiles()[tileCounterX, tileCounterY];
-                                    if (currentTile.Collision)
-                                        if (theProjectile.ProjectileHitBox.Intersects(currentTile.BoundingBox))
-                                        {
-                                            theProjectile.IsStuck = true;
-                                        }
-                                            
-                                    // At this point, this is O(n³), but that's okay for our purpose, especially since it's all small numbers. And it's still polynomial.
+                                    for (int tileCounterY = 0; tileCounterY < currentRoom.GetTiles().GetLength(1); tileCounterY++)
+                                    {
+                                        Tile currentTile = currentRoom.GetTiles()[tileCounterX, tileCounterY];
+                                        if (currentTile.Collision)
+                                            if (theProjectile.ProjectileHitBox.Intersects(currentTile.BoundingBox))
+                                            {
+                                                theProjectile.IsStuck = true;
+                                            }
+
+                                        // At this point, this is O(n³), but that's okay for our purpose, especially since it's all small numbers. And it's still polynomial.
+                                    }
                                 }
                             }
-                        }
 
 
                     }
@@ -651,7 +652,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
                             // The enemies and projectiles need to get cleared between stages because we're entering new rooms where the old enemies and projectiles don't exist, and this happens at similar coordinates.
                             clearEnemiesAndProjectiles();
-
+                            Enemies = new List<Enemy>();
                             map.SetStage(stage);
                             map.GenerateMap(content, ref enemies);
                             ClearItemsOnStageChange();
@@ -670,6 +671,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             hero.Position = door.TeleportPosition;
                             stage++;
                             clearEnemiesAndProjectiles();
+                            Enemies = new List<Enemy>();
                             map.SetStage(stage);
                             map.GenerateMap(content, ref enemies);
                             ClearItemsOnStageChange();
@@ -688,6 +690,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             hero.Position = door.TeleportPosition;
                             stage++;
                             clearEnemiesAndProjectiles();
+                            Enemies = new List<Enemy>();
                             map.SetStage(stage);
                             map.GenerateMap(content, ref enemies);
                             ClearItemsOnStageChange();
@@ -706,6 +709,7 @@ namespace GameStateManagementSample.Models.GameLogic
                             hero.Position = door.TeleportPosition;
                             stage++;
                             clearEnemiesAndProjectiles();
+                            Enemies = new List<Enemy>();
                             map.SetStage(stage);
                             map.GenerateMap(content, ref enemies);
                             ClearItemsOnStageChange();
@@ -776,7 +780,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
         public void clearEnemiesAndProjectiles()
         {
-            Enemies.Clear();
+            // enemies.Clear();
             Projectiles.Clear();
         }
 

@@ -91,13 +91,13 @@ namespace GameStateManagementSample.Models.Map
             stone3 = content.Load<Texture2D>("Map/stone3");
             stone4 = content.Load<Texture2D>("Map/stone4");
             grasslvl2 = content.Load<Texture2D>("Map/grasslvl2");
-            treelvl2 = content.Load<Texture2D>("Map/treelvl2");
+            treelvl2 = content.Load<Texture2D>("Map/SwampTree");
 
             //lvl3 grass
             lvl3floor1 = content.Load<Texture2D>("Map/lvl3floor1");
             lvl3floor2 = content.Load<Texture2D>("Map/lvl3floor2");
             lvl3floor3 = content.Load<Texture2D>("Map/lvl3floor3");
-            treelvl3 = content.Load<Texture2D>("Map/treelvl3");
+            treelvl3 = content.Load<Texture2D>("Map/Totem_1");
 
             hole = content.Load<Texture2D>("Map/hole");
             tree = content.Load<Texture2D>("Map/Tree1_scaled");
@@ -171,7 +171,9 @@ namespace GameStateManagementSample.Models.Map
                             tiles[i, j] = new Tile(tilePos, lvl3floor3, false);
                     }
                     // for things like pots etc.
-                    rdmNumber = random.Next(1, 100);
+                    rdmNumber = random.Next(1, 125);
+                    if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                        tiles[i, j] = new Tile(tilePos, pot, true);
                     if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
                         tiles[i, j] = new Tile(tilePos, pot, true);
                     if (rdmNumber >= 90 && i >= 4 && j >= 4 && i <= tiles.GetLength(0) - 3 && j <= tiles.GetLength(1) - 3)
@@ -242,7 +244,7 @@ namespace GameStateManagementSample.Models.Map
                     }
                     if (stage == 2)
                     {
-                        if (i == tiles.GetLength(0) - 1)
+                        if (i == tiles.GetLength(0) - 1 || i == 0)
                             spriteBatch.Draw(grasslvl2, new Vector2(tiles[i, j].getPos().X, tiles[i, j].getPos().Y + 100), Color.White);
                         if (tiles[i, j].getTexture() == treelvl2)
                             spriteBatch.Draw(tiles[i, j].getTexture(), tiles[i, j].getPos(), Color.White);

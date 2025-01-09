@@ -584,6 +584,18 @@
 /processorParam:TextureFormat=Color
 /build:Map/stone4.png
 
+#begin Map/SwampTree.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Map/SwampTree.png
+
 #begin Map/Testblock.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -595,6 +607,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Map/Testblock.png
+
+#begin Map/Totem_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Map/Totem_1.png
 
 #begin Map/tree.png
 /importer:TextureImporter
@@ -1287,18 +1311,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/Arrow.png
 
-#begin Skeleton_Archer/Arrow.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Arrow.png
-
 #begin Skeleton_Archer/Attack_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1310,30 +1322,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/Attack_1.png
-
-#begin Skeleton_Archer/Attack_1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Attack_1.png
-
-#begin Skeleton_Archer/Attack_2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Attack_2.png
 
 #begin Skeleton_Archer/Attack_2.png
 /importer:TextureImporter
@@ -1359,18 +1347,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/Attack_3.png
 
-#begin Skeleton_Archer/Attack_3.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Attack_3.png
-
 #begin Skeleton_Archer/Dead.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1382,30 +1358,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/Dead.png
-
-#begin Skeleton_Archer/Dead.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Dead.png
-
-#begin Skeleton_Archer/death_frames/death0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/death_frames/death0.png
 
 #begin Skeleton_Archer/death_frames/death0.png
 /importer:TextureImporter
@@ -1431,18 +1383,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/death_frames/death1.png
 
-#begin Skeleton_Archer/death_frames/death1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/death_frames/death1.png
-
 #begin Skeleton_Archer/death_frames/death2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1454,30 +1394,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/death_frames/death2.png
-
-#begin Skeleton_Archer/death_frames/death2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/death_frames/death2.png
-
-#begin Skeleton_Archer/death_frames/death3.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/death_frames/death3.png
 
 #begin Skeleton_Archer/death_frames/death3.png
 /importer:TextureImporter
@@ -1503,18 +1419,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/death_frames/death4.png
 
-#begin Skeleton_Archer/death_frames/death4.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/death_frames/death4.png
-
 #begin Skeleton_Archer/Evasion.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1526,30 +1430,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/Evasion.png
-
-#begin Skeleton_Archer/Evasion.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Evasion.png
-
-#begin Skeleton_Archer/Hurt.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Hurt.png
 
 #begin Skeleton_Archer/Hurt.png
 /importer:TextureImporter
@@ -1575,18 +1455,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/idle_frames/idle0.png
 
-#begin Skeleton_Archer/idle_frames/idle0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/idle_frames/idle0.png
-
 #begin Skeleton_Archer/idle_frames/idle1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1598,30 +1466,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/idle_frames/idle1.png
-
-#begin Skeleton_Archer/idle_frames/idle1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/idle_frames/idle1.png
-
-#begin Skeleton_Archer/idle_frames/idle2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/idle_frames/idle2.png
 
 #begin Skeleton_Archer/idle_frames/idle2.png
 /importer:TextureImporter
@@ -1647,18 +1491,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/idle_frames/idle3.png
 
-#begin Skeleton_Archer/idle_frames/idle3.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/idle_frames/idle3.png
-
 #begin Skeleton_Archer/idle_frames/idle4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1670,30 +1502,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/idle_frames/idle4.png
-
-#begin Skeleton_Archer/idle_frames/idle4.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/idle_frames/idle4.png
-
-#begin Skeleton_Archer/idle_frames/idle5.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/idle_frames/idle5.png
 
 #begin Skeleton_Archer/idle_frames/idle5.png
 /importer:TextureImporter
@@ -1719,18 +1527,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/idle_frames/idle6.png
 
-#begin Skeleton_Archer/idle_frames/idle6.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/idle_frames/idle6.png
-
 #begin Skeleton_Archer/Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1742,30 +1538,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/Idle.png
-
-#begin Skeleton_Archer/Idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Idle.png
-
-#begin Skeleton_Archer/Shot_1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Shot_1.png
 
 #begin Skeleton_Archer/Shot_1.png
 /importer:TextureImporter
@@ -1791,18 +1563,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/Shot_2.png
 
-#begin Skeleton_Archer/Shot_2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/Shot_2.png
-
 #begin Skeleton_Archer/shot_frames/shot0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1814,30 +1574,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/shot_frames/shot0.png
-
-#begin Skeleton_Archer/shot_frames/shot0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/shot_frames/shot0.png
-
-#begin Skeleton_Archer/shot_frames/shot1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/shot_frames/shot1.png
 
 #begin Skeleton_Archer/shot_frames/shot1.png
 /importer:TextureImporter
@@ -1863,30 +1599,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/shot_frames/shot10.png
 
-#begin Skeleton_Archer/shot_frames/shot10.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/shot_frames/shot10.png
-
-#begin Skeleton_Archer/shot_frames/shot11.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/shot_frames/shot11.png
-
 #begin Skeleton_Archer/shot_frames/shot11.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1911,18 +1623,6 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/shot_frames/shot12.png
 
-#begin Skeleton_Archer/shot_frames/shot12.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/shot_frames/shot12.png
-
 #begin Skeleton_Archer/shot_frames/shot13.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1934,30 +1634,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Archer/shot_frames/shot13.png
-
-#begin Skeleton_Archer/shot_frames/shot13.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/shot_frames/shot13.png
-
-#begin Skeleton_Archer/shot_frames/shot14.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Skeleton_Archer/shot_frames/shot14.png
 
 #begin Skeleton_Archer/shot_frames/shot14.png
 /importer:TextureImporter

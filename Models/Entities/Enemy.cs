@@ -135,7 +135,6 @@ namespace GameStateManagementSample.Models.Entities
             }
             else if(recognitionDistance < distanceXToPlayer && recognitionDistance < distanceYToPlayer || -recognitionDistance > distanceXToPlayer && -recognitionDistance < distanceYToPlayer){
                 Idling(room);
-                HealthPoints += 1;
             }
                 
 
