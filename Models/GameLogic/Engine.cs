@@ -10,11 +10,13 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using System.Threading;
 using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Microsoft.Xna.Framework.Audio;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 
 enum PlayerGameStatus
@@ -741,23 +743,32 @@ namespace GameStateManagementSample.Models.GameLogic
                 if (finishedAnim)
                 {
                     Enemies.Remove(e);
-                    worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
-                    worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
-
-                    if (Enemies.Count == 0)//
+                    DropLoot(e.Position);
+                    if (Enemies.Count == 0 && stage == 3)//
                     {
-                        worldConsumables.Add(new Key("Key", KeyTexture, null, e.Position));
+                        playerGameStatus = PlayerGameStatus.WON;
                     }
                 }
 
 
-
-
-                if (Enemies.Count == 0 && stage == 3)//
-                {
-                    playerGameStatus = PlayerGameStatus.WON;
-                }
             }
+        }
+
+        private void DropLoot(Vector2 pos)
+        {
+            if (Enemies.Count == 0 && stage < 3)//
+            {
+                worldConsumables.Add(new Key("Key", KeyTexture, null, pos));
+            }
+            if (random.NextInt64(10) < 2)
+            {
+                if (random.NextInt64(10) <= 5)
+                    worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, pos, 2f, 10));
+                else
+                    worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, pos, 20));
+
+            }
+
         }
 
         public void CollectItems()
