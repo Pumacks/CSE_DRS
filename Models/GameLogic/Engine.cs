@@ -203,7 +203,7 @@ namespace GameStateManagementSample.Models.GameLogic
             ai = new Ai();
 
             map.LoadMapTextures(content);
-            map.GenerateMap(content, ref enemies);
+            map.GenerateMap(content, ref enemies, hero.Camera);
             hero.LoadContent(content);
             enemies.ForEach(enem => enem.Camera = camera);
             enemies.ForEach(enemy1 => enemy1.LoadContent(content));
@@ -654,7 +654,12 @@ namespace GameStateManagementSample.Models.GameLogic
                             clearEnemiesAndProjectiles();
                             Enemies = new List<Enemy>();
                             map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies);
+                            map.GenerateMap(content, ref enemies, hero.Camera);
+                            foreach (var e in enemies)
+                            {
+                                e.LoadContent(content);
+                                e.Camera = camera;
+                            }
                             ClearItemsOnStageChange();
                         }
 
@@ -673,7 +678,12 @@ namespace GameStateManagementSample.Models.GameLogic
                             clearEnemiesAndProjectiles();
                             Enemies = new List<Enemy>();
                             map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies);
+                            map.GenerateMap(content, ref enemies, hero.Camera);
+                            foreach (var e in enemies)
+                            {
+                                e.LoadContent(content);
+                                e.Camera = camera;
+                            }
                             ClearItemsOnStageChange();
                         }
 
@@ -692,7 +702,12 @@ namespace GameStateManagementSample.Models.GameLogic
                             clearEnemiesAndProjectiles();
                             Enemies = new List<Enemy>();
                             map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies);
+                            map.GenerateMap(content, ref enemies, hero.Camera);
+                            foreach (var e in enemies)
+                            {
+                                e.LoadContent(content);
+                                e.Camera = camera;
+                            }
                             ClearItemsOnStageChange();
                         }
 
@@ -711,7 +726,12 @@ namespace GameStateManagementSample.Models.GameLogic
                             clearEnemiesAndProjectiles();
                             Enemies = new List<Enemy>();
                             map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies);
+                            map.GenerateMap(content, ref enemies, hero.Camera);
+                            foreach (var e in enemies)
+                            {
+                                e.LoadContent(content);
+                                e.Camera = camera;
+                            }
                             ClearItemsOnStageChange();
                         }
 
@@ -805,6 +825,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 e.UpdateDistanceToHero(hero.Position);
                 //e.Idling(map.Rooms[0]);
                 e.FollowPlayer(map.Rooms[0]);
+                e.Camera = camera;
                 e.Update(gameTime);
                 if (e.HealthPoints <= 0)
                     deadEnemy.Add(e);

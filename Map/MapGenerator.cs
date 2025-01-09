@@ -36,17 +36,17 @@ namespace GameStateManagementSample.Models.Map
             }
         }
 
-        
 
-        public void GenerateMap(ContentManager content,  ref List<Enemy> enemies)
+
+        public void GenerateMap(ContentManager content, ref List<Enemy> enemies, Camera camera)
         {
             for (int i = 0; i < rooms.Length; i++)
             {
                 rooms[i] = new Room();
             }
             LoadMapTextures(content);
-            rooms[0].GenerateRoom(random, new Vector2(5000,5000),stage, ref enemies);
-            mapVisual = new bool[10,10];
+            rooms[0].GenerateRoom(random, new Vector2(5000, 5000), stage, ref enemies);
+            mapVisual = new bool[10, 10];
             xmapVisual = 5;
             ymapVisual = 5;
             mapVisual[xmapVisual, ymapVisual] = true;
@@ -68,7 +68,7 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(0) && !mapVisual[xmapVisual -1, ymapVisual])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(0) && !mapVisual[xmapVisual - 1, ymapVisual])
                         {
                             xmapVisual -= 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
@@ -96,7 +96,7 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(1) && !mapVisual[xmapVisual, ymapVisual+1])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(1) && !mapVisual[xmapVisual, ymapVisual + 1])
                         {
                             ymapVisual += 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
@@ -123,7 +123,7 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(2) && !mapVisual[xmapVisual +1, ymapVisual])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(2) && !mapVisual[xmapVisual + 1, ymapVisual])
                         {
                             xmapVisual += 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
@@ -149,7 +149,7 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(3) && !mapVisual[xmapVisual, ymapVisual-1])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(3) && !mapVisual[xmapVisual, ymapVisual - 1])
                         {
                             ymapVisual -= 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
@@ -171,10 +171,12 @@ namespace GameStateManagementSample.Models.Map
                         break;
                 }
 
+     
             }
         }
 
-        public MapGenerator getMap(){
+        public MapGenerator getMap()
+        {
             return this;
         }
         public void DrawMap(SpriteBatch spriteBatch)
@@ -185,7 +187,8 @@ namespace GameStateManagementSample.Models.Map
             }
         }
 
-        public void SetStage(int stage){
+        public void SetStage(int stage)
+        {
             this.stage = stage;
         }
 
