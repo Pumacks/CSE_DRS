@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using GameStateManagementSample.Models.Entities.States;
 using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Map;
+using System.Runtime.CompilerServices;
 
 namespace GameStateManagementSample.Models.Entities
 {
@@ -16,6 +17,9 @@ namespace GameStateManagementSample.Models.Entities
 
         float distanceXToPlayer;
         float distanceYToPlayer;
+
+        float reductionDistance = 120;
+        float recognitionDistance = 1100;
 
         public Enemy() { }
 
@@ -43,114 +47,59 @@ namespace GameStateManagementSample.Models.Entities
             //-------
         }
 
-        /*         public virtual void FollowPlayer(Room room)
-                {
-                    Vector2 movingDirection = Vector2.Zero;
-                    bool colNorth = false, colEast = false, colSouth = false, colWest = false;
-
-                    if (distanceXToPlayer > 120 && distanceXToPlayer < 500)
-                    {
-                        movingDirection.X += MovementSpeed;
-                        if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                            colEast = true;
-                        if (!colEast)
-                            Move(movingDirection);
-                    }
-                    if (distanceXToPlayer < -120 && distanceXToPlayer > -500)
-                    {
-                        movingDirection.X -= MovementSpeed;
-                        if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                            colWest = true;
-                        if (!colWest)
-                            Move(movingDirection);
-                    }
-                    if (distanceYToPlayer > 120 && distanceYToPlayer < 500)
-                    {
-                        movingDirection.Y += MovementSpeed;
-                        if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                            colSouth = true;
-                        if (!colSouth)
-                            Move(movingDirection);
-                    }
-                    if (distanceYToPlayer < -120 && distanceYToPlayer > -500)
-                    {
-                        movingDirection.Y -= MovementSpeed;
-                        if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                            colNorth = true;
-                        if (!colNorth)
-                            Move(movingDirection);
-                    }
-                } */
-
         public virtual void FollowPlayer(Room room)
         {
-            Vector2 movingDirection = Vector2.Zero;
-
-
-            //SouthEast
-            if (isDistanceToPlayerBetweenAandBPlus(distanceXToPlayer, 120, 500) && isDistanceToPlayerBetweenAandBPlus(distanceYToPlayer, 120, 500))
+            if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance))
             {
                 moveSouthEast(room);
             }
-            // SouthWest
-            else if (isDistanceToPlayerBetweenAandBPlus(distanceYToPlayer, 120, 500) && isDistanceToPlayerBetweenAandBMinus(distanceXToPlayer, -120, -500))
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance))
             {
                 moveSouthWest(room);
             }
-            //NorthEast
-            else if (isDistanceToPlayerBetweenAandBMinus(distanceYToPlayer, -120, -500) && isDistanceToPlayerBetweenAandBPlus(distanceXToPlayer, 120, 500))
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance))
             {
                 moveNorthEast(room);
             }
-            //NorthWest
-            else if (isDistanceToPlayerBetweenAandBMinus(distanceYToPlayer, -120, -500) && isDistanceToPlayerBetweenAandBMinus(distanceXToPlayer, -120, -500))
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance))
             {
                 moveNorthWest(room);
             }
-            // East
-            else if (isDistanceToPlayerBetweenAandBPlus(distanceXToPlayer, 120, 500))
+            else if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance) && distanceYToPlayer > -recognitionDistance && distanceYToPlayer < recognitionDistance)
             {
-                movingDirection.X += MovementSpeed;
-                if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                    Move(movingDirection);
+                moveEast(room);
             }
-            // West
-            else if (isDistanceToPlayerBetweenAandBMinus(distanceXToPlayer, -120, -500))
+            else if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance) && distanceYToPlayer > -recognitionDistance && distanceYToPlayer < recognitionDistance)
             {
-                movingDirection.X -= MovementSpeed;
-                if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                    Move(movingDirection);
+                moveWest(room);
             }
-            // South
-            else if (isDistanceToPlayerBetweenAandBPlus(distanceYToPlayer, 120, 500))
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance) && distanceXToPlayer > -recognitionDistance && distanceXToPlayer < recognitionDistance)
             {
-                movingDirection.Y += MovementSpeed;
-                if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                    Move(movingDirection);
+                moveSouth(room);
             }
-            // North
-            else if (isDistanceToPlayerBetweenAandBMinus(distanceYToPlayer, -120, -500))
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && distanceXToPlayer > -recognitionDistance && distanceXToPlayer < recognitionDistance)
             {
-                movingDirection.Y -= MovementSpeed;
-                if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                    Move(movingDirection);
+                moveNorth(room);
             }
 
         }
 
-        private bool isDistanceToPlayerBetweenAandBPlus(float distance, float a, float b)
+        private bool isDistanceToPlayerinRecognitionDistance(float distance, float a, float b)
         {
-            if (distance > a && distance < b)
-                return true;
+            if (a < 0 && b < 0)
+            {
+                if (distance < a && distance > b)
+                    return true;
+                else
+                    return false;
+            }
             else
-                return false;
-        }
-        private bool isDistanceToPlayerBetweenAandBMinus(float distance, float a, float b)
-        {
-            if (distance < a && distance > b)
-                return true;
-            else
-                return false;
+            {
+                if (distance > a && distance < b)
+                    return true;
+                else
+                    return false;
+            }
         }
 
         private void moveSouthEast(Room room)
@@ -189,6 +138,46 @@ namespace GameStateManagementSample.Models.Entities
             Vector2 movingDirection = Vector2.Zero;
             movingDirection.Y -= MovementSpeed / 2;
             movingDirection.X -= MovementSpeed / 2;
+
+            if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
+            {
+                Move(movingDirection);
+            }
+        }
+        private void moveNorth(Room room)
+        {
+            Vector2 movingDirection = Vector2.Zero;
+            movingDirection.Y -= MovementSpeed;
+
+            if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
+            {
+                Move(movingDirection);
+            }
+        }
+        private void moveEast(Room room)
+        {
+            Vector2 movingDirection = Vector2.Zero;
+            movingDirection.X += MovementSpeed;
+
+            if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
+            {
+                Move(movingDirection);
+            }
+        }
+        private void moveSouth(Room room)
+        {
+            Vector2 movingDirection = Vector2.Zero;
+            movingDirection.Y += MovementSpeed;
+
+            if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
+            {
+                Move(movingDirection);
+            }
+        }
+        private void moveWest(Room room)
+        {
+            Vector2 movingDirection = Vector2.Zero;
+            movingDirection.X -= MovementSpeed;
 
             if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
             {
