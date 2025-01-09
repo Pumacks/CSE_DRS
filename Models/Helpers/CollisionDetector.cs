@@ -26,6 +26,7 @@ namespace GameStateManagementSample.Models.Helpers
                     {
                         if (IsIntersecting(projectile.BoundingBox, enemy.BoundingBox))
                         {
+                            Player.totalScore += (int)entity.ActiveWeapon.WeaponDamage;
                             enemy.TakeDamage((int)entity.ActiveWeapon.WeaponDamage);
                             projectilesWithCollision.Add(projectile);
                         }

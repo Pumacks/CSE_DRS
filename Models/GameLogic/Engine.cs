@@ -62,7 +62,7 @@ namespace GameStateManagementSample.Models.GameLogic
         Texture2D SelectedInventorySlotTexture;
         Texture2D ActiveWeaponInventorySlotTexture;
         Texture2D BowTexture;
-
+        Texture2D KeyTexture;
         // Texture2D MarkerTexture;
         Texture2D HealthPotion;
         Texture2D SpeedPotion;
@@ -174,7 +174,7 @@ namespace GameStateManagementSample.Models.GameLogic
             //MarkerTexture = content.Load<Texture2D>("Marker");
             HealthPotion = content.Load<Texture2D>("Items/Potions/HealthPotion");
             SpeedPotion = content.Load<Texture2D>("Items/Potions/SpeedPotion");
-
+            KeyTexture = content.Load<Texture2D>("Items/Key");
             // Loading Sound Effects
             bowEquip1 = content.Load<SoundEffect>("649332__sonofxaudio__bow_draw_fast01");
             bowEquip2 = content.Load<SoundEffect>("649337__sonofxaudio__bow_draw_fast02");
@@ -529,24 +529,24 @@ namespace GameStateManagementSample.Models.GameLogic
 
                         // Checking whether the projectiles collide with any tiles in the map. Sadly this check is currently not possible for only the current room of the player, but only for all rooms.
                         if (!theProjectile.IsStuck)
-                        for (int roomNumber = 0; roomNumber < map.Rooms.Length; roomNumber++)
-                        {
-                            Room currentRoom = map.Rooms[roomNumber];
-                            for (int tileCounterX = 0; tileCounterX < currentRoom.GetTiles().GetLength(0); tileCounterX++)
+                            for (int roomNumber = 0; roomNumber < map.Rooms.Length; roomNumber++)
                             {
-                                for (int tileCounterY = 0; tileCounterY < currentRoom.GetTiles().GetLength(1); tileCounterY++)
+                                Room currentRoom = map.Rooms[roomNumber];
+                                for (int tileCounterX = 0; tileCounterX < currentRoom.GetTiles().GetLength(0); tileCounterX++)
                                 {
-                                    Tile currentTile = currentRoom.GetTiles()[tileCounterX, tileCounterY];
-                                    if (currentTile.Collision)
-                                        if (theProjectile.ProjectileHitBox.Intersects(currentTile.BoundingBox))
-                                        {
-                                            theProjectile.IsStuck = true;
-                                        }
-                                            
-                                    // At this point, this is O(n³), but that's okay for our purpose, especially since it's all small numbers. And it's still polynomial.
+                                    for (int tileCounterY = 0; tileCounterY < currentRoom.GetTiles().GetLength(1); tileCounterY++)
+                                    {
+                                        Tile currentTile = currentRoom.GetTiles()[tileCounterX, tileCounterY];
+                                        if (currentTile.Collision)
+                                            if (theProjectile.ProjectileHitBox.Intersects(currentTile.BoundingBox))
+                                            {
+                                                theProjectile.IsStuck = true;
+                                            }
+
+                                        // At this point, this is O(n³), but that's okay for our purpose, especially since it's all small numbers. And it's still polynomial.
+                                    }
                                 }
                             }
-                        }
 
 
                     }
@@ -569,61 +569,6 @@ namespace GameStateManagementSample.Models.GameLogic
         public void HandleInput(KeyboardState keyboardState, PlayerIndex? controllingPlayer,
             ScreenManager screenManager)
         {
-            // --- TO BE DELETED ----
-            if (Keyboard.GetState().IsKeyDown(Keys.K))
-                hero.TakeDamage(1);
-
-            List<Vector2> vecs = new List<Vector2>();
-            for (int i = 0; i < Enemies.Count; i++)
-            {
-                vecs.Add(Vector2.Zero);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                for (int i = 0; i < Enemies.Count; i++)
-                {
-                    Vector2 v = vecs[i];
-                    v.Y += Enemies[i].MovementSpeed;
-                    vecs[i] = v;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                for (int i = 0; i < Enemies.Count; i++)
-                {
-                    Vector2 v = vecs[i];
-                    v.Y -= Enemies[i].MovementSpeed;
-                    vecs[i] = v;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                for (int i = 0; i < Enemies.Count; i++)
-                {
-                    Vector2 v = vecs[i];
-                    v.X -= Enemies[i].MovementSpeed;
-                    vecs[i] = v;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                for (int i = 0; i < Enemies.Count; i++)
-                {
-                    Vector2 v = vecs[i];
-                    v.X += Enemies[i].MovementSpeed;
-                    vecs[i] = v;
-                }
-            }
-            for (int i = 0; i < Enemies.Count; i++)
-            {
-                Enemies[i].Move(vecs[i]);
-            }
-            // --- END TO BE DELETED ----
-
             if (playerGameStatus == PlayerGameStatus.ALIVE)
             {
 
@@ -652,85 +597,6 @@ namespace GameStateManagementSample.Models.GameLogic
                 bool collisionEast = false;
                 foreach (var room in map.Rooms)
                 {
-                    #region DoorCollision
-
-                    DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north, ref map);
-                    if (door != null)
-                    {
-                        if (!door.IsLastDoor)
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-
-                            // The enemies and projectiles need to get cleared between stages because we're entering new rooms where the old enemies and projectiles don't exist, and this happens at similar coordinates.
-                            clearEnemiesAndProjectiles();
-
-                            map.SetStage(stage);
-                            map.GenerateMap(content);
-                            ClearItemsOnStageChange();
-                        }
-
-                        break;
-                    }
-
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, south, ref map);
-                    if (door != null)
-                    {
-                        if (!door.IsLastDoor)
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            clearEnemiesAndProjectiles();
-                            map.SetStage(stage);
-                            map.GenerateMap(content);
-                            ClearItemsOnStageChange();
-                        }
-
-                        break;
-                    }
-
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, west, ref map);
-                    if (door != null)
-                    {
-                        if (!door.IsLastDoor)
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            clearEnemiesAndProjectiles();
-                            map.SetStage(stage);
-                            map.GenerateMap(content);
-                            ClearItemsOnStageChange();
-                        }
-
-                        break;
-                    }
-
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, east, ref map);
-                    if (door != null)
-                    {
-                        if (!door.IsLastDoor)
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            clearEnemiesAndProjectiles();
-                            map.SetStage(stage);
-                            map.GenerateMap(content);
-                            ClearItemsOnStageChange();
-                        }
-
-                        break;
-                    }
-
-                    #endregion
-
                     #region StructureCollision
 
                     if (CollisionDetector.HasStructureCollision(room, hero, north))
@@ -741,6 +607,38 @@ namespace GameStateManagementSample.Models.GameLogic
                         collisionWest = true;
                     if (CollisionDetector.HasStructureCollision(room, hero, east))
                         collisionEast = true;
+
+                    #endregion
+
+                    #region DoorCollision
+
+                    DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north, ref map);
+                    if (door != null)
+                    {
+                        EnterDoor(door);
+                        break;
+                    }
+
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, south, ref map);
+                    if (door != null)
+                    {
+                        EnterDoor(door);
+                        break;
+                    }
+
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, west, ref map);
+                    if (door != null)
+                    {
+                        EnterDoor(door);
+                        break;
+                    }
+
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, east, ref map);
+                    if (door != null)
+                    {
+                        EnterDoor(door);
+                        break;
+                    }
 
                     #endregion
                 }
@@ -789,12 +687,6 @@ namespace GameStateManagementSample.Models.GameLogic
             }
         }
 
-        public void clearEnemiesAndProjectiles()
-        {
-            Enemies.Clear();
-            Projectiles.Clear();
-        }
-
         // public void playSoundBowEquip1()
         // {
         //     bowEquip1.Play();
@@ -803,7 +695,7 @@ namespace GameStateManagementSample.Models.GameLogic
         private void ClearItemsOnStageChange()
         {
             worldConsumables.Clear();
-            //enemies.Clear();
+            Projectiles.Clear();
         }
 
 
@@ -851,6 +743,19 @@ namespace GameStateManagementSample.Models.GameLogic
                     Enemies.Remove(e);
                     worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
                     worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
+
+                    if (Enemies.Count == 0)//
+                    {
+                        worldConsumables.Add(new Key("Key", KeyTexture, null, e.Position));
+                    }
+                }
+
+
+
+
+                if (Enemies.Count == 0 && stage == 3)//
+                {
+                    playerGameStatus = PlayerGameStatus.WON;
                 }
             }
         }
@@ -874,5 +779,22 @@ namespace GameStateManagementSample.Models.GameLogic
             }
         }
 
+        public void EnterDoor(DoorTile door)
+        {
+            if (!door.IsLastDoor)
+                hero.Position = door.getOtherSideDoor().TeleportPosition;
+            else
+            {
+                if (hero.HasKey)
+                {
+                    hero.Position = door.TeleportPosition;
+                    hero.HasKey = false;
+                    stage++;
+                    map.SetStage(stage);
+                    map.GenerateMap(content);
+                    ClearItemsOnStageChange();
+                }
+            }
+        }
     }
 }

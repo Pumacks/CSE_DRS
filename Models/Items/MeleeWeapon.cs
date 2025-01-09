@@ -67,6 +67,7 @@ namespace GameStateManagementSample.Models.Items
 
                     if (angle <= 52)
                     {
+                        Player.totalScore += (int)weaponDamage;
                         targetEnemy.TakeDamage((int)WeaponDamage);
                     }
                 }

@@ -24,7 +24,8 @@ namespace GameStateManagementSample.Models.Entities
         private MouseState previousMouseState = Mouse.GetState();
         private Engine gameEngine;
 
-
+        public static int totalScore;
+        public bool HasKey { get; set; } = false;
 
         public Player() { }
         public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Engine engine)
@@ -282,7 +283,10 @@ namespace GameStateManagementSample.Models.Entities
             foreach (var observer in GUIObservers)
             {
                 if (observer is HealthGUI healthGUI)
+                {
                     healthGUI.Texture = content.Load<Texture2D>("Player/HPTexture");
+                    healthGUI.KeyTexture = content.Load<Texture2D>("Items/Key");
+                }
                 if (observer is SpeedBuffGUI speedBuffGUI)
                     speedBuffGUI.Texture = content.Load<Texture2D>("Player/RunTexture");
             }
