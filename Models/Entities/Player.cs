@@ -1,5 +1,5 @@
 ﻿using GameStateManagementSample.Models;
-﻿using GameStateManagementSample.Models.GameLogic;
+using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.GUI;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
@@ -23,6 +23,18 @@ namespace GameStateManagementSample.Models.Entities
         private MouseState currentMouseState;
         private MouseState previousMouseState = Mouse.GetState();
         private Engine gameEngine;
+        private bool showControlsAndStats = false;
+        public bool ShowControlsAndStats
+        {
+            get
+            {
+                return this.showControlsAndStats;
+            }
+            set
+            {
+                this.showControlsAndStats = value;
+            }
+        }
 
 
 
@@ -168,6 +180,15 @@ namespace GameStateManagementSample.Models.Entities
                 }
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.F1))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.F1) && !previousKeyboardState.IsKeyDown(Keys.F1))
+                {
+                    // showControlsAndStats = showControlsAndStats ? false : true ;
+                    showControlsAndStats = !showControlsAndStats;
+                }
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.X))
             {
                 if (currentKeyboardState.IsKeyDown(Keys.X) && !previousKeyboardState.IsKeyDown(Keys.X))
@@ -185,7 +206,7 @@ namespace GameStateManagementSample.Models.Entities
                             // Engine.playSoundBowEquip1();
                             // GameplayScreen.GameEngine.bowEquip1.Play();
                             gameEngine.swordEquip1.Play();
-                        }                      
+                        }
                         Weapon toBeSwitchedWeapon = ActiveWeapon;
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
@@ -217,7 +238,7 @@ namespace GameStateManagementSample.Models.Entities
                             // Engine.playSoundBowEquip1();
                             // GameplayScreen.GameEngine.bowEquip1.Play();
                             gameEngine.swordEquip1.Play();
-                        }                
+                        }
                         Weapon toBeSwitchedWeapon = ActiveWeapon;
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;

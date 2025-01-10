@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework.Graphics;
+using GameStateManagementSample.Models.Map;
+using GameStateManagementSample.Models.Helpers;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -11,9 +13,10 @@ namespace GameStateManagementSample.Models.Entities
     public class EnemyArcher : Enemy
     {
 
-        public EnemyArcher(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
+        public EnemyArcher(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Weapon activeEnemyWeapon)
             : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
+            ActiveWeapon = activeEnemyWeapon;
         }
 
         public override void LoadContent(ContentManager content)
@@ -32,6 +35,79 @@ namespace GameStateManagementSample.Models.Entities
             animManager.death.ChangeAnimationDuration(15);
             Texture = animManager.IdleAnimation();
             Position += Vector2.Zero;
+        }
+
+        public override void FollowPlayer2(Room room)
+        {
+            Vector2 movingDirection = Vector2.Zero;
+            bool colNorth = false, colEast = false, colSouth = false, colWest = false;
+
+            /*
+            #region StructureCollision
+
+            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                colNorth = true;
+            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                colSouth = true;
+            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                colWest = true;
+            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                colEast = true;
+
+            #endregion
+            */
+
+
+
+            // // Attacking:
+            // if (Math.Sqrt(distanceXToPlayer * distanceXToPlayer + distanceYToPlayer * distanceYToPlayer) <= this.ActiveWeapon.WeaponRange)
+            // {
+            //     ActiveWeapon.weaponAttack(this);
+            // }
+            // else
+            // {
+
+            // }
+
+
+
+            
+
+
+                if (distanceXToPlayer > 120 && distanceXToPlayer < 500)
+                {
+                    movingDirection.X += MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colEast = true;
+                    if (!colEast)
+                        Move(movingDirection);
+                }
+                if (distanceXToPlayer < -120 && distanceXToPlayer > -500)
+                {
+                    movingDirection.X -= MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colWest = true;
+                    if (!colWest)
+                        Move(movingDirection);
+                }
+                if (distanceYToPlayer > 120 && distanceYToPlayer < 500)
+                {
+                    movingDirection.Y += MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colSouth = true;
+                    if (!colSouth)
+                        Move(movingDirection);
+                }
+                if (distanceYToPlayer < -120 && distanceYToPlayer > -500)
+                {
+                    movingDirection.Y -= MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colNorth = true;
+                    if (!colNorth)
+                        Move(movingDirection);
+                }
+
+
         }
     }
 }
