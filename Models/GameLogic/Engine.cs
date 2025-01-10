@@ -906,8 +906,8 @@ namespace GameStateManagementSample.Models.GameLogic
             foreach (var e in Enemies)
             {
                 e.UpdateDistanceToHero(hero.Position);
-                e.FollowPlayer2(map.Rooms[0]);
                 e.Update(gameTime);
+                e.FollowPlayer2(map.Rooms[0]);
                 if (e.HealthPoints <= 0)
                     deadEnemy.Add(e);
 

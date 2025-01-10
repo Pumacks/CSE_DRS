@@ -24,13 +24,13 @@ namespace GameStateManagementSample.Models.Entities
             for (int i = 0; i <= 7; i++)
                 animManager.walk.addFrame(content.Load<Texture2D>("Skeleton_Archer/walk_frames/walk" + i.ToString()));
             for (int i = 0; i <= 14; i++)
-                animManager.attack.addFrame(content.Load<Texture2D>("Skeleton_Archer/shot_frames/shot" + i.ToString()));
+                animManager.shot.addFrame(content.Load<Texture2D>("Skeleton_Archer/shot_frames/shot" + i.ToString()));
             for (int i = 0; i <= 6; i++)
                 animManager.idle.addFrame(content.Load<Texture2D>("Skeleton_Archer/idle_frames/idle" + i.ToString()));
             for (int i = 0; i <= 4; i++)
                 animManager.death.addFrame(content.Load<Texture2D>("Skeleton_Archer/death_frames/death" + i.ToString()));
             animManager.walk.ChangeAnimationDuration(3);
-            animManager.attack.ChangeAnimationDuration(2);
+            animManager.shot.ChangeAnimationDuration(2);
             animManager.idle.ChangeAnimationDuration(2);
             animManager.death.ChangeAnimationDuration(15);
             Texture = animManager.IdleAnimation();
@@ -59,53 +59,54 @@ namespace GameStateManagementSample.Models.Entities
 
 
 
-            // // Attacking:
-            // if (Math.Sqrt(distanceXToPlayer * distanceXToPlayer + distanceYToPlayer * distanceYToPlayer) <= this.ActiveWeapon.WeaponRange)
-            // {
-            //     ActiveWeapon.weaponAttack(this);
-            // }
-            // else
-            // {
+            // Attacking:
+            if (Math.Sqrt(distanceXToPlayer * distanceXToPlayer + distanceYToPlayer * distanceYToPlayer) <= this.ActiveWeapon.WeaponRange)
+            {
+                
+                ActiveWeapon.weaponAttack(this);
+            }
+            else
+            {
 
-            // }
-
-
-
-            
+            }
 
 
-                if (distanceXToPlayer > 120 && distanceXToPlayer < 500)
-                {
-                    movingDirection.X += MovementSpeed;
-                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                        colEast = true;
-                    if (!colEast)
-                        Move(movingDirection);
-                }
-                if (distanceXToPlayer < -120 && distanceXToPlayer > -500)
-                {
-                    movingDirection.X -= MovementSpeed;
-                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                        colWest = true;
-                    if (!colWest)
-                        Move(movingDirection);
-                }
-                if (distanceYToPlayer > 120 && distanceYToPlayer < 500)
-                {
-                    movingDirection.Y += MovementSpeed;
-                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                        colSouth = true;
-                    if (!colSouth)
-                        Move(movingDirection);
-                }
-                if (distanceYToPlayer < -120 && distanceYToPlayer > -500)
-                {
-                    movingDirection.Y -= MovementSpeed;
-                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                        colNorth = true;
-                    if (!colNorth)
-                        Move(movingDirection);
-                }
+
+
+
+
+            if (distanceXToPlayer > 120 && distanceXToPlayer < 500)
+            {
+                movingDirection.X += MovementSpeed;
+                if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                    colEast = true;
+                if (!colEast)
+                    Move(movingDirection);
+            }
+            if (distanceXToPlayer < -120 && distanceXToPlayer > -500)
+            {
+                movingDirection.X -= MovementSpeed;
+                if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                    colWest = true;
+                if (!colWest)
+                    Move(movingDirection);
+            }
+            if (distanceYToPlayer > 120 && distanceYToPlayer < 500)
+            {
+                movingDirection.Y += MovementSpeed;
+                if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                    colSouth = true;
+                if (!colSouth)
+                    Move(movingDirection);
+            }
+            if (distanceYToPlayer < -120 && distanceYToPlayer > -500)
+            {
+                movingDirection.Y -= MovementSpeed;
+                if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                    colNorth = true;
+                if (!colNorth)
+                    Move(movingDirection);
+            }
 
 
         }
