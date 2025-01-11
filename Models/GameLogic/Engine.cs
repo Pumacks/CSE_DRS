@@ -652,7 +652,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
                             // The enemies and projectiles need to get cleared between stages because we're entering new rooms where the old enemies and projectiles don't exist, and this happens at similar coordinates.
                             clearEnemiesAndProjectiles();
-                            Enemies = new List<Enemy>();
+                            //Enemies = new List<Enemy>();
                             map.SetStage(stage);
                             map.GenerateMap(content, ref enemies, hero.Camera);
                             foreach (var e in enemies)
@@ -800,7 +800,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
         public void clearEnemiesAndProjectiles()
         {
-            // enemies.Clear();
+            enemies.Clear();
             Projectiles.Clear();
         }
 

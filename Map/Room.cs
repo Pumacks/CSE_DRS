@@ -66,7 +66,9 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D pot;
         private Texture2D initTexture; // for Enemy
         private SpriteFont gameFont;
-            
+
+        private Texture2D s1BrokenTree, s1Bush, s1Rock, s2Stone, s2LightStone, s2BrownStone, s3BrokenTree, s3Mushroom1, s3Mushroom2;
+
         private Random random = new Random();
 
         public Room()
@@ -117,16 +119,29 @@ namespace GameStateManagementSample.Models.Map
             doorlvl3S = content.Load<Texture2D>("Map/Doorlvl3S");
             doorlvl3W = content.Load<Texture2D>("Map/Doorlvl3W");
 
-            
+
             gameFont = content.Load<SpriteFont>("gamefont");
             initTexture = content.Load<Texture2D>("Player/idle_frames/idle0");
             pot = content.Load<Texture2D>("Map/pot");
+
+
+            //decorations
+            s1BrokenTree = content.Load<Texture2D>("Map/Decorations/Stage1/Broken_tree4");
+            s1Bush = content.Load<Texture2D>("Map/Decorations/Stage1/Bush7");
+            s1Rock = content.Load<Texture2D>("Map/Decorations/Stage1/Rpck_grass3");
+            s2Stone = content.Load<Texture2D>("Map/Decorations/Stage2/Beige_stone_grass5");
+            s2LightStone = content.Load<Texture2D>("Map/Decorations/Stage2/Light_stone_grass2");
+            s2BrownStone = content.Load<Texture2D>("Map/Decorations/Stage2/Brown_stone_grass4");
+            s3BrokenTree = content.Load<Texture2D>("Map/Decorations/Stage3/Broken_tree7");
+            s3Mushroom1 = content.Load<Texture2D>("Map/Decorations/Stage3/Musgroom1_3");
+            s3Mushroom2 = content.Load<Texture2D>("Map/Decorations/Stage3/Mushroom2_2");
+
 
         }
 
         public void GenerateRoom(Random random, Vector2 roomPos, int stage, ref List<Enemy> enemies)
         {
-            
+
             this.stage = stage;
             tiles = GenerateRoomArray();
             if (tiles == null)
@@ -172,10 +187,40 @@ namespace GameStateManagementSample.Models.Map
                     }
                     // for things like pots etc.
                     rdmNumber = random.Next(1, 125);
-                    if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
-                        tiles[i, j] = new Tile(tilePos, pot, true);
-                    if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
-                        tiles[i, j] = new Tile(tilePos, pot, true);
+                    if (stage == 1)
+                    {
+                        if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, pot, true);
+                        if (rdmNumber == 16 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s1BrokenTree, true);
+                        if (rdmNumber == 17 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s1Bush, true);
+                        if (rdmNumber == 18 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s1Rock, true);
+                    }
+                    if (stage == 2)
+                    {
+                        if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, pot, true);
+                        if (rdmNumber == 16 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s2LightStone, true);
+                        if (rdmNumber == 17 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s2BrownStone, true);
+                        if (rdmNumber == 18 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s2Stone, true);
+                    }
+                    if (stage == 3)
+                    {
+                        if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, pot, true);
+                        if (rdmNumber == 16 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s3BrokenTree, true);
+                        if (rdmNumber == 17 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s3Mushroom1, true);
+                        if (rdmNumber == 18 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
+                            tiles[i, j] = new Tile(tilePos, s3Mushroom2, true);
+                    }
+
                     if (rdmNumber >= 90 && i >= 4 && j >= 4 && i <= tiles.GetLength(0) - 3 && j <= tiles.GetLength(1) - 3)
                     {
                         if (rdmNumber >= 90 && rdmNumber <= 93)
@@ -254,6 +299,8 @@ namespace GameStateManagementSample.Models.Map
                         if (i == tiles.GetLength(0) - 1)
                             spriteBatch.Draw(lvl3floor1, new Vector2(tiles[i, j].getPos().X, tiles[i, j].getPos().Y + 100), Color.White);
                         if (tiles[i, j].getTexture() == treelvl3)
+                            spriteBatch.Draw(tiles[i, j].getTexture(), tiles[i, j].getPos(), Color.White);
+                        if (tiles[i, j].getTexture() == s3Mushroom2)
                             spriteBatch.Draw(tiles[i, j].getTexture(), tiles[i, j].getPos(), Color.White);
                     }
                 }
