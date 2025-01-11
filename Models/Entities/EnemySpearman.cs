@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework.Graphics;
+using GameStateManagementSample.Models.Helpers;
+using GameStateManagementSample.Models.Map;
+using GameStateManagementSample.Models.GameLogic;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -16,10 +19,18 @@ namespace GameStateManagementSample.Models.Entities
         }
 
 
-        public EnemySpearman (int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
-            : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
+        public EnemySpearman(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Engine engine)
+            : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items, engine)
         {
             ReductionDistance = 150;
+            ActiveWeapon = new MeleeWeapon("Sword",
+            null,
+            null,
+            15,
+            1000,
+            ReductionDistance,
+            engine.Enemies,
+            engine);
         }
 
         public override void LoadContent(ContentManager content)
@@ -39,5 +50,76 @@ namespace GameStateManagementSample.Models.Entities
             Texture = animManager.IdleAnimation();
             Position += Vector2.Zero;
         }
+
+        public override void FollowPlayer(Room room)
+        {
+            if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance))
+            {
+                if (HealthPoints <= fleeAt)
+                    moveNorthWest(room);
+                else
+                    moveSouthEast(room);
+            }
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance))
+            {
+                if (HealthPoints <= fleeAt)
+                    moveNorthEast(room);
+                else
+                    moveSouthWest(room);
+            }
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance))
+            {
+                if (HealthPoints <= fleeAt)
+                    moveSouthWest(room);
+                else
+                    moveNorthEast(room);
+            }
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance))
+            {
+                if (HealthPoints <= fleeAt)
+                    moveSouthEast(room);
+                else
+                    moveNorthWest(room);
+            }
+            else if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance) && distanceYToPlayer > -recognitionDistance && distanceYToPlayer < recognitionDistance)
+            {
+                if (HealthPoints <= fleeAt)
+                    moveWest(room);
+                else
+                    moveEast(room);
+            }
+            else if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance) && distanceYToPlayer > -recognitionDistance && distanceYToPlayer < recognitionDistance)
+            {
+                if (HealthPoints <= fleeAt)
+                    moveEast(room);
+                else
+                    moveWest(room);
+            }
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance) && distanceXToPlayer > -recognitionDistance && distanceXToPlayer < recognitionDistance)
+            {
+                if (HealthPoints <= fleeAt)
+                    moveNorth(room);
+                else
+                    moveSouth(room);
+            }
+            else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && distanceXToPlayer > -recognitionDistance && distanceXToPlayer < recognitionDistance)
+            {
+                if (HealthPoints <= fleeAt)
+                    moveSouth(room);
+                else
+                    moveNorth(room);
+            }
+            else if (!isPlayerInReach())
+            {
+                Idling(room);
+            }
+            else if (isPlayerInReach())
+            {
+                ActiveWeapon.weaponAttack(this);
+            }
+        }
+
+
+
     }
 }

@@ -1,4 +1,5 @@
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.GameLogic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,6 +16,7 @@ namespace GameStateManagementSample.Models.Map
         int xmapVisual = 4;
         int ymapVisual = 4;
         int stage = 1;
+        Engine e;
 
         public Room[] Rooms
         {
@@ -24,12 +26,13 @@ namespace GameStateManagementSample.Models.Map
 
         const int ROOM_DISTANCE = 5000; // Einheitliche Distanz
 
-        public MapGenerator()
+        public MapGenerator(Engine engine)
         {
             for (int i = 0; i < rooms.Length; i++)
             {
-                rooms[i] = new Room();
+                rooms[i] = new Room(e);
             }
+            e = engine;
         }
 
         public void GenerateMap(ContentManager content, ref List<Enemy> enemies, Camera camera)
@@ -37,7 +40,7 @@ namespace GameStateManagementSample.Models.Map
             // Rooms neu initialisieren
             for (int i = 0; i < rooms.Length; i++)
             {
-                rooms[i] = new Room();
+                rooms[i] = new Room(e);
             }
 
             // Texturen laden

@@ -25,8 +25,6 @@ namespace GameStateManagementSample.Screens
         public GameOverScreen(PlayerGameStatus status)
             : base(status== PlayerGameStatus.DEAD ? "Game  over, you  died!" : "Congratulations, You won!")
         {
-            this.isDead = isDead;
-
 
             // Create our menu entries.
 

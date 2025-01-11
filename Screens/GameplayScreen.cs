@@ -41,10 +41,6 @@ namespace GameStateManagement
 
         private Engine gameEngine = new Engine();
 
-        private SpriteFont gameFont;
-
-
-
         #endregion Fields
 
 

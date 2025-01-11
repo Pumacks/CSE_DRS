@@ -1,4 +1,5 @@
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -66,6 +67,7 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D pot;
         private Texture2D initTexture; // for Enemy
         private SpriteFont gameFont;
+        private Engine engine;
 
         private Texture2D s1BrokenTree, s1Bush, s1Rock, s2Stone, s2LightStone, s2BrownStone, s3BrokenTree, s3Mushroom1, s3Mushroom2;
 
@@ -74,12 +76,15 @@ namespace GameStateManagementSample.Models.Map
         public int MapX { get; set; }
         public int MapY { get; set; }
 
-        public Room()
+        
+
+        public Room(Engine engine)
         {
             for (int i = 0; i < blocked.Length; i++)
             {
                 blocked[i] = false;
             }
+            this.engine = engine;
         }
 
         public void LoadTextures(ContentManager content)
@@ -220,11 +225,11 @@ namespace GameStateManagementSample.Models.Map
                     if (rdmNumber >= 90 && i >= 4 && j >= 4 && i <= tiles.GetLength(0) - 3 && j <= tiles.GetLength(1) - 3)
                     {
                         if (rdmNumber >= 90 && rdmNumber <= 93)
-                            enemies.Add(new EnemyWarrior(100, 1, tilePos, initTexture, gameFont, new List<Item>()));
+                            enemies.Add(new EnemyWarrior(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
                         if (rdmNumber >= 94 && rdmNumber <= 97)
-                            enemies.Add(new EnemySpearman(100, 1, tilePos, initTexture, gameFont, new List<Item>()));
+                            enemies.Add(new EnemySpearman(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
                         if (rdmNumber >= 98 && rdmNumber <= 100)
-                            enemies.Add(new EnemyArcher(100, 1, tilePos, initTexture, gameFont, new List<Item>()));
+                            enemies.Add(new EnemyArcher(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
 
                     }
 

@@ -1,5 +1,5 @@
 ﻿using GameStateManagementSample.Models;
-﻿using GameStateManagementSample.Models.GameLogic;
+using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.GUI;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
@@ -23,12 +23,36 @@ namespace GameStateManagementSample.Models.Entities
         private MouseState currentMouseState;
         private MouseState previousMouseState = Mouse.GetState();
         private Engine gameEngine;
+        private bool showStats = false;
+        public bool ShowStats
+        {
+            get
+            {
+                return this.showStats;
+            }
+            set
+            {
+                this.showStats = value;
+            }
+        }
+        private bool showControls = false;
+        public bool ShowControls
+        {
+            get
+            {
+                return this.showControls;
+            }
+            set
+            {
+                this.showControls = value;
+            }
+        }
 
 
 
         public Player() { }
         public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Engine engine)
-        : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
+        : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items, engine)
         {
             GUIObservers.Add(new HealthGUI(this));
             GUIObservers.Add(new SpeedBuffGUI(this));
@@ -168,6 +192,23 @@ namespace GameStateManagementSample.Models.Entities
                 }
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.F1))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.F1) && !previousKeyboardState.IsKeyDown(Keys.F1))
+                {
+                    // showControlsAndStats = showControlsAndStats ? false : true ;
+                    showStats = !showStats;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F2))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.F2) && !previousKeyboardState.IsKeyDown(Keys.F2))
+                {
+                    showControls = !showControls;
+                }
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.X))
             {
                 if (currentKeyboardState.IsKeyDown(Keys.X) && !previousKeyboardState.IsKeyDown(Keys.X))
@@ -185,7 +226,7 @@ namespace GameStateManagementSample.Models.Entities
                             // Engine.playSoundBowEquip1();
                             // GameplayScreen.GameEngine.bowEquip1.Play();
                             gameEngine.swordEquip1.Play();
-                        }                      
+                        }
                         Weapon toBeSwitchedWeapon = ActiveWeapon;
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;
@@ -217,7 +258,7 @@ namespace GameStateManagementSample.Models.Entities
                             // Engine.playSoundBowEquip1();
                             // GameplayScreen.GameEngine.bowEquip1.Play();
                             gameEngine.swordEquip1.Play();
-                        }                
+                        }
                         Weapon toBeSwitchedWeapon = ActiveWeapon;
                         ActiveWeapon = (Weapon)Inventory[selectedInventorySlot];
                         Inventory[selectedInventorySlot] = toBeSwitchedWeapon;

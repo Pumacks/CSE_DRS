@@ -101,6 +101,7 @@ namespace GameStateManagementSample.Models.Items
                 this.projectiles = value;
             }
         }
+
         protected Engine gameEngine;
         /*
         Die Überlegung ist an dieser Stelle, wie kompliziert wir die Waffenlogik machen wollen.
@@ -144,10 +145,10 @@ namespace GameStateManagementSample.Models.Items
         public void weaponAttack(Entity owner)
         {
             // Weapon Attack Timer, depending on the weapon's attack speed
-            if ((owner.GameTime.TotalGameTime.TotalMilliseconds - attackSpeed >= lastAttackGameTimeInMilliseconds) || lastAttackGameTimeInMilliseconds == 0)
+            if ((owner.GameTime.TotalGameTime.TotalMilliseconds - this.attackSpeed >= this.lastAttackGameTimeInMilliseconds) || lastAttackGameTimeInMilliseconds == 0)
             {
                 IsAtacking = true;
-                lastAttackGameTimeInMilliseconds = (float)owner.GameTime.TotalGameTime.TotalMilliseconds;
+                this.lastAttackGameTimeInMilliseconds = (float)owner.GameTime.TotalGameTime.TotalMilliseconds;
                 attack(owner);
             }
            

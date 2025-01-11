@@ -188,7 +188,7 @@ namespace GameStateManagementSample.Models.Items
 
         private float calculateRotation(Vector2 start, Vector2 end)
         {
-            if (start != null && end != null && start != end)
+            if (start != end)
             {
                 float deltaX = end.X - start.X;
                 float deltaY = end.Y - start.Y;
@@ -206,7 +206,7 @@ namespace GameStateManagementSample.Models.Items
 
         private Vector2 calculateSpeedVector(Vector2 start, Vector2 end, int pixelsPerSecond)
         {
-            if (start != null && end != null && start != end)
+            if (start != end)
             {
                 Vector2 dirV = new Vector2(end.X - start.X, end.Y - start.Y); //direction vector
                 float absoluteOfDirectionVector = (float)Math.Sqrt(dirV.X * dirV.X + dirV.Y * dirV.Y);

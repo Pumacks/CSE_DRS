@@ -32,7 +32,7 @@ namespace GameStateManagementSample.Models.Items
             }
         }
         private Texture2D projectileTexture;
-        
+
         public Texture2D ProjectileTexture
         {
             get
@@ -46,7 +46,8 @@ namespace GameStateManagementSample.Models.Items
         }
         #endregion
 
-        public RangedWeapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, int projectileSpeed, Texture2D projectileTexture, List<Projectile> projectileList, Engine engine) : base (itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies, engine) {
+        public RangedWeapon(String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, int projectileSpeed, Texture2D projectileTexture, List<Projectile> projectileList, Engine engine) : base(itemName, itemTexture, itemOwner, weaponDamage, attackSpeed, weaponRange, enemies, engine)
+        {
             this.projectileSpeed = projectileSpeed;
             this.projectileTexture = projectileTexture;
             this.Projectiles = projectileList;
@@ -61,13 +62,13 @@ namespace GameStateManagementSample.Models.Items
         {
 
             Random random = new Random();
-            int randomInt = random.Next(0,3);
+            int randomInt = random.Next(0, 3);
             if (randomInt == 0)
-            gameEngine.bowShoot1.Play();
+                gameEngine.bowShoot1.Play();
             else if (randomInt == 1)
-            gameEngine.bowShoot2.Play();
+                gameEngine.bowShoot2.Play();
             else
-            gameEngine.bowShoot3.Play();
+                gameEngine.bowShoot3.Play();
             // if (random.Next(0,3) == 0)
             // gameEngine.bowShoot1.Play();
             // else if (random.Next(0,2) == 0)
@@ -75,23 +76,52 @@ namespace GameStateManagementSample.Models.Items
             // else
             // gameEngine.bowShoot3.Play();
 
-            Vector2 vector2 = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(owner.Camera.Transform));
+            Vector2 cursorPosition = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(owner.Camera.Transform));
+            Vector2 heroPosition = gameEngine.heroPlayer.Position;
 
-            Projectiles.Add(
-            new Projectile(
-                this.ItemName,
-                projectileTexture,
-                this.ItemOwner,
-                this.ItemOwner.Position,
-                vector2,
-                projectileSpeed,
-                this.weaponRange,
-                this.weaponDamage));
+            if (owner is Player)
+            {
+                Projectiles.Add(
+                new Projectile(
+                    this.ItemName,
+                    projectileTexture,
+                    this.ItemOwner,
+                    this.ItemOwner.Position,
+                    cursorPosition,
+                    projectileSpeed,
+                    this.weaponRange,
+                    this.weaponDamage));
+            }
+            else {
+                Projectiles.Add(
+                new Projectile(
+                    this.ItemName,
+                    projectileTexture,
+                    owner,
+                    // this.ItemOwner.Position,
+                    owner.Position,
+                    heroPosition,
+                    // new Vector2(5000,5000),
+                    projectileSpeed,
+                    this.weaponRange,
+                    this.weaponDamage));
+            }
+
         }
 
         public override void DrawItem(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            {
+                spriteBatch.Draw(texture: ItemTexture,
+                    position: Position,
+                    sourceRectangle: null,
+                    color: Color.White,
+                    rotation: 1.570796f,
+                    origin: new Vector2(ItemTexture.Width / 2, ItemTexture.Height / 2),
+                    scale: 1f,
+                    effects: SpriteEffects.None,
+                    layerDepth: 0f);
+            }
         }
     }
 }

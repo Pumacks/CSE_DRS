@@ -10,6 +10,7 @@ using System.Net;
 using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
+using GameStateManagementSample.Models.GameLogic;
 
 namespace GameStateManagementSample.Models.Entities
 {
@@ -35,6 +36,7 @@ namespace GameStateManagementSample.Models.Entities
         protected Rectangle boundingBox;
         protected bool flipTexture;
         protected GameTime gameTime;
+        private Engine gameEngine;
 
         private float speedPotionBoost;
         private float speedPotionDuration;
@@ -100,7 +102,7 @@ namespace GameStateManagementSample.Models.Entities
         protected AnimationManager animManager;
         public Entity() { }
 
-        public Entity(int healthPoints, float movmentSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
+        public Entity(int healthPoints, float movmentSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Engine engine)
         {
             this.HealthPoints = healthPoints;
             this.MovementSpeed = movmentSpeed;
@@ -110,6 +112,7 @@ namespace GameStateManagementSample.Models.Entities
             this.items = items;
             this.spriteFont = spriteFont;
             this.inventory = new Item[7];
+            gameEngine = engine;
             animManager = new AnimationManager(movmentSpeed);
             this.boundingBox = new Rectangle((int)position.X - texture.Width / 2,
                 (int)position.Y - texture.Height / 2,
@@ -173,14 +176,14 @@ namespace GameStateManagementSample.Models.Entities
             FlipTexture();
 
             #region SpeedPotionEffect
-            
-           
+
+
             if (speedPotionDuration > 0)
             {
                 MovementSpeed = speedPotionBoost + defaultMvSpeed;
                 speedPotionDuration -= (float)gametime.ElapsedGameTime.TotalSeconds;
 
-                if(speedPotionDuration <= 0)
+                if (speedPotionDuration <= 0)
                     MovementSpeed = defaultMvSpeed;
 
                 NotifyObservers();

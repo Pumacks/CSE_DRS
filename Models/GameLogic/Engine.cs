@@ -16,6 +16,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Microsoft.Xna.Framework.Audio;
 using System.Runtime.Serialization;
+using System.IO;
 
 
 enum PlayerGameStatus
@@ -81,6 +82,8 @@ namespace GameStateManagementSample.Models.GameLogic
         public SoundEffect swordHit1;
         public SoundEffect swordHit2;
 
+        public Player heroPlayer;
+        public Engine enginereference;
 
         private Random random = new Random();
 
@@ -126,7 +129,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             camera = new Models.Camera();
-            map = new MapGenerator();
+            map = new MapGenerator(this);
             worldConsumables = new List<Item>();
             Enemies = new List<Enemy>();
 
@@ -135,6 +138,8 @@ namespace GameStateManagementSample.Models.GameLogic
             initTexture = content.Load<Texture2D>("Player/idle_frames/idle0");
 
             hero = new Player(100, 5, new Vector2(5300, 5300), initTexture, gameFont, new List<Item>(), this);
+            heroPlayer = hero;
+            enginereference = this;
             hero.Camera = camera;
 
 
@@ -150,6 +155,68 @@ namespace GameStateManagementSample.Models.GameLogic
             //{
             //    Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
             //}
+
+
+
+
+            RangedWeapon enemyBow = new RangedWeapon(
+                "Bow of the Dungeon",
+                BowTexture,
+                null,
+                15,
+                2000,
+                1000,
+                Enemies,
+                600,
+                ArrowTexture,
+                Projectiles,
+                this
+            );
+            MeleeWeapon enemySword = new MeleeWeapon(
+                "Sword of the Dungeon",
+                SwordTexture,
+                null,
+                10,
+                1500,
+                150,
+                Enemies,
+                this
+            );
+            MeleeWeapon enemySpear = new MeleeWeapon(
+                "Sword of the Dungeon",
+                SwordTexture,
+                null,
+                15,
+                2000,
+                250,
+                Enemies,
+                this
+            );
+
+            Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>(), this);
+            enemySword.ItemOwner = enemyWarrior;
+            enemyWarrior.Camera = camera;
+
+            Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), initTexture, gameFont, new List<Item>(), this);
+            enemyBow.ItemOwner = enemyArcher;
+            enemyArcher.Camera = camera;
+
+            Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>(), this);
+            enemySpear.ItemOwner = enemySpearman;
+            enemySpearman.Camera = camera;
+
+
+            enemies.Add(enemyWarrior);
+            enemies.Add(enemyArcher);
+            enemies.Add(enemySpearman);
+
+            // for (int i = 0; i < 100; i++)
+            // {
+            //     Enemy e = new EnemyWarrior(100, 1, new Vector2(5500 + 10 * i, 5500 + 10 * i), initTexture, gameFont, new List<Item>());
+            //     e.Camera = camera;
+            //     enemies.Add(e);
+            // }
+
             //ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
             ArrowTexture = content.Load<Texture2D>("Items/Projectile/Arrow");
             BowTexture = content.Load<Texture2D>("Bow1-130x25px");
@@ -180,7 +247,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 BowTexture,
                 hero,
                 20,
-                400,
+                1000, //cooldown
                 1000,
                 Enemies,
                 1500,
@@ -194,8 +261,8 @@ namespace GameStateManagementSample.Models.GameLogic
                 SwordTexture,
                 hero,
                 40,
-                400,
-                250,
+                1000, //cooldown
+                200,
                 Enemies,
                 this
             );
@@ -384,6 +451,94 @@ namespace GameStateManagementSample.Models.GameLogic
             spriteBatch.Begin();
             spriteBatch.DrawString(
                 spriteFont: gameFont,
+                text: "Press_F2_to_show_Controls",
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                    ScreenManager.GraphicsDevice.Viewport.Height * 0.01f),
+                Color.Blue
+            );
+            spriteBatch.End();
+
+            if (hero.ShowControls)
+            {
+                spriteBatch.Begin();
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "W,A,S,D_for_movement",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 50),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Left_Mouse_Button_to_attack",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 100),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Middle_Mouse_Button_or_X_to_use_item",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 150),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "1,2,3,4,5,6,7_for_quick_inventory_access",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 200),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Mousewheel_for_scrolling_through_inventory",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 250),
+                    Color.Green
+                );
+                spriteBatch.End();
+            }
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(
+                spriteFont: gameFont,
+                text: "Press_F1_to_toggle_Stats",
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 100),
+                Color.Blue
+            );
+            spriteBatch.End();
+
+            if (hero.ShowStats)
+            {
+                spriteBatch.Begin();
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Equipped_Weapon's_Damage:" + hero.ActiveWeapon.WeaponDamage,
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
+                        ScreenManager.GraphicsDevice.Viewport.Height - 250),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Equipped_Weapon's_Cooldown:" + hero.ActiveWeapon.AttackSpeed,
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
+                        ScreenManager.GraphicsDevice.Viewport.Height - 200),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Equipped_Weapon's_Range:" + hero.ActiveWeapon.WeaponRange,
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
+                        ScreenManager.GraphicsDevice.Viewport.Height - 150),
+                    Color.Green
+                );
+                spriteBatch.End();
+            }
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(
+                spriteFont: gameFont,
                 text: "Total ms: " + gameTime.TotalGameTime.TotalMilliseconds.ToString(),
                 position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
                     ScreenManager.GraphicsDevice.Viewport.Height - 250),
@@ -420,6 +575,30 @@ namespace GameStateManagementSample.Models.GameLogic
                 position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
                     ScreenManager.GraphicsDevice.Viewport.Height - 400),
                 Color.Red
+            );
+            spriteBatch.End();
+
+
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(
+                spriteFont: gameFont,
+                text: "ShowStats: " + hero.ShowStats,
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 450),
+                Color.White
+            );
+            spriteBatch.End();
+
+
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(
+                spriteFont: gameFont,
+                text: "ShowControls: " + hero.ShowControls,
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 500),
+                Color.White
             );
             spriteBatch.End();
 
@@ -502,16 +681,30 @@ namespace GameStateManagementSample.Models.GameLogic
                             theProjectile.ProjectileTexture.Width
                         );
 
-                        // For each Projectile, checks collision between arrow and enemy hitbox with every enemy (yes, Projectiles * Enemies calculations, O(n²), bad but not extremely bad)
-                        Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from the first Enemy whose hitbox intersects the arrow's hitbox.
+
+
+                        if (theProjectile.ItemOwner is Player) // Player's arrows can only damage enemies.
+                        {
+                            // For each Projectile, checks collision between arrow and enemy hitbox with every enemy (yes, Projectiles * Enemies calculations, O(n²), bad but not extremely bad)
+                            Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from the first Enemy whose hitbox intersects the arrow's hitbox.
+                            {
+                                if (!theProjectile.IsStuck) // <---------- notice this
+                                    if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
+                                    {
+                                        targetEnemy.TakeDamage(theProjectile.ProjectileDamage);
+                                        Projectiles.Remove(theProjectile); // Projectiles.RemoveAt(projectileUpdateIndex); <--- ist fehleranfällig für IndexOutOfBoundsException
+                                    }
+                            });
+                        }
+                        else // Enemies' arrows can only damage the player.
                         {
                             if (!theProjectile.IsStuck) // <---------- notice this
-                                if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
+                                if (theProjectile.ProjectileHitBox.Intersects(hero.BoundingBox))
                                 {
-                                    targetEnemy.TakeDamage(theProjectile.ProjectileDamage);
+                                    hero.TakeDamage(theProjectile.ProjectileDamage);
                                     Projectiles.Remove(theProjectile); // Projectiles.RemoveAt(projectileUpdateIndex); <--- ist fehleranfällig für IndexOutOfBoundsException
                                 }
-                        });
+                        }
 
                         // Checking whether the projectiles collide with any tiles in the map. Sadly this check is currently not possible for only the current room of the player, but only for all rooms.
                         if (!theProjectile.IsStuck)
@@ -804,11 +997,6 @@ namespace GameStateManagementSample.Models.GameLogic
             Projectiles.Clear();
         }
 
-        // public void playSoundBowEquip1()
-        // {
-        //     bowEquip1.Play();
-        // }
-
         private void ClearItemsOnStageChange()
         {
             worldConsumables.Clear();
@@ -822,6 +1010,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
             foreach (var e in Enemies)
             {
+                e.setGameTime(gameTime);
                 e.UpdateDistanceToHero(hero.Position);
                 //e.Idling(map.Rooms[0]);
                 e.FollowPlayer(map.Rooms[0]);
@@ -838,8 +1027,54 @@ namespace GameStateManagementSample.Models.GameLogic
                 if (finishedAnim)
                 {
                     Enemies.Remove(e);
-                    worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
-                    worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
+
+                    // 40% Drop Chance for Health Potion
+                    if (random.Next(0, 100) < 40)
+                        worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
+
+                    // 40% Drop Chance for Speed Potion
+                    if (random.Next(0, 100) < 40)
+                        worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
+
+                    // Roll for main loot, 10% drop chance
+                    int mainDropRoll = random.Next(0, 100);
+                    if (mainDropRoll > 89)
+                    {
+                        if (hero.ActiveWeapon is MeleeWeapon)
+                        {
+                            MeleeWeapon newWeapon = new MeleeWeapon(
+                                "Ancient Sword",
+                                SwordTexture,
+                                hero,
+                                hero.ActiveWeapon.WeaponDamage * 1.05f,
+                                hero.ActiveWeapon.AttackSpeed * 0.95f,
+                                hero.ActiveWeapon.WeaponRange * 1.04f,
+                                Enemies,
+                                this
+                            );
+                            newWeapon.Position = e.Position;
+                            worldConsumables.Add(newWeapon);
+                        }
+                        else if (hero.ActiveWeapon is RangedWeapon)
+                        {
+                            RangedWeapon newWeapon = new RangedWeapon(
+                                "Ancient Bow",
+                                BowTexture,
+                                hero,
+                                hero.ActiveWeapon.WeaponDamage * 1.05f,
+                                hero.ActiveWeapon.AttackSpeed * 0.95f,
+                                hero.ActiveWeapon.WeaponRange * 1.1f,
+                                Enemies,
+                                // (int)(hero.ActiveWeapon.ProjectileSpeed * 1.05f),
+                                1500,
+                                ArrowTexture,
+                                Projectiles,
+                                this
+                            );
+                            newWeapon.Position = e.Position;
+                            worldConsumables.Add(newWeapon);
+                        }
+                    }
                 }
             }
         }
@@ -852,12 +1087,60 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 for (int i = 0; i < hero.Inventory.Length; i++)
                 {
-                    if (hero.Inventory[i] == null)
+                    if (itemToCollect is Weapon)
                     {
-                        itemToCollect.ItemOwner = hero;
-                        hero.Inventory[i] = itemToCollect;
-                        worldConsumables.Remove(itemToCollect);
-                        break;
+                        if (itemToCollect is MeleeWeapon)
+                        {
+                            if (hero.ActiveWeapon is MeleeWeapon)
+                            {
+                                hero.ActiveWeapon = (MeleeWeapon)itemToCollect;
+                                worldConsumables.Remove(itemToCollect);
+                                break;
+                            }
+                            else
+                            {
+                                for (int n = 0; n < hero.Inventory.Length; n++)
+                                {
+                                    if ((hero.Inventory[n] == null) && hero.Inventory[n] is MeleeWeapon)
+                                    {
+                                        hero.ActiveWeapon = (MeleeWeapon)itemToCollect;
+                                        worldConsumables.Remove(itemToCollect);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else // if the itemToCollect is a RangedWeapon
+                        {
+                            if (hero.ActiveWeapon is RangedWeapon)
+                            {
+                                hero.ActiveWeapon = (RangedWeapon)itemToCollect;
+                                worldConsumables.Remove(itemToCollect);
+                                break;
+                            }
+                            else
+                            {
+                                for (int n = 0; n < hero.Inventory.Length; n++)
+                                {
+                                    if ((hero.Inventory[n] == null) && hero.Inventory[n] is RangedWeapon)
+                                    {
+                                        hero.ActiveWeapon = (RangedWeapon)itemToCollect;
+                                        worldConsumables.Remove(itemToCollect);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (hero.Inventory[i] == null)
+                        {
+                            itemToCollect.ItemOwner = hero;
+                            hero.Inventory[i] = itemToCollect;
+                            worldConsumables.Remove(itemToCollect);
+                            break;
+                        }
                     }
                 }
             }
