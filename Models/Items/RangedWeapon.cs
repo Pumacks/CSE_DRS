@@ -97,9 +97,11 @@ namespace GameStateManagementSample.Models.Items
                 new Projectile(
                     this.ItemName,
                     projectileTexture,
-                    this.ItemOwner,
-                    this.ItemOwner.Position,
+                    owner,
+                    // this.ItemOwner.Position,
+                    owner.Position,
                     heroPosition,
+                    // new Vector2(5000,5000),
                     projectileSpeed,
                     this.weaponRange,
                     this.weaponDamage));

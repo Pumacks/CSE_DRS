@@ -155,27 +155,52 @@ namespace GameStateManagementSample.Models.GameLogic
             //}
 
             
+
+
             RangedWeapon enemyBow = new RangedWeapon(
                 "Bow of the Dungeon",
                 BowTexture,
-                hero,
-                10,
-                800,
-                1500,
+                null,
+                15,
+                2000,
+                1000,
                 Enemies,
-                400,
+                600,
                 ArrowTexture,
                 Projectiles,
                 this
             );
+            MeleeWeapon enemySword = new MeleeWeapon(
+                "Sword of the Dungeon",
+                SwordTexture,
+                null,
+                10,
+                1500,
+                150,
+                Enemies,
+                this
+            );
+            MeleeWeapon enemySpear = new MeleeWeapon(
+                "Sword of the Dungeon",
+                SwordTexture,
+                null,
+                15,
+                2000,
+                250,
+                Enemies,
+                this
+            );
 
             Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>());
+            enemySword.ItemOwner = enemyWarrior;
             enemyWarrior.Camera = camera;
 
             Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), initTexture, gameFont, new List<Item>(), enemyBow);
+            enemyBow.ItemOwner = enemyArcher;
             enemyArcher.Camera = camera;
 
             Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>());
+            enemySpear.ItemOwner = enemySpearman;
             enemySpearman.Camera = camera;
 
 
@@ -220,7 +245,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 BowTexture,
                 hero,
                 20,
-                400,
+                1000, //cooldown
                 1000,
                 Enemies,
                 1500,
@@ -234,7 +259,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 SwordTexture,
                 hero,
                 40,
-                400,
+                1000, //cooldown
                 200,
                 Enemies,
                 this
@@ -424,33 +449,84 @@ namespace GameStateManagementSample.Models.GameLogic
             spriteBatch.Begin();
             spriteBatch.DrawString(
                 spriteFont: gameFont,
-                text: "Press_F1_to_toggle_Controls_and_Stats",
+                text: "Press_F2_to_show_Controls",
                 position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 80),
+                    ScreenManager.GraphicsDevice.Viewport.Height * 0.01f),
                 Color.Blue
             );
             spriteBatch.End();
 
-            if (hero.ShowControlsAndStats)
+            if (hero.ShowControls)
             {
                 spriteBatch.Begin();
                 spriteBatch.DrawString(
                     spriteFont: gameFont,
-                    text: "Equipped Weapon's Damage:" + hero.ActiveWeapon.WeaponDamage,
+                    text: "W,A,S,D_for_movement",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 50),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Left_Mouse_Button_to_attack",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 100),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Middle_Mouse_Button_or_X_to_use_item",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 150),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "1,2,3,4,5,6,7_for_quick_inventory_access",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 200),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Mousewheel_for_scrolling_through_inventory",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 250),
+                    Color.Green
+                );
+                spriteBatch.End();
+            }
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(
+                spriteFont: gameFont,
+                text: "Press_F1_to_toggle_Stats",
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 100),
+                Color.Blue
+            );
+            spriteBatch.End();
+
+            if (hero.ShowStats)
+            {
+                spriteBatch.Begin();
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Equipped_Weapon's_Damage:" + hero.ActiveWeapon.WeaponDamage,
                     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
                         ScreenManager.GraphicsDevice.Viewport.Height - 250),
                     Color.Green
                 );
                 spriteBatch.DrawString(
                     spriteFont: gameFont,
-                    text: "Equipped Weapon's Cooldown:" + hero.ActiveWeapon.AttackSpeed,
+                    text: "Equipped_Weapon's_Cooldown:" + hero.ActiveWeapon.AttackSpeed,
                     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
                         ScreenManager.GraphicsDevice.Viewport.Height - 200),
                     Color.Green
                 );
                 spriteBatch.DrawString(
                     spriteFont: gameFont,
-                    text: "Equipped Weapon's Range:" + hero.ActiveWeapon.WeaponRange,
+                    text: "Equipped_Weapon's_Range:" + hero.ActiveWeapon.WeaponRange,
                     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
                         ScreenManager.GraphicsDevice.Viewport.Height - 150),
                     Color.Green
@@ -505,9 +581,21 @@ namespace GameStateManagementSample.Models.GameLogic
             spriteBatch.Begin();
             spriteBatch.DrawString(
                 spriteFont: gameFont,
-                text: "ShowControlsAndStats: " + hero.ShowControlsAndStats,
+                text: "ShowStats: " + hero.ShowStats,
                 position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
                     ScreenManager.GraphicsDevice.Viewport.Height - 450),
+                Color.White
+            );
+            spriteBatch.End();
+
+
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(
+                spriteFont: gameFont,
+                text: "ShowControls: " + hero.ShowControls,
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 500),
                 Color.White
             );
             spriteBatch.End();
@@ -591,16 +679,30 @@ namespace GameStateManagementSample.Models.GameLogic
                             theProjectile.ProjectileTexture.Width
                         );
 
-                        // For each Projectile, checks collision between arrow and enemy hitbox with every enemy (yes, Projectiles * Enemies calculations, O(n²), bad but not extremely bad)
-                        Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from the first Enemy whose hitbox intersects the arrow's hitbox.
+
+
+                        if (theProjectile.ItemOwner is Player) // Player's arrows can only damage enemies.
+                        {
+                            // For each Projectile, checks collision between arrow and enemy hitbox with every enemy (yes, Projectiles * Enemies calculations, O(n²), bad but not extremely bad)
+                            Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from the first Enemy whose hitbox intersects the arrow's hitbox.
+                            {
+                                if (!theProjectile.IsStuck) // <---------- notice this
+                                    if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
+                                    {
+                                        targetEnemy.TakeDamage(theProjectile.ProjectileDamage);
+                                        Projectiles.Remove(theProjectile); // Projectiles.RemoveAt(projectileUpdateIndex); <--- ist fehleranfällig für IndexOutOfBoundsException
+                                    }
+                            });
+                        }
+                        else // Enemies' arrows can only damage the player.
                         {
                             if (!theProjectile.IsStuck) // <---------- notice this
-                                if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
+                                if (theProjectile.ProjectileHitBox.Intersects(hero.BoundingBox))
                                 {
-                                    targetEnemy.TakeDamage(theProjectile.ProjectileDamage);
+                                    hero.TakeDamage(theProjectile.ProjectileDamage);
                                     Projectiles.Remove(theProjectile); // Projectiles.RemoveAt(projectileUpdateIndex); <--- ist fehleranfällig für IndexOutOfBoundsException
                                 }
-                        });
+                        }
 
                         // Checking whether the projectiles collide with any tiles in the map. Sadly this check is currently not possible for only the current room of the player, but only for all rooms.
                         if (!theProjectile.IsStuck)
@@ -935,7 +1037,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         if (hero.ActiveWeapon is MeleeWeapon)
                         {
                             MeleeWeapon newWeapon = new MeleeWeapon(
-                                "Dungeon Sword",
+                                "Ancient Sword",
                                 SwordTexture,
                                 hero,
                                 hero.ActiveWeapon.WeaponDamage * 1.05f,
@@ -950,7 +1052,7 @@ namespace GameStateManagementSample.Models.GameLogic
                         else if (hero.ActiveWeapon is RangedWeapon)
                         {
                             RangedWeapon newWeapon = new RangedWeapon(
-                                "Dungeon Bow",
+                                "Ancient Bow",
                                 BowTexture,
                                 hero,
                                 hero.ActiveWeapon.WeaponDamage * 1.05f,

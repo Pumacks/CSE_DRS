@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GameStateManagementSample.Models.Helpers;
+using GameStateManagementSample.Models.Map;
 
 namespace GameStateManagementSample.Models.Entities
 {
@@ -34,5 +36,79 @@ namespace GameStateManagementSample.Models.Entities
             Texture = animManager.IdleAnimation();
             Position += Vector2.Zero;
         }
+
+        // public override void FollowPlayer2(Room room)
+        // {
+        //     Vector2 movingDirection = Vector2.Zero;
+        //     bool colNorth = false, colEast = false, colSouth = false, colWest = false;
+
+        //     /*
+        //     #region StructureCollision
+
+        //     if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+        //         colNorth = true;
+        //     if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+        //         colSouth = true;
+        //     if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+        //         colWest = true;
+        //     if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+        //         colEast = true;
+
+        //     #endregion
+        //     */
+
+
+
+        //     // Attacking:
+        //     if (Math.Sqrt(distanceXToPlayer * distanceXToPlayer + distanceYToPlayer * distanceYToPlayer) <= this.ActiveWeapon.WeaponRange)
+        //     {
+
+        //         ActiveWeapon.weaponAttack(this);
+        //     }
+        //     else
+        //     {
+
+
+
+
+
+
+        //         if (distanceXToPlayer > 120 * followPlayerMultiplier && distanceXToPlayer < 500 * followPlayerMultiplier)
+        //         {
+        //             movingDirection.X += MovementSpeed;
+        //             if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+        //                 colEast = true;
+        //             if (!colEast)
+        //                 Move(movingDirection);
+        //         }
+        //         if (distanceXToPlayer < -120 * followPlayerMultiplier && distanceXToPlayer > -500 * followPlayerMultiplier)
+        //         {
+        //             movingDirection.X -= MovementSpeed;
+        //             if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+        //                 colWest = true;
+        //             if (!colWest)
+        //                 Move(movingDirection);
+        //         }
+        //         if (distanceYToPlayer > 120 * followPlayerMultiplier && distanceYToPlayer < 500 * followPlayerMultiplier)
+        //         {
+        //             movingDirection.Y += MovementSpeed;
+        //             if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+        //                 colSouth = true;
+        //             if (!colSouth)
+        //                 Move(movingDirection);
+        //         }
+        //         if (distanceYToPlayer < -120 * followPlayerMultiplier && distanceYToPlayer > -500 * followPlayerMultiplier)
+        //         {
+        //             movingDirection.Y -= MovementSpeed;
+        //             if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+        //                 colNorth = true;
+        //             if (!colNorth)
+        //                 Move(movingDirection);
+        //         }
+
+        //     }
+
+
+        // }
     }
 }

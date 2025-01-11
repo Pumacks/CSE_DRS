@@ -62,50 +62,50 @@ namespace GameStateManagementSample.Models.Entities
             // Attacking:
             if (Math.Sqrt(distanceXToPlayer * distanceXToPlayer + distanceYToPlayer * distanceYToPlayer) <= this.ActiveWeapon.WeaponRange)
             {
-                
+
                 ActiveWeapon.weaponAttack(this);
             }
             else
+
+
+
+
+
+
             {
+                if (distanceXToPlayer > 120 * followPlayerMultiplier && distanceXToPlayer < 500 * followPlayerMultiplier)
+                {
+                    movingDirection.X += MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colEast = true;
+                    if (!colEast)
+                        Move(movingDirection);
+                }
+                if (distanceXToPlayer < -120 * followPlayerMultiplier && distanceXToPlayer > -500 * followPlayerMultiplier)
+                {
+                    movingDirection.X -= MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colWest = true;
+                    if (!colWest)
+                        Move(movingDirection);
+                }
+                if (distanceYToPlayer > 120 * followPlayerMultiplier && distanceYToPlayer < 500 * followPlayerMultiplier)
+                {
+                    movingDirection.Y += MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colSouth = true;
+                    if (!colSouth)
+                        Move(movingDirection);
+                }
+                if (distanceYToPlayer < -120 * followPlayerMultiplier && distanceYToPlayer > -500 * followPlayerMultiplier)
+                {
+                    movingDirection.Y -= MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colNorth = true;
+                    if (!colNorth)
+                        Move(movingDirection);
+                }
 
-            }
-
-
-
-
-
-
-            if (distanceXToPlayer > 120 && distanceXToPlayer < 500)
-            {
-                movingDirection.X += MovementSpeed;
-                if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                    colEast = true;
-                if (!colEast)
-                    Move(movingDirection);
-            }
-            if (distanceXToPlayer < -120 && distanceXToPlayer > -500)
-            {
-                movingDirection.X -= MovementSpeed;
-                if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                    colWest = true;
-                if (!colWest)
-                    Move(movingDirection);
-            }
-            if (distanceYToPlayer > 120 && distanceYToPlayer < 500)
-            {
-                movingDirection.Y += MovementSpeed;
-                if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                    colSouth = true;
-                if (!colSouth)
-                    Move(movingDirection);
-            }
-            if (distanceYToPlayer < -120 && distanceYToPlayer > -500)
-            {
-                movingDirection.Y -= MovementSpeed;
-                if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                    colNorth = true;
-                if (!colNorth)
-                    Move(movingDirection);
             }
 
 

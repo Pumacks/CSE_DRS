@@ -23,16 +23,28 @@ namespace GameStateManagementSample.Models.Entities
         private MouseState currentMouseState;
         private MouseState previousMouseState = Mouse.GetState();
         private Engine gameEngine;
-        private bool showControlsAndStats = false;
-        public bool ShowControlsAndStats
+        private bool showStats = false;
+        public bool ShowStats
         {
             get
             {
-                return this.showControlsAndStats;
+                return this.showStats;
             }
             set
             {
-                this.showControlsAndStats = value;
+                this.showStats = value;
+            }
+        }
+        private bool showControls = false;
+        public bool ShowControls
+        {
+            get
+            {
+                return this.showControls;
+            }
+            set
+            {
+                this.showControls = value;
             }
         }
 
@@ -185,7 +197,15 @@ namespace GameStateManagementSample.Models.Entities
                 if (currentKeyboardState.IsKeyDown(Keys.F1) && !previousKeyboardState.IsKeyDown(Keys.F1))
                 {
                     // showControlsAndStats = showControlsAndStats ? false : true ;
-                    showControlsAndStats = !showControlsAndStats;
+                    showStats = !showStats;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F2))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.F2) && !previousKeyboardState.IsKeyDown(Keys.F2))
+                {
+                    showControls = !showControls;
                 }
             }
 

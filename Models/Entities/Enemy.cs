@@ -16,6 +16,7 @@ namespace GameStateManagementSample.Models.Entities
 
         protected float distanceXToPlayer;
         protected float distanceYToPlayer;
+        protected float followPlayerMultiplier = 2;
 
         public Enemy() { }
 
