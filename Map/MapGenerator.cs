@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace GameStateManagementSample.Models.Map
 {
@@ -13,8 +12,8 @@ namespace GameStateManagementSample.Models.Map
         private static Random random = new Random();
         Room[] rooms = new Room[5];
         bool[,] mapVisual = new bool[10, 10];
-        int xmapVisual = 5;
-        int ymapVisual = 5;
+        int xmapVisual = 4;
+        int ymapVisual = 4;
         int stage = 1;
 
         public Room[] Rooms
@@ -23,10 +22,7 @@ namespace GameStateManagementSample.Models.Map
             set => rooms = value;
         }
 
-
         const int ROOM_DISTANCE = 5000; // Einheitliche Distanz
-
-
 
         public MapGenerator()
         {
@@ -36,25 +32,35 @@ namespace GameStateManagementSample.Models.Map
             }
         }
 
-
-
         public void GenerateMap(ContentManager content, ref List<Enemy> enemies, Camera camera)
         {
+            // Rooms neu initialisieren
             for (int i = 0; i < rooms.Length; i++)
             {
                 rooms[i] = new Room();
             }
+
+            // Texturen laden
             LoadMapTextures(content);
+
+            // Ersten Raum erzeugen
             rooms[0].GenerateRoom(random, new Vector2(5000, 5000), stage, ref enemies);
+
+            // Start im bool-Array markieren und in Room speichern
             mapVisual = new bool[10, 10];
-            xmapVisual = 5;
-            ymapVisual = 5;
+            xmapVisual = 4;
+            ymapVisual = 4;
             mapVisual[xmapVisual, ymapVisual] = true;
+
+            // WICHTIG: die Map-Koordinaten des ersten Raums merken
+            rooms[0].MapX = xmapVisual;
+            rooms[0].MapY = ymapVisual;
 
             int randomdirection;
             int randomRoom;
             Vector2 posOfRoom;
 
+            // Weitere Räume platzieren
             for (int i = 1; i < rooms.Length; i++)
             {
                 randomdirection = random.Next(0, 4);
@@ -68,23 +74,29 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(0) && !mapVisual[xmapVisual - 1, ymapVisual])
+                        // Statt xmapVisual - 1 immer nur, wenn es frei ist
+                        if (!rooms[randomRoom].isDirectionBlockedOn(0) 
+                            && !mapVisual[xmapVisual - 1, ymapVisual])
                         {
                             xmapVisual -= 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
+
+                            // Raum generieren
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y -= ROOM_DISTANCE;
-
                             rooms[i].GenerateRoom(random, posOfRoom, stage, ref enemies);
 
+                            // Neue Raum-Koordinaten merken
+                            rooms[i].MapX = xmapVisual;
+                            rooms[i].MapY = ymapVisual;
+
+                            // Türen / Blockierungen
                             rooms[randomRoom].blockDirection(0);
                             rooms[i].blockDirection(2);
-
                             rooms[randomRoom].setDoors(0, rooms[i]);
 
                             if (i == rooms.Length - 1)
                                 rooms[i].setDoorLastDoor(0);
-
                         }
                         else
                             i--;
@@ -96,19 +108,21 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(1) && !mapVisual[xmapVisual, ymapVisual + 1])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(1)
+                            && !mapVisual[xmapVisual, ymapVisual + 1])
                         {
                             ymapVisual += 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
+
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X += ROOM_DISTANCE;
-
                             rooms[i].GenerateRoom(random, posOfRoom, stage, ref enemies);
+
+                            rooms[i].MapX = xmapVisual;
+                            rooms[i].MapY = ymapVisual;
 
                             rooms[randomRoom].blockDirection(1);
                             rooms[i].blockDirection(3);
-
-
                             rooms[randomRoom].setDoors(1, rooms[i]);
 
                             if (i == rooms.Length - 1)
@@ -117,24 +131,28 @@ namespace GameStateManagementSample.Models.Map
                         else
                             i--;
                         break;
+
                     case 2: // South
                         if (rooms[randomRoom].allDirectionsBlocked())
                         {
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(2) && !mapVisual[xmapVisual + 1, ymapVisual])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(2)
+                            && !mapVisual[xmapVisual + 1, ymapVisual])
                         {
                             xmapVisual += 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
+
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.Y += ROOM_DISTANCE;
-
                             rooms[i].GenerateRoom(random, posOfRoom, stage, ref enemies);
+
+                            rooms[i].MapX = xmapVisual;
+                            rooms[i].MapY = ymapVisual;
 
                             rooms[randomRoom].blockDirection(2);
                             rooms[i].blockDirection(0);
-
                             rooms[randomRoom].setDoors(2, rooms[i]);
 
                             if (i == rooms.Length - 1)
@@ -143,24 +161,28 @@ namespace GameStateManagementSample.Models.Map
                         else
                             i--;
                         break;
+
                     case 3: // West
                         if (rooms[randomRoom].allDirectionsBlocked())
                         {
                             i--;
                             break;
                         }
-                        if (!rooms[randomRoom].isDirectionBlockedOn(3) && !mapVisual[xmapVisual, ymapVisual - 1])
+                        if (!rooms[randomRoom].isDirectionBlockedOn(3)
+                            && !mapVisual[xmapVisual, ymapVisual - 1])
                         {
                             ymapVisual -= 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
+
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
                             posOfRoom.X -= ROOM_DISTANCE;
-
                             rooms[i].GenerateRoom(random, posOfRoom, stage, ref enemies);
+
+                            rooms[i].MapX = xmapVisual;
+                            rooms[i].MapY = ymapVisual;
 
                             rooms[randomRoom].blockDirection(3);
                             rooms[i].blockDirection(1);
-
                             rooms[randomRoom].setDoors(3, rooms[i]);
 
                             if (i == rooms.Length - 1)
@@ -170,8 +192,6 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                         break;
                 }
-
-     
             }
         }
 
@@ -179,6 +199,7 @@ namespace GameStateManagementSample.Models.Map
         {
             return this;
         }
+
         public void DrawMap(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < rooms.Length; i++)
@@ -199,6 +220,5 @@ namespace GameStateManagementSample.Models.Map
                 rooms[i].LoadTextures(content);
             }
         }
-
     }
 }

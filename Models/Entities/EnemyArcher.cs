@@ -14,6 +14,7 @@ namespace GameStateManagementSample.Models.Entities
         public EnemyArcher(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
             : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
+            ReductionDistance = 500;
         }
 
         public override void LoadContent(ContentManager content)

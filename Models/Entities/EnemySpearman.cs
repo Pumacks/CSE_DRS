@@ -19,6 +19,7 @@ namespace GameStateManagementSample.Models.Entities
         public EnemySpearman (int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
             : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
+            ReductionDistance = 150;
         }
 
         public override void LoadContent(ContentManager content)

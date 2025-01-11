@@ -19,9 +19,15 @@ namespace GameStateManagementSample.Models.Entities
         float distanceYToPlayer;
 
         float reductionDistance = 150;
-        float recognitionDistance = 1100;
+        float recognitionDistance = 800;
         float howLong = 100;
         float fleeAt = 60;
+
+        protected float ReductionDistance
+        {
+            get => reductionDistance;
+            set => reductionDistance = value;
+        }
 
         public Enemy() { }
 
@@ -136,8 +142,6 @@ namespace GameStateManagementSample.Models.Entities
             else if(recognitionDistance < distanceXToPlayer && recognitionDistance < distanceYToPlayer || -recognitionDistance > distanceXToPlayer && -recognitionDistance < distanceYToPlayer){
                 Idling(room);
             }
-                
-
         }
 
         private bool isDistanceToPlayerinRecognitionDistance(float distance, float a, float b)

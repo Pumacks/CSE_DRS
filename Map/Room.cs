@@ -71,6 +71,9 @@ namespace GameStateManagementSample.Models.Map
 
         private Random random = new Random();
 
+        public int MapX { get; set; }
+        public int MapY { get; set; }
+
         public Room()
         {
             for (int i = 0; i < blocked.Length; i++)
@@ -78,7 +81,6 @@ namespace GameStateManagementSample.Models.Map
                 blocked[i] = false;
             }
         }
-
 
         public void LoadTextures(ContentManager content)
         {
@@ -189,8 +191,6 @@ namespace GameStateManagementSample.Models.Map
                     rdmNumber = random.Next(1, 125);
                     if (stage == 1)
                     {
-                        if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
-                            tiles[i, j] = new Tile(tilePos, pot, true);
                         if (rdmNumber == 16 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
                             tiles[i, j] = new Tile(tilePos, s1BrokenTree, true);
                         if (rdmNumber == 17 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
@@ -200,8 +200,6 @@ namespace GameStateManagementSample.Models.Map
                     }
                     if (stage == 2)
                     {
-                        if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
-                            tiles[i, j] = new Tile(tilePos, pot, true);
                         if (rdmNumber == 16 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
                             tiles[i, j] = new Tile(tilePos, s2LightStone, true);
                         if (rdmNumber == 17 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
@@ -211,8 +209,6 @@ namespace GameStateManagementSample.Models.Map
                     }
                     if (stage == 3)
                     {
-                        if (rdmNumber == 15 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
-                            tiles[i, j] = new Tile(tilePos, pot, true);
                         if (rdmNumber == 16 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
                             tiles[i, j] = new Tile(tilePos, s3BrokenTree, true);
                         if (rdmNumber == 17 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
