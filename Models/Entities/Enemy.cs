@@ -18,7 +18,7 @@ namespace GameStateManagementSample.Models.Entities
         float distanceXToPlayer;
         float distanceYToPlayer;
 
-        float reductionDistance = 150;
+        float reductionDistance = 120;
         float recognitionDistance = 800;
         float howLong = 100;
         float fleeAt = 60;
