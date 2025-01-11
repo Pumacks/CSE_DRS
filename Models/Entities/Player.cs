@@ -10,6 +10,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using GameStateManagement;
+using System;
+using GameStateManagementSample.Models.Helpers;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -209,6 +211,31 @@ namespace GameStateManagementSample.Models.Entities
                 }
             }
 
+            // Pick up items
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.F) && !previousKeyboardState.IsKeyDown(Keys.F))
+                {
+                    pickUpItems();
+                }
+            }
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            {
+                if (currentMouseState.RightButton == ButtonState.Pressed && !(previousMouseState.RightButton == ButtonState.Pressed))
+                {
+                    pickUpItems();
+                }
+            }
+
+            // Pick up items
+            if (Keyboard.GetState().IsKeyDown(Keys.G))
+            {
+                if (currentKeyboardState.IsKeyDown(Keys.G) && !previousKeyboardState.IsKeyDown(Keys.G))
+                {
+                    dropItem();
+                }
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.X))
             {
                 if (currentKeyboardState.IsKeyDown(Keys.X) && !previousKeyboardState.IsKeyDown(Keys.X))
@@ -292,6 +319,37 @@ namespace GameStateManagementSample.Models.Entities
             previousKeyboardState = currentKeyboardState;
             previousMouseState = currentMouseState;
         }
+
+        private void dropItem()
+        {
+            if (inventory[selectedInventorySlot] != null) {
+                inventory[selectedInventorySlot].Position = this.Position;
+                gameEngine.WorldConsumables.Add(inventory[selectedInventorySlot]);
+                inventory[selectedInventorySlot] = null;
+            }
+        }
+
+        private void pickUpItems()
+        {
+            // foreach (Item itemToPickUp in gameEngine.WorldConsumables) {
+
+            // }
+            Item itemToPickUp = CollisionDetector.HasItemCollision(gameEngine.WorldConsumables, this);
+            if (itemToPickUp != null)
+            {
+                for (int i = 0; i < this.Inventory.Length; i++)
+                {
+                    if (this.Inventory[i] == null)
+                    {
+                        itemToPickUp.ItemOwner = this;
+                        this.Inventory[i] = itemToPickUp;
+                        gameEngine.WorldConsumables.Remove(itemToPickUp);
+                        break;
+                    }
+                }
+            }
+        }
+
         public override void Atack()
         {
             ActiveWeapon.weaponAttack(this);

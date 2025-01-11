@@ -13,7 +13,7 @@ namespace GameStateManagementSample.Models.Entities
 {
     public class EnemyArcher : Enemy
     {
-        Texture2D ArrowTexture;
+        protected Texture2D ArrowTexture;
 
         public EnemyArcher(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Engine engine)
             : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items, engine)
@@ -22,12 +22,12 @@ namespace GameStateManagementSample.Models.Entities
             ActiveWeapon = new RangedWeapon("Bow of the Dungeon",
                 null,
                 null,
-                15,
-                1000,
-                ReductionDistance,
+                10,
+                4000,
+                ReductionDistance * 1.42f,
                 engine.Enemies,
                 600,
-                ArrowTexture,
+                engine.arrowTextureRef,
                 engine.Projectiles,
                 engine);
         }
@@ -50,6 +50,7 @@ namespace GameStateManagementSample.Models.Entities
             Position += Vector2.Zero;
 
             ArrowTexture = content.Load<Texture2D>("Items/Projectile/Arrow");
+            // ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px"); 
         }
 
         public override void FollowPlayer(Room room)
@@ -116,7 +117,7 @@ namespace GameStateManagementSample.Models.Entities
             }
             else if (isPlayerInReach())
             {
-                // ActiveWeapon.weaponAttack(this);
+                ActiveWeapon.weaponAttack(this);
             }
         }
     }

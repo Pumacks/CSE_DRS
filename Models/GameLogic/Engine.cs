@@ -43,6 +43,11 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
         private List<Item> worldConsumables;
+        public List<Item> WorldConsumables
+        {
+            get { return worldConsumables; }
+            set { worldConsumables = value; }
+        }
 
         private PlayerGameStatus playerGameStatus = PlayerGameStatus.ALIVE;
         private bool deathAnimationFinished = false;
@@ -84,6 +89,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
         public Player heroPlayer;
         public Engine enginereference;
+        public Texture2D arrowTextureRef;
 
         private Random random = new Random();
 
@@ -145,6 +151,7 @@ namespace GameStateManagementSample.Models.GameLogic
 
             // Loading the Texture for Arrows
             ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
+            arrowTextureRef = ArrowTexture;
             BowTexture = content.Load<Texture2D>("Bow1-130x25px");
             // Creating a List-Object for enemies
             Enemies = new List<Enemy>();
@@ -246,8 +253,8 @@ namespace GameStateManagementSample.Models.GameLogic
                 "Bow of the Gods",
                 BowTexture,
                 hero,
-                20,
-                1000, //cooldown
+                17,
+                900, //cooldown
                 1000,
                 Enemies,
                 1500,
@@ -260,9 +267,9 @@ namespace GameStateManagementSample.Models.GameLogic
                 "Sword of the Gods",
                 SwordTexture,
                 hero,
-                40,
-                1000, //cooldown
-                200,
+                17,
+                700, //cooldown
+                300,
                 Enemies,
                 this
             );
@@ -452,8 +459,8 @@ namespace GameStateManagementSample.Models.GameLogic
             spriteBatch.DrawString(
                 spriteFont: gameFont,
                 text: "Press_F2_to_show_Controls",
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
-                    ScreenManager.GraphicsDevice.Viewport.Height * 0.01f),
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 150),
                 Color.Blue
             );
             spriteBatch.End();
@@ -464,36 +471,50 @@ namespace GameStateManagementSample.Models.GameLogic
                 spriteBatch.DrawString(
                     spriteFont: gameFont,
                     text: "W,A,S,D_for_movement",
-                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
-                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 50),
-                    Color.Green
-                );
-                spriteBatch.DrawString(
-                    spriteFont: gameFont,
-                    text: "Left_Mouse_Button_to_attack",
-                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
-                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 100),
-                    Color.Green
-                );
-                spriteBatch.DrawString(
-                    spriteFont: gameFont,
-                    text: "Middle_Mouse_Button_or_X_to_use_item",
-                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
-                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 150),
-                    Color.Green
-                );
-                spriteBatch.DrawString(
-                    spriteFont: gameFont,
-                    text: "1,2,3,4,5,6,7_for_quick_inventory_access",
-                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
                         ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 200),
                     Color.Green
                 );
                 spriteBatch.DrawString(
                     spriteFont: gameFont,
-                    text: "Mousewheel_for_scrolling_through_inventory",
-                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.75f,
+                    text: "Left_Mouse_Button_to_attack",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
                         ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 250),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Right_Mouse_Button_or_F_to_pickup_items",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 300),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Middle_Mouse_Button_or_X_to_use_item",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 350),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "1,2,3,4,5,6,7_for_quick_inventory_access",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 400),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Mousewheel_for_scrolling_through_inventory",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 450),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "G_to_drop_selected_item",
+                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                        ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 500),
                     Color.Green
                 );
                 spriteBatch.End();
@@ -503,8 +524,8 @@ namespace GameStateManagementSample.Models.GameLogic
             spriteBatch.DrawString(
                 spriteFont: gameFont,
                 text: "Press_F1_to_toggle_Stats",
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 100),
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 250),
                 Color.Blue
             );
             spriteBatch.End();
@@ -514,93 +535,100 @@ namespace GameStateManagementSample.Models.GameLogic
                 spriteBatch.Begin();
                 spriteBatch.DrawString(
                     spriteFont: gameFont,
-                    text: "Equipped_Weapon's_Damage:" + hero.ActiveWeapon.WeaponDamage,
-                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
-                        ScreenManager.GraphicsDevice.Viewport.Height - 250),
+                    text: "DPS:" + hero.ActiveWeapon.WeaponDamage * (1000 / hero.ActiveWeapon.AttackSpeed),
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 450),
                     Color.Green
                 );
                 spriteBatch.DrawString(
                     spriteFont: gameFont,
-                    text: "Equipped_Weapon's_Cooldown:" + hero.ActiveWeapon.AttackSpeed,
-                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
-                        ScreenManager.GraphicsDevice.Viewport.Height - 200),
+                    text: "Damage:" + hero.ActiveWeapon.WeaponDamage,
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 400),
                     Color.Green
                 );
                 spriteBatch.DrawString(
                     spriteFont: gameFont,
-                    text: "Equipped_Weapon's_Range:" + hero.ActiveWeapon.WeaponRange,
-                    position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.8f,
-                        ScreenManager.GraphicsDevice.Viewport.Height - 150),
+                    text: "Cooldown:" + hero.ActiveWeapon.AttackSpeed,
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 350),
+                    Color.Green
+                );
+                spriteBatch.DrawString(
+                    spriteFont: gameFont,
+                    text: "Range:" + hero.ActiveWeapon.WeaponRange,
+                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+                    ScreenManager.GraphicsDevice.Viewport.Height - 300),
                     Color.Green
                 );
                 spriteBatch.End();
             }
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Total ms: " + gameTime.TotalGameTime.TotalMilliseconds.ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 250),
-                Color.Red
-            );
-            spriteBatch.End();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Hero Position: " + hero.Position.ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 300),
-                Color.Red
-            );
-            spriteBatch.End();
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Hero Transformed Position: " + Vector2.Transform(hero.Position, camera.Transform).ToString(),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 350),
-                Color.Red
-            );
-            spriteBatch.End();
+            // spriteBatch.Begin();
+            // spriteBatch.DrawString(
+            //     spriteFont: gameFont,
+            //     text: "Total ms: " + gameTime.TotalGameTime.TotalMilliseconds.ToString(),
+            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+            //         ScreenManager.GraphicsDevice.Viewport.Height - 250),
+            //     Color.Red
+            // );
+            // spriteBatch.End();
+            // spriteBatch.Begin();
+            // spriteBatch.DrawString(
+            //     spriteFont: gameFont,
+            //     text: "Hero Position: " + hero.Position.ToString(),
+            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+            //         ScreenManager.GraphicsDevice.Viewport.Height - 300),
+            //     Color.Red
+            // );
+            // spriteBatch.End();
+            // spriteBatch.Begin();
+            // spriteBatch.DrawString(
+            //     spriteFont: gameFont,
+            //     text: "Hero Transformed Position: " + Vector2.Transform(hero.Position, camera.Transform).ToString(),
+            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+            //         ScreenManager.GraphicsDevice.Viewport.Height - 350),
+            //     Color.Red
+            // );
+            // spriteBatch.End();
 
 
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                // text: "M.Cursor Transformed Inverted: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.Camera.Transform)),
-                text: "Mouse aiming at: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
-                    Matrix.Invert(hero.Camera.Transform)),
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 400),
-                Color.Red
-            );
-            spriteBatch.End();
+            // spriteBatch.Begin();
+            // spriteBatch.DrawString(
+            //     spriteFont: gameFont,
+            //     // text: "M.Cursor Transformed Inverted: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.Camera.Transform)),
+            //     text: "Mouse aiming at: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
+            //         Matrix.Invert(hero.Camera.Transform)),
+            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+            //         ScreenManager.GraphicsDevice.Viewport.Height - 400),
+            //     Color.Red
+            // );
+            // spriteBatch.End();
 
 
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "ShowStats: " + hero.ShowStats,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 450),
-                Color.White
-            );
-            spriteBatch.End();
+            // spriteBatch.Begin();
+            // spriteBatch.DrawString(
+            //     spriteFont: gameFont,
+            //     text: "ShowStats: " + hero.ShowStats,
+            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+            //         ScreenManager.GraphicsDevice.Viewport.Height - 450),
+            //     Color.White
+            // );
+            // spriteBatch.End();
 
 
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "ShowControls: " + hero.ShowControls,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 500),
-                Color.White
-            );
-            spriteBatch.End();
+            // spriteBatch.Begin();
+            // spriteBatch.DrawString(
+            //     spriteFont: gameFont,
+            //     text: "ShowControls: " + hero.ShowControls,
+            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
+            //         ScreenManager.GraphicsDevice.Viewport.Height - 500),
+            //     Color.White
+            // );
+            // spriteBatch.End();
 
 
 
@@ -644,7 +672,7 @@ namespace GameStateManagementSample.Models.GameLogic
             hero.Update(gameTime);
             camera.Follow(hero);
             UpdateEnemies(gameTime);
-            CollectItems();
+            // CollectItems();
 
 
             if (hero.HealthPoints <= 0)
@@ -1040,15 +1068,18 @@ namespace GameStateManagementSample.Models.GameLogic
                     int mainDropRoll = random.Next(0, 100);
                     if (mainDropRoll > 89)
                     {
+                        double damageMultiplier = random.NextDouble() * 0.08f + 0.97f;
+                        double speedMultiplier = random.NextDouble() * 0.08f + 0.95f;
+                        double rangeMultiplier = random.NextDouble() * 0.1f + 0.96f;
                         if (hero.ActiveWeapon is MeleeWeapon)
                         {
                             MeleeWeapon newWeapon = new MeleeWeapon(
                                 "Ancient Sword",
                                 SwordTexture,
                                 hero,
-                                hero.ActiveWeapon.WeaponDamage * 1.05f,
-                                hero.ActiveWeapon.AttackSpeed * 0.95f,
-                                hero.ActiveWeapon.WeaponRange * 1.04f,
+                                (float)(hero.ActiveWeapon.WeaponDamage * damageMultiplier + 1),
+                                (float)(hero.ActiveWeapon.AttackSpeed * speedMultiplier - 1),
+                                (float)(hero.ActiveWeapon.WeaponRange * rangeMultiplier + 1),
                                 Enemies,
                                 this
                             );
@@ -1061,9 +1092,9 @@ namespace GameStateManagementSample.Models.GameLogic
                                 "Ancient Bow",
                                 BowTexture,
                                 hero,
-                                hero.ActiveWeapon.WeaponDamage * 1.05f,
-                                hero.ActiveWeapon.AttackSpeed * 0.95f,
-                                hero.ActiveWeapon.WeaponRange * 1.1f,
+                                (float)(hero.ActiveWeapon.WeaponDamage * damageMultiplier + 1),
+                                (float)(hero.ActiveWeapon.AttackSpeed * speedMultiplier - 1),
+                                (float)(hero.ActiveWeapon.WeaponRange * rangeMultiplier + 1),
                                 Enemies,
                                 // (int)(hero.ActiveWeapon.ProjectileSpeed * 1.05f),
                                 1500,

@@ -22,9 +22,9 @@ namespace GameStateManagementSample.Models.Entities
             ActiveWeapon = new MeleeWeapon("Spear",
             null,
             null,
-            15,
+            5,
             1000,
-            ReductionDistance,
+            ReductionDistance * 1.42f,
             engine.Enemies,
             engine);
         }
@@ -50,64 +50,65 @@ namespace GameStateManagementSample.Models.Entities
         {
             if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance))
             {
-                if(HealthPoints <= fleeAt)
+                if (HealthPoints <= fleeAt)
                     moveNorthWest(room);
                 else
                     moveSouthEast(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance))
             {
-                if(HealthPoints <= fleeAt)
+                if (HealthPoints <= fleeAt)
                     moveNorthEast(room);
                 else
                     moveSouthWest(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance))
             {
-                if(HealthPoints <= fleeAt)
+                if (HealthPoints <= fleeAt)
                     moveSouthWest(room);
                 else
                     moveNorthEast(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance))
             {
-                if(HealthPoints <= fleeAt)
+                if (HealthPoints <= fleeAt)
                     moveSouthEast(room);
                 else
                     moveNorthWest(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, reductionDistance, recognitionDistance) && distanceYToPlayer > -recognitionDistance && distanceYToPlayer < recognitionDistance)
             {
-                if(HealthPoints <= fleeAt)
+                if (HealthPoints <= fleeAt)
                     moveWest(room);
                 else
                     moveEast(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceXToPlayer, -reductionDistance, -recognitionDistance) && distanceYToPlayer > -recognitionDistance && distanceYToPlayer < recognitionDistance)
             {
-                if(HealthPoints <= fleeAt)
+                if (HealthPoints <= fleeAt)
                     moveEast(room);
                 else
                     moveWest(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, reductionDistance, recognitionDistance) && distanceXToPlayer > -recognitionDistance && distanceXToPlayer < recognitionDistance)
             {
-                if(HealthPoints <= fleeAt)
+                if (HealthPoints <= fleeAt)
                     moveNorth(room);
                 else
                     moveSouth(room);
             }
             else if (isDistanceToPlayerinRecognitionDistance(distanceYToPlayer, -reductionDistance, -recognitionDistance) && distanceXToPlayer > -recognitionDistance && distanceXToPlayer < recognitionDistance)
             {
-                if(HealthPoints <= fleeAt)
+                if (HealthPoints <= fleeAt)
                     moveSouth(room);
                 else
                     moveNorth(room);
             }
-            else if(!isPlayerInReach()){
+            else if (!isPlayerInReach())
+            {
                 Idling(room);
             }
-            else if(isPlayerInReach())
+            else if (isPlayerInReach())
             {
                 ActiveWeapon.weaponAttack(this);
             }

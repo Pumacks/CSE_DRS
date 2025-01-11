@@ -26,9 +26,9 @@ namespace GameStateManagementSample.Models.Entities
             ActiveWeapon = new MeleeWeapon("Sword",
             null,
             null,
-            15,
-            1000,
-            ReductionDistance,
+            10,
+            2000,
+            ReductionDistance * 1.42f,
             engine.Enemies,
             engine);
         }
