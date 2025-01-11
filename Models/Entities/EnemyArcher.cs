@@ -14,9 +14,9 @@ namespace GameStateManagementSample.Models.Entities
     {
 
         public EnemyArcher(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Weapon activeEnemyWeapon)
-            : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
+            : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items, activeEnemyWeapon)
         {
-            ActiveWeapon = activeEnemyWeapon;
+
         }
 
         public override void LoadContent(ContentManager content)
@@ -42,37 +42,14 @@ namespace GameStateManagementSample.Models.Entities
             Vector2 movingDirection = Vector2.Zero;
             bool colNorth = false, colEast = false, colSouth = false, colWest = false;
 
-            /*
-            #region StructureCollision
-
-            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                colNorth = true;
-            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                colSouth = true;
-            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                colWest = true;
-            if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-                colEast = true;
-
-            #endregion
-            */
-
-
-
             // Attacking:
             if (Math.Sqrt(distanceXToPlayer * distanceXToPlayer + distanceYToPlayer * distanceYToPlayer) <= this.ActiveWeapon.WeaponRange)
             {
-
                 ActiveWeapon.weaponAttack(this);
             }
             else
-
-
-
-
-
-
             {
+
                 if (distanceXToPlayer > 120 * followPlayerMultiplier && distanceXToPlayer < 500 * followPlayerMultiplier)
                 {
                     movingDirection.X += MovementSpeed;

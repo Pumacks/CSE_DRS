@@ -154,7 +154,7 @@ namespace GameStateManagementSample.Models.GameLogic
             //    Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
             //}
 
-            
+
 
 
             RangedWeapon enemyBow = new RangedWeapon(
@@ -191,7 +191,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 this
             );
 
-            Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>());
+            Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>(), enemySword);
             enemySword.ItemOwner = enemyWarrior;
             enemyWarrior.Camera = camera;
 
@@ -199,7 +199,7 @@ namespace GameStateManagementSample.Models.GameLogic
             enemyBow.ItemOwner = enemyArcher;
             enemyArcher.Camera = camera;
 
-            Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>());
+            Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>(), enemySpear);
             enemySpear.ItemOwner = enemySpearman;
             enemySpearman.Camera = camera;
 
@@ -1007,9 +1007,10 @@ namespace GameStateManagementSample.Models.GameLogic
 
             foreach (var e in Enemies)
             {
+                e.setGameTime(gameTime);
                 e.UpdateDistanceToHero(hero.Position);
-                e.Update(gameTime);
                 e.FollowPlayer2(map.Rooms[0]);
+                e.Update(gameTime);
                 if (e.HealthPoints <= 0)
                     deadEnemy.Add(e);
 

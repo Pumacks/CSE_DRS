@@ -173,14 +173,14 @@ namespace GameStateManagementSample.Models.Entities
             FlipTexture();
 
             #region SpeedPotionEffect
-            
-           
+
+
             if (speedPotionDuration > 0)
             {
                 MovementSpeed = speedPotionBoost + defaultMvSpeed;
                 speedPotionDuration -= (float)gametime.ElapsedGameTime.TotalSeconds;
 
-                if(speedPotionDuration <= 0)
+                if (speedPotionDuration <= 0)
                     MovementSpeed = defaultMvSpeed;
 
                 NotifyObservers();

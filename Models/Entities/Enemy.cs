@@ -20,9 +20,10 @@ namespace GameStateManagementSample.Models.Entities
 
         public Enemy() { }
 
-        public Enemy(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
+        public Enemy(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Weapon activeEnemyWeapon)
         : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
         {
+            ActiveWeapon = activeEnemyWeapon;
         }
 
         public override void Move(Vector2 movement)
@@ -135,5 +136,9 @@ namespace GameStateManagementSample.Models.Entities
             distanceYToPlayer = -(position.Y - heroPos.Y);
         }
 
+        public void setGameTime(GameTime gametime)
+        {
+            GameTime = gametime;
+        }
     }
 }

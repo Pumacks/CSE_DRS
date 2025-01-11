@@ -15,14 +15,14 @@ namespace GameStateManagementSample.Models.Entities
     internal class EnemyWarrior : Enemy
     {
 
-        public EnemyWarrior(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items)
-            : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items)
+        public EnemyWarrior(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Weapon activeEnemyWeapon)
+            : base(healthPoints, movementSpeed, playerPosition, texture, spriteFont, items, activeEnemyWeapon)
         {
         }
         public override void LoadContent(ContentManager content)
         {
             for (int i = 0; i <= 6; i++)
-                animManager.walk.addFrame(content.Load<Texture2D>("Skeleton_Warrior/walk_frames/walk" + i.ToString() ));
+                animManager.walk.addFrame(content.Load<Texture2D>("Skeleton_Warrior/walk_frames/walk" + i.ToString()));
             for (int i = 0; i <= 4; i++)
                 animManager.attack.addFrame(content.Load<Texture2D>("Skeleton_Warrior/attack_frames/attack" + i.ToString()));
             for (int i = 0; i <= 6; i++)
@@ -37,78 +37,55 @@ namespace GameStateManagementSample.Models.Entities
             Position += Vector2.Zero;
         }
 
-        // public override void FollowPlayer2(Room room)
-        // {
-        //     Vector2 movingDirection = Vector2.Zero;
-        //     bool colNorth = false, colEast = false, colSouth = false, colWest = false;
+        public override void FollowPlayer2(Room room)
+        {
+            Vector2 movingDirection = Vector2.Zero;
+            bool colNorth = false, colEast = false, colSouth = false, colWest = false;
 
-        //     /*
-        //     #region StructureCollision
+            // Attacking:
+            if (Math.Sqrt(distanceXToPlayer * distanceXToPlayer + distanceYToPlayer * distanceYToPlayer) <= this.ActiveWeapon.WeaponRange)
+            {
+                ActiveWeapon.weaponAttack(this);
+            }
+            else
+            {
 
-        //     if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-        //         colNorth = true;
-        //     if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-        //         colSouth = true;
-        //     if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-        //         colWest = true;
-        //     if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-        //         colEast = true;
+                if (distanceXToPlayer > 120 * followPlayerMultiplier && distanceXToPlayer < 500 * followPlayerMultiplier)
+                {
+                    movingDirection.X += MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colEast = true;
+                    if (!colEast)
+                        Move(movingDirection);
+                }
+                if (distanceXToPlayer < -120 * followPlayerMultiplier && distanceXToPlayer > -500 * followPlayerMultiplier)
+                {
+                    movingDirection.X -= MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colWest = true;
+                    if (!colWest)
+                        Move(movingDirection);
+                }
+                if (distanceYToPlayer > 120 * followPlayerMultiplier && distanceYToPlayer < 500 * followPlayerMultiplier)
+                {
+                    movingDirection.Y += MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colSouth = true;
+                    if (!colSouth)
+                        Move(movingDirection);
+                }
+                if (distanceYToPlayer < -120 * followPlayerMultiplier && distanceYToPlayer > -500 * followPlayerMultiplier)
+                {
+                    movingDirection.Y -= MovementSpeed;
+                    if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
+                        colNorth = true;
+                    if (!colNorth)
+                        Move(movingDirection);
+                }
 
-        //     #endregion
-        //     */
-
-
-
-        //     // Attacking:
-        //     if (Math.Sqrt(distanceXToPlayer * distanceXToPlayer + distanceYToPlayer * distanceYToPlayer) <= this.ActiveWeapon.WeaponRange)
-        //     {
-
-        //         ActiveWeapon.weaponAttack(this);
-        //     }
-        //     else
-        //     {
-
-
-
-
-
-
-        //         if (distanceXToPlayer > 120 * followPlayerMultiplier && distanceXToPlayer < 500 * followPlayerMultiplier)
-        //         {
-        //             movingDirection.X += MovementSpeed;
-        //             if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-        //                 colEast = true;
-        //             if (!colEast)
-        //                 Move(movingDirection);
-        //         }
-        //         if (distanceXToPlayer < -120 * followPlayerMultiplier && distanceXToPlayer > -500 * followPlayerMultiplier)
-        //         {
-        //             movingDirection.X -= MovementSpeed;
-        //             if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-        //                 colWest = true;
-        //             if (!colWest)
-        //                 Move(movingDirection);
-        //         }
-        //         if (distanceYToPlayer > 120 * followPlayerMultiplier && distanceYToPlayer < 500 * followPlayerMultiplier)
-        //         {
-        //             movingDirection.Y += MovementSpeed;
-        //             if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-        //                 colSouth = true;
-        //             if (!colSouth)
-        //                 Move(movingDirection);
-        //         }
-        //         if (distanceYToPlayer < -120 * followPlayerMultiplier && distanceYToPlayer > -500 * followPlayerMultiplier)
-        //         {
-        //             movingDirection.Y -= MovementSpeed;
-        //             if (CollisionDetector.HasStructureCollision(room, this, movingDirection))
-        //                 colNorth = true;
-        //             if (!colNorth)
-        //                 Move(movingDirection);
-        //         }
-
-        //     }
+            }
 
 
-        // }
+        }
     }
 }
