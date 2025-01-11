@@ -98,9 +98,9 @@ namespace GameStateManagementSample.Models.Map
             treelvl2 = content.Load<Texture2D>("Map/SwampTree");
 
             //lvl3 grass
-            lvl3floor1 = content.Load<Texture2D>("Map/lvl3floor1");
-            lvl3floor2 = content.Load<Texture2D>("Map/lvl3floor2");
-            lvl3floor3 = content.Load<Texture2D>("Map/lvl3floor3");
+            lvl3floor1 = content.Load<Texture2D>("Map/lvl3floor1_2");
+            lvl3floor2 = content.Load<Texture2D>("Map/lvl3floor2_2");
+            lvl3floor3 = content.Load<Texture2D>("Map/lvl3floor3_2");
             treelvl3 = content.Load<Texture2D>("Map/Totem_1");
 
             hole = content.Load<Texture2D>("Map/hole");

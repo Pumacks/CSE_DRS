@@ -620,6 +620,18 @@
 /processorParam:TextureFormat=Color
 /build:Map/hole.png
 
+#begin Map/lvl3floor1_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Map/lvl3floor1_2.png
+
 #begin Map/lvl3floor1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -632,6 +644,18 @@
 /processorParam:TextureFormat=Color
 /build:Map/lvl3floor1.png
 
+#begin Map/lvl3floor2_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Map/lvl3floor2_2.png
+
 #begin Map/lvl3floor2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -643,6 +667,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Map/lvl3floor2.png
+
+#begin Map/lvl3floor3_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Map/lvl3floor3_2.png
 
 #begin Map/lvl3floor3.png
 /importer:TextureImporter
