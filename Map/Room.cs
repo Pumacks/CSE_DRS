@@ -193,7 +193,7 @@ namespace GameStateManagementSample.Models.Map
                             tiles[i, j] = new Tile(tilePos, lvl3floor3, false);
                     }
                     // for things like pots etc.
-                    rdmNumber = random.Next(1, 125);
+                    rdmNumber = random.Next(1, 225);
                     if (stage == 1)
                     {
                         if (rdmNumber == 16 && i >= 5 && j >= 5 && i <= tiles.GetLength(0) - 5 && j <= tiles.GetLength(1) - 5)
