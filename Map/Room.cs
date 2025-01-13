@@ -224,11 +224,11 @@ namespace GameStateManagementSample.Models.Map
 
                     if (rdmNumber >= 90 && i >= 4 && j >= 4 && i <= tiles.GetLength(0) - 3 && j <= tiles.GetLength(1) - 3)
                     {
-                        if (rdmNumber >= 90 && rdmNumber <= 93)
+                        if (rdmNumber == 90 /* && rdmNumber <= 93 */)
                             enemies.Add(new EnemyWarrior(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
-                        if (rdmNumber >= 94 && rdmNumber <= 97)
+                        if (rdmNumber == 94 /* && rdmNumber <= 97 */)
                             enemies.Add(new EnemySpearman(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
-                        if (rdmNumber >= 98 && rdmNumber <= 100)
+                        if (rdmNumber == 98 /* && rdmNumber <= 100 */)
                             enemies.Add(new EnemyArcher(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
 
                     }
