@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -40,6 +41,7 @@ namespace GameStateManagement
         private SpriteBatch spriteBatch;
         private SpriteFont font;
         private Texture2D blankTexture;
+        // private Song menuSong;
 
         private bool isInitialized;
 
@@ -114,6 +116,8 @@ namespace GameStateManagement
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = content.Load<SpriteFont>("menufont");
             blankTexture = content.Load<Texture2D>("blank");
+            // menuSong = content.Load<Song>("Our-Mountain_v003");
+            // MediaPlayer.Play(menuSong);
 
             // Tell each of the screens to load their content.
             foreach (GameScreen screen in screens)
@@ -290,7 +294,7 @@ namespace GameStateManagement
 
             spriteBatch.Draw(blankTexture,
                              new Rectangle(0, 0, viewport.Width, viewport.Height),
-                             Color.Black * alpha);
+                             Color.Black * alpha); // Student's note: Pause Menu Screen transparent color fade, and to some degree inbetween loading screens
 
             spriteBatch.End();
         }

@@ -1,6 +1,7 @@
 using GameStateManagementSample.Models.Entities;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using GameStateManagementSample.Models.GameLogic;
 namespace GameStateManagementSample.Models.Items
 {
     public class HealthPotion : Item
@@ -14,7 +15,7 @@ namespace GameStateManagementSample.Models.Items
             set { healingAmount = value; }
         }
 
-        public HealthPotion(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, int healingAmount) : base(itemName, itemTexture, itemOwner)
+        public HealthPotion(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, int healingAmount, Engine engine) : base(itemName, itemTexture, itemOwner, engine)
         {
             Position = position;
             HealingAmount = healingAmount;
@@ -41,6 +42,8 @@ Nach Implementierung besagter Mechaniken.
 
         public override void use()
         {
+            gameEngine.potionSound1.Play();
+            gameEngine.burpSound.Play();
             ItemOwner.HealthPoints += healingAmount;
         }
 

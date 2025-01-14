@@ -97,7 +97,7 @@ namespace GameStateManagement
         /// </summary>
         protected override void Draw(GameTime gameTime)
         {
-            graphics.GraphicsDevice.Clear(Color.Black);
+            graphics.GraphicsDevice.Clear(Color.Black); // Student's Note: Loading Screen before the game starts.
 
             // The real drawing happens inside the screen manager component.
             base.Draw(gameTime);

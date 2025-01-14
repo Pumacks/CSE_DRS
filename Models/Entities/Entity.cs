@@ -37,6 +37,18 @@ namespace GameStateManagementSample.Models.Entities
         protected bool flipTexture;
         protected GameTime gameTime;
         private Engine gameEngine;
+        private bool isDead = false;
+        public bool IsDead
+        {
+            get
+            {
+                return this.isDead;
+            }
+            set
+            {
+                this.isDead = value;
+            }
+        }
 
         private float speedPotionBoost;
         private float speedPotionDuration;
@@ -151,6 +163,25 @@ namespace GameStateManagementSample.Models.Entities
 
         public void TakeDamage(int damage)
         {
+            if (this is Enemy)
+            {
+                System.Random random = new System.Random();
+                if (random.Next(0, 2) == 0)
+                    gameEngine.enemyDamaged1.Play();
+                else
+                    gameEngine.enemyDamaged2.Play();
+            }
+            else if (this is Player)
+            {
+                System.Random random = new System.Random();
+                int randomInt = random.Next(0, 3);
+                if (randomInt == 0)
+                    gameEngine.heroDamaged1.Play();
+                else if (randomInt == 1)
+                    gameEngine.heroDamaged2.Play();
+                else
+                    gameEngine.heroDamaged3.Play();
+            }
             HealthPoints -= damage;
             NotifyObservers();
         }
@@ -164,6 +195,15 @@ namespace GameStateManagementSample.Models.Entities
 
         public bool PlayDeathAnimation()
         {
+            if (this is Enemy && this.isDead == false)
+            {
+                this.isDead = true;
+                gameEngine.enemyDeath1.Play();
+            } else if (this is Player && this.isDead == false)
+            {
+                this.isDead = true;
+                gameEngine.heroDeath1.Play();
+            }
             Texture = animManager.DeathAnimation();
             return animManager.DeathAnimationFinished();
         }

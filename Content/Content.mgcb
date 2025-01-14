@@ -109,6 +109,12 @@
 /processorParam:Quality=Best
 /build:649335__sonofxaudio__arrow_loose01.wav
 
+#begin 649336__sonofxaudio__bow_draw_slow01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:649336__sonofxaudio__bow_draw_slow01.wav
+
 #begin 649337__sonofxaudio__bow_draw_fast02.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -187,6 +193,12 @@
 /processorParam:TextureFormat=Color
 /build:blank.png
 
+#begin Bog-Creatures-On-the-Move.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Bog-Creatures-On-the-Move.mp3
+
 #begin Bow1-130x25px.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -211,6 +223,12 @@
 /processorParam:TextureFormat=Color
 /build:Broken_tree4.png
 
+#begin burpSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:burpSound.wav
+
 #begin Bush7.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -228,6 +246,24 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:draw-sword1-44724.wav
+
+#begin enemyDamaged1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:enemyDamaged1.wav
+
+#begin enemyDamaged2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:enemyDamaged2.wav
+
+#begin enemyDeath1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:enemyDeath1.wav
 
 #begin gamefont.spritefont
 /importer:FontDescriptionImporter
@@ -260,17 +296,29 @@
 /processorParam:TextureFormat=Color
 /build:gradient.png
 
-#begin Items/key.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Items/key.png
+#begin heroDamaged1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:heroDamaged1.wav
+
+#begin heroDamaged2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:heroDamaged2.wav
+
+#begin heroDamaged3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:heroDamaged3.wav
+
+#begin heroDeath1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:heroDeath1.wav
 
 #begin Items/key.png
 /importer:TextureImporter
@@ -319,6 +367,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Items/Projectile/Arrow.png
+
+#begin Kingdom-of-Darkness.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Kingdom-of-Darkness.mp3
+
+#begin Kingdom-Quest.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Kingdom-Quest.mp3
 
 #begin Map/2doorE.png
 /importer:TextureImporter
@@ -915,6 +975,12 @@
 /processorParam:TextureFormat=Color
 /build:Minecraft Hotbar 7 Slots.png
 
+#begin Our-Mountain_v003.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Our-Mountain_v003.mp3
+
 #begin Player/attack_frames/attack0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1490,6 +1556,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Player/walk.png
+
+#begin potionPickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:potionPickup.wav
+
+#begin potionSound1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:potionSound1.wav
 
 #begin Rpck_grass3.png
 /importer:TextureImporter
@@ -2835,6 +2913,24 @@
 /processorParam:TextureFormat=Color
 /build:Skeleton_Warrior/Walk.png
 
+#begin sword-sound-effect-1-234987.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sword-sound-effect-1-234987.wav
+
+#begin sword-sound-effect-2-234986.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sword-sound-effect-2-234986.wav
+
+#begin sword-stab-push-melee-weapon-236206.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sword-stab-push-melee-weapon-236206.wav
+
 #begin sword-swing-whoosh-sound-effect-1-241824.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -2870,4 +2966,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:sword1_130x27px.png
+
+#begin swordPickupOrDrop1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:swordPickupOrDrop1.wav
+
+#begin swordPickupOrDrop2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:swordPickupOrDrop2.wav
 

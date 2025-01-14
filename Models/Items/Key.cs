@@ -1,4 +1,5 @@
 ﻿using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.GameLogic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,7 +7,7 @@ namespace GameStateManagementSample.Models.Items;
 
 public class Key : Item
 {
-    public Key(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position) : base(itemName, itemTexture, itemOwner)
+    public Key(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, Engine engine) : base(itemName, itemTexture, itemOwner, engine)
     {
         this.Position = position;
     }

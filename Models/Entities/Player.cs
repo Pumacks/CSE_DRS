@@ -12,6 +12,7 @@ using System.Diagnostics;
 using GameStateManagement;
 using System;
 using GameStateManagementSample.Models.Helpers;
+using Microsoft.Xna.Framework.Media;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -324,9 +325,31 @@ namespace GameStateManagementSample.Models.Entities
 
         private void dropItem()
         {
-            if (inventory[selectedInventorySlot] != null) {
+            if (inventory[selectedInventorySlot] != null)
+            {
                 inventory[selectedInventorySlot].Position = this.Position;
                 gameEngine.WorldConsumables.Add(inventory[selectedInventorySlot]);
+
+
+                
+                        if (inventory[selectedInventorySlot] is HealthPotion || inventory[selectedInventorySlot] is SpeedPotion)
+                        {
+                            gameEngine.potionPickup.Play();
+                        }
+                        else if (inventory[selectedInventorySlot] is RangedWeapon)
+                        {
+                            gameEngine.bowPickupOrDrop1.Play();
+                        }
+                        else if (inventory[selectedInventorySlot] is MeleeWeapon)
+                        {
+                            System.Random random = new System.Random();
+                            if (random.Next(0, 2) == 0)
+                                gameEngine.swordPickupOrDrop1.Play();
+                            else
+                                gameEngine.swordPickupOrDrop2.Play();
+                        }
+
+
                 inventory[selectedInventorySlot] = null;
             }
         }
@@ -337,6 +360,7 @@ namespace GameStateManagementSample.Models.Entities
 
             // }
             Item itemToPickUp = CollisionDetector.HasItemCollision(gameEngine.WorldConsumables, this);
+
             if (itemToPickUp != null)
             {
                 for (int i = 0; i < this.Inventory.Length; i++)
@@ -345,6 +369,29 @@ namespace GameStateManagementSample.Models.Entities
                     {
                         itemToPickUp.ItemOwner = this;
                         this.Inventory[i] = itemToPickUp;
+
+
+
+                        if (itemToPickUp is HealthPotion || itemToPickUp is SpeedPotion)
+                        {
+                            gameEngine.potionPickup.Play();
+                        }
+                        else if (itemToPickUp is RangedWeapon)
+                        {
+                            gameEngine.bowPickupOrDrop1.Play();
+                        }
+                        else if (itemToPickUp is MeleeWeapon)
+                        {
+                            System.Random random = new System.Random();
+                            if (random.Next(0, 2) == 0)
+                                gameEngine.swordPickupOrDrop1.Play();
+                            else
+                                gameEngine.swordPickupOrDrop2.Play();
+                        }
+
+
+
+
                         gameEngine.WorldConsumables.Remove(itemToPickUp);
                         break;
                     }

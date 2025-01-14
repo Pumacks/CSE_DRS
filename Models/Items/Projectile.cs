@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Metadata;
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -162,7 +163,7 @@ namespace GameStateManagementSample.Models.Items
         }
         #endregion
 
-        public Projectile(String itemName, Texture2D itemTexture, Entity itemOwner, Vector2 pos, Vector2 target, int projectileSpeed, float weaponRange, float weaponDamage) : base(itemName, itemTexture, itemOwner)
+        public Projectile(String itemName, Texture2D itemTexture, Entity itemOwner, Vector2 pos, Vector2 target, int projectileSpeed, float weaponRange, float weaponDamage, Engine engine) : base(itemName, itemTexture, itemOwner, engine)
         {
             this.ItemName = "Projectile Nr. " + ++projectileNumber;
             this.currentProjectilePosition = pos;

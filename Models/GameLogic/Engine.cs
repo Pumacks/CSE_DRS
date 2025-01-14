@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Audio;
 using System.Runtime.Serialization;
 using System.IO;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Microsoft.Xna.Framework.Media;
 
 
 enum PlayerGameStatus
@@ -80,14 +81,39 @@ namespace GameStateManagementSample.Models.GameLogic
 
         public SoundEffect bowEquip1;
         public SoundEffect bowEquip2;
+        public SoundEffect bowPickupOrDrop1;
         public SoundEffect bowShoot1;
         public SoundEffect bowShoot2;
         public SoundEffect bowShoot3;
         public SoundEffect swordEquip1;
+        public SoundEffect swordPickupOrDrop1;
+        public SoundEffect swordPickupOrDrop2;
         public SoundEffect swordSwing1;
         public SoundEffect swordSwing2;
         public SoundEffect swordHit1;
         public SoundEffect swordHit2;
+        public SoundEffect enemySwordHit1;
+        public SoundEffect enemySwordHit2;
+        public SoundEffect enemySpearHit1;
+        public SoundEffect enemyDamaged1;
+        public SoundEffect enemyDamaged2;
+        public SoundEffect enemyDeath1;
+        public SoundEffect heroDamaged1;
+        public SoundEffect heroDamaged2;
+        public SoundEffect heroDamaged3;
+        public SoundEffect heroDeath1;
+        public SoundEffect potionSound1;
+        public SoundEffect potionPickup;
+        public SoundEffect burpSound;
+
+        public Song songLevelOne;
+        public Song songLevelTwo;
+        public Song songLevelThree;
+        public Song songYouWin;
+        private bool songLevelOneIsPlaying = false;
+        private bool songLevelTwoIsPlaying = false;
+        private bool songLevelThreeIsPlaying = false;
+        private bool songYouWinIsPlaying = false;
 
         public Player heroPlayer;
         public Engine enginereference;
@@ -240,14 +266,42 @@ namespace GameStateManagementSample.Models.GameLogic
             // Loading Sound Effects
             bowEquip1 = content.Load<SoundEffect>("649332__sonofxaudio__bow_draw_fast01");
             bowEquip2 = content.Load<SoundEffect>("649337__sonofxaudio__bow_draw_fast02");
+            bowPickupOrDrop1 = content.Load<SoundEffect>("649336__sonofxaudio__bow_draw_slow01");
             bowShoot1 = content.Load<SoundEffect>("649335__sonofxaudio__arrow_loose01");
             bowShoot2 = content.Load<SoundEffect>("649334__sonofxaudio__arrow_loose02");
             bowShoot3 = content.Load<SoundEffect>("649333__sonofxaudio__arrow_loose03");
             swordEquip1 = content.Load<SoundEffect>("draw-sword1-44724");
+            swordPickupOrDrop1 = content.Load<SoundEffect>("swordPickupOrDrop1");
+            swordPickupOrDrop2 = content.Load<SoundEffect>("swordPickupOrDrop2");
             swordSwing1 = content.Load<SoundEffect>("sword-swing-whoosh-sound-effect-1-241824");
             swordSwing2 = content.Load<SoundEffect>("sword-swing-whoosh-sound-effect-2-241823");
-            // swordHit1 = content.Load<SoundEffect>("");
-            // swordHit2 = content.Load<SoundEffect>("");
+            enemySwordHit1 = content.Load<SoundEffect>("sword-sound-effect-1-234987");
+            enemySwordHit2 = content.Load<SoundEffect>("sword-sound-effect-2-234986");
+            enemySpearHit1 = content.Load<SoundEffect>("sword-stab-push-melee-weapon-236206");
+            enemyDamaged1 = content.Load<SoundEffect>("enemyDamaged1");
+            enemyDamaged2 = content.Load<SoundEffect>("enemyDamaged2");
+            enemyDeath1 = content.Load<SoundEffect>("enemyDeath1");
+            heroDamaged1 = content.Load<SoundEffect>("heroDamaged1");
+            heroDamaged2 = content.Load<SoundEffect>("heroDamaged2");
+            heroDamaged3 = content.Load<SoundEffect>("heroDamaged3");
+            heroDeath1 = content.Load<SoundEffect>("heroDeath1");
+            potionSound1 = content.Load<SoundEffect>("potionSound1");
+            potionPickup = content.Load<SoundEffect>("potionPickup");
+            burpSound = content.Load<SoundEffect>("burpSound");
+
+
+
+            
+            songLevelOne = content.Load<Song>("Our-Mountain_v003");
+            songLevelTwo = content.Load<Song>("Bog-Creatures-On-the-Move");
+            songLevelThree = content.Load<Song>("Kingdom-of-Darkness");
+            songYouWin = content.Load<Song>("Kingdom-Quest");
+
+
+            MediaPlayer.Play(songLevelOne);
+            songLevelOneIsPlaying = true;
+            MediaPlayer.Volume = 0.3f;
+            MediaPlayer.IsRepeating = true;
 
 
             //Giving our Test-Hero a Weapon (bow) at the start (without a texture), so he can shoot arrows!
@@ -767,6 +821,28 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
 
+
+
+            if (stage == 2 && songLevelOneIsPlaying) {
+                MediaPlayer.Stop();
+                MediaPlayer.Play(songLevelTwo);
+                songLevelTwoIsPlaying = true;
+                songLevelOneIsPlaying = false;
+            }
+            if (stage == 3 && songLevelTwoIsPlaying) {
+                MediaPlayer.Stop();
+                MediaPlayer.Play(songLevelThree);
+                songLevelThreeIsPlaying = true;
+                songLevelTwoIsPlaying = false;
+            }
+            if (stage == 4 && songLevelThreeIsPlaying) {
+                MediaPlayer.Stop();
+                MediaPlayer.Play(songYouWin);
+                songYouWinIsPlaying = true;
+                songLevelThreeIsPlaying = false;
+            }
+
+
             // Updating the Weapon-Classes necessary awareness of enemies and projectiles in the world.
             // THIS CAN (and probably should) BE DELETED (if you read this while merging and are unsure, just delete these two lines and two comments)
             // hero.ActiveWeapon.Enemies = Enemies;
@@ -1004,16 +1080,16 @@ namespace GameStateManagementSample.Models.GameLogic
                     Enemies.Remove(e);
 
                     // 40% Drop Chance for Health Potion
-                    if (random.Next(0, 100) < 40)
-                        worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, e.Position, 20));
+                    if (random.Next(0, 100) < 45)
+                        worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, new Vector2(e.Position.X-10,e.Position.Y), 20, this));
 
                     // 40% Drop Chance for Speed Potion
-                    if (random.Next(0, 100) < 40)
-                        worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, e.Position, 2f, 10));
+                    if (random.Next(0, 100) < 35)
+                        worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, new Vector2(e.Position.X-10,e.Position.Y), 2f, 10, this));
 
                     // Roll for main loot, 10% drop chance
                     int mainDropRoll = random.Next(0, 100);
-                    if (mainDropRoll > 89)
+                    if (mainDropRoll > 79)
                     {
                         double damageMultiplier = random.NextDouble() * 0.08f + 0.97f;
                         double speedMultiplier = random.NextDouble() * 0.08f + 0.95f;
