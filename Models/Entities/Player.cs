@@ -374,10 +374,10 @@ namespace GameStateManagementSample.Models.Entities
 
 
             animManager.walk.ChangeAnimationDuration(3);
-            animManager.attack.ChangeAnimationDuration(3);
+            animManager.attack.ChangeAnimationDuration(4);
             animManager.idle.ChangeAnimationDuration(2);
             animManager.death.ChangeAnimationDuration(8);
-            animManager.shot.ChangeAnimationDuration(2);
+            animManager.shot.ChangeAnimationDuration(5);
             Texture = animManager.IdleAnimation();
 
 

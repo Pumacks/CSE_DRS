@@ -34,7 +34,7 @@ namespace GameStateManagementSample.Models.Entities
             for (int i = 0; i <= 3; i++)
                 animManager.death.addFrame(content.Load<Texture2D>("Skeleton_Warrior/death_frames/death" + i.ToString()));
             animManager.walk.ChangeAnimationDuration(3);
-            animManager.attack.ChangeAnimationDuration(2);
+            animManager.attack.ChangeAnimationDuration(3);
             animManager.idle.ChangeAnimationDuration(2);
             animManager.death.ChangeAnimationDuration(15);
             Texture = animManager.IdleAnimation();
@@ -105,7 +105,11 @@ namespace GameStateManagementSample.Models.Entities
             }
             else if (isPlayerInReach())
             {
-                ActiveWeapon.weaponAttack(this);
+                if (animState != AnimState.Death)
+                {
+                    ActiveWeapon.weaponAttack(this);
+                    Move(Vector2.Zero);
+                }
             }
         }
     }

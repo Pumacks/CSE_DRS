@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -42,7 +43,7 @@ namespace GameStateManagementSample.Models.Entities
             for (int i = 0; i <= 4; i++)
                 animManager.death.addFrame(content.Load<Texture2D>("Skeleton_Spearman/death_frames/death" + i.ToString()));
             animManager.walk.ChangeAnimationDuration(3);
-            animManager.attack.ChangeAnimationDuration(2);
+            animManager.attack.ChangeAnimationDuration(3);
             animManager.idle.ChangeAnimationDuration(2);
             animManager.death.ChangeAnimationDuration(15);
             Texture = animManager.IdleAnimation();
@@ -113,7 +114,11 @@ namespace GameStateManagementSample.Models.Entities
             }
             else if (isPlayerInReach())
             {
-                ActiveWeapon.weaponAttack(this);
+                if (animState != AnimState.Death)
+                {
+                    ActiveWeapon.weaponAttack(this);
+                    Move(Vector2.Zero);
+                }
             }
         }
 

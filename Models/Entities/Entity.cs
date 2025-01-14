@@ -187,11 +187,11 @@ namespace GameStateManagementSample.Models.Entities
 
 
             if (activeWeapon != null && activeWeapon is MeleeWeapon)
-                if (animManager.AttackAnimationFinished() && GameTime.TotalGameTime.TotalMilliseconds - activeWeapon.LastAttackGameTimeInMilliseconds >= activeWeapon.AttackSpeed)
+                if (animManager.AttackAnimationFinished())
                     activeWeapon.IsAtacking = false;
 
             if (activeWeapon != null && activeWeapon is RangedWeapon)
-                if (animManager.ShotAnimationFinished() && GameTime.TotalGameTime.TotalMilliseconds - activeWeapon.LastAttackGameTimeInMilliseconds >= activeWeapon.AttackSpeed)
+                if (animManager.ShotAnimationFinished())
                     activeWeapon.IsAtacking = false;
 
 

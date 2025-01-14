@@ -313,32 +313,6 @@ namespace GameStateManagementSample.Models.GameLogic
             }
 
 
-
-            // Bows, Projectiles, GameTime
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(
-            //    texture: this.hero.ActiveWeapon.ItemTexture,
-            //    position: Vector2.Transform(hero.Position,
-            //        camera.Transform), // Hier Vector2.Transform(hero.Position,camera.Transform) anstatt new Vector2(ScreenManager.GraphicsDevice.Viewport.Width/2,ScreenManager.GraphicsDevice.Viewport.Height/2)
-            //    sourceRectangle: null,
-            //    color: Color.White,
-            //    rotation: (float)Math.PI / 2 +
-            //              (float)Math.Atan2(Mouse.GetState().Y - Vector2.Transform(hero.Position, camera.Transform).Y,
-            //                  Mouse.GetState().X - Vector2.Transform(hero.Position, camera.Transform).X),
-            //    // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
-            //    // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
-            //    origin: this.hero.ActiveWeapon is MeleeWeapon
-            //        ? new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2,
-            //            this.hero.ActiveWeapon.ItemTexture.Height * 0.75f)
-            //        : new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2,
-            //            this.hero.ActiveWeapon.ItemTexture.Height / 2),
-            //    scale: 1f,
-            //    effects: SpriteEffects.None,
-            //    layerDepth: 0f);
-            //spriteBatch.End();
-
-
-
             if (Projectiles != null)
             {
                 spriteBatch.Begin();
@@ -561,106 +535,6 @@ namespace GameStateManagementSample.Models.GameLogic
                 spriteBatch.End();
             }
 
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "Total ms: " + gameTime.TotalGameTime.TotalMilliseconds.ToString(),
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 250),
-            //     Color.Red
-            // );
-            // spriteBatch.End();
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "Hero Position: " + hero.Position.ToString(),
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 300),
-            //     Color.Red
-            // );
-            // spriteBatch.End();
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "Hero Transformed Position: " + Vector2.Transform(hero.Position, camera.Transform).ToString(),
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 350),
-            //     Color.Red
-            // );
-            // spriteBatch.End();
-
-
-
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     // text: "M.Cursor Transformed Inverted: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.Camera.Transform)),
-            //     text: "Mouse aiming at: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
-            //         Matrix.Invert(hero.Camera.Transform)),
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 400),
-            //     Color.Red
-            // );
-            // spriteBatch.End();
-
-
-
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "ShowStats: " + hero.ShowStats,
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 450),
-            //     Color.White
-            // );
-            // spriteBatch.End();
-
-
-
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "ShowControls: " + hero.ShowControls,
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 500),
-            //     Color.White
-            // );
-            // spriteBatch.End();
-
-
-
-            /*
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "selectedInventorySlot: " + this.hero.SelectedInventorySlot,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 450),
-                Color.Red
-            );
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Mouse Wheel Value: " + Mouse.GetState().ScrollWheelValue,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 500),
-                Color.Red
-            );
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Mouse Wheel PREVIOUS Value: " + Mouse.GetState().ScrollWheelValue,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 550),
-                Color.Red
-            );
-            spriteBatch.End();
-            */
-
         }
 
 
@@ -716,6 +590,7 @@ namespace GameStateManagementSample.Models.GameLogic
                                 if (!theProjectile.IsStuck) // <---------- notice this
                                     if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
                                     {
+                                        Player.totalScore += (int)theProjectile.ProjectileDamage;
                                         targetEnemy.TakeDamage(theProjectile.ProjectileDamage);
                                         Projectiles.Remove(theProjectile); // Projectiles.RemoveAt(projectileUpdateIndex); <--- ist fehleranfällig für IndexOutOfBoundsException
                                     }
@@ -819,98 +694,28 @@ namespace GameStateManagementSample.Models.GameLogic
                     DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north, ref map);
                     if (door != null)
                     {
-                        if (!door.IsLastDoor)
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-
-                            // The enemies and projectiles need to get cleared between stages because we're entering new rooms where the old enemies and projectiles don't exist, and this happens at similar coordinates.
-                            clearEnemiesAndProjectiles();
-                            //Enemies = new List<Enemy>();
-                            map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies, hero.Camera);
-                            foreach (var e in enemies)
-                            {
-                                e.LoadContent(content);
-                                e.Camera = camera;
-                            }
-                            ClearItemsOnStageChange();
-                        }
-
+                        EnterDoor(door);
                         break;
                     }
 
                     door = CollisionDetector.HasDoorTileCollision(room, hero, south, ref map);
                     if (door != null)
                     {
-                        if (!door.IsLastDoor)
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            clearEnemiesAndProjectiles();
-                            Enemies = new List<Enemy>();
-                            map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies, hero.Camera);
-                            foreach (var e in enemies)
-                            {
-                                e.LoadContent(content);
-                                e.Camera = camera;
-                            }
-                            ClearItemsOnStageChange();
-                        }
-
+                        EnterDoor(door);
                         break;
                     }
 
                     door = CollisionDetector.HasDoorTileCollision(room, hero, west, ref map);
                     if (door != null)
                     {
-                        if (!door.IsLastDoor)
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            clearEnemiesAndProjectiles();
-                            Enemies = new List<Enemy>();
-                            map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies, hero.Camera);
-                            foreach (var e in enemies)
-                            {
-                                e.LoadContent(content);
-                                e.Camera = camera;
-                            }
-                            ClearItemsOnStageChange();
-                        }
-
+                        EnterDoor(door);
                         break;
                     }
 
                     door = CollisionDetector.HasDoorTileCollision(room, hero, east, ref map);
                     if (door != null)
                     {
-                        if (!door.IsLastDoor)
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            clearEnemiesAndProjectiles();
-                            Enemies = new List<Enemy>();
-                            map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies, hero.Camera);
-                            foreach (var e in enemies)
-                            {
-                                e.LoadContent(content);
-                                e.Camera = camera;
-                            }
-                            ClearItemsOnStageChange();
-                        }
-
+                        EnterDoor(door);
                         break;
                     }
 
@@ -997,6 +802,8 @@ namespace GameStateManagementSample.Models.GameLogic
                 if (finishedAnim)
                 {
                     Enemies.Remove(e);
+                    if (Enemies.Count <= 0)
+                        worldConsumables.Add(new Key("key", KeyTexture, hero, e.Position));
 
                     // 40% Drop Chance for Health Potion
                     if (random.Next(0, 100) < 40)
@@ -1080,12 +887,23 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 if (hero.HasKey)
                 {
-                    hero.Position = door.TeleportPosition;
                     stage++;
-                    hero.UseKey();
-                    map.SetStage(stage);
-                    map.GenerateMap(content, ref enemies, camera);
-                    ClearItemsOnStageChange();
+                    if (stage > 3)
+                        playerGameStatus = PlayerGameStatus.WON;
+                    else
+                    {
+                        hero.Position = door.TeleportPosition;
+                        clearEnemiesAndProjectiles();
+                        map.SetStage(stage);
+                        map.GenerateMap(content, ref enemies, hero.Camera);
+                        foreach (var e in enemies)
+                        {
+                            e.LoadContent(content);
+                            e.Camera = camera;
+                        }
+                        ClearItemsOnStageChange();
+                        hero.UseKey();
+                    }
                 }
             }
         }

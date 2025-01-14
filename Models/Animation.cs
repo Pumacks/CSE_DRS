@@ -9,6 +9,7 @@ namespace GameStateManagementSample.Models
         private float animationSpeed;
         private float timeCounter;
         private int currentFrame;
+        private int iterationCounter;
         private bool isLooping = true;
         private float totalDuration;
 
@@ -66,7 +67,13 @@ namespace GameStateManagementSample.Models
 
         public bool IterationFinished()
         {
-            return currentFrame == textures.Count - 1;
+            iterationCounter = currentFrame;
+            if (currentFrame >= textures.Count - 1)
+            {
+                currentFrame = 0;
+                return true;
+            }
+            return false;
         }
 
         public void ChangeAnimationDuration(float duration)

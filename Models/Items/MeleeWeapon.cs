@@ -37,7 +37,7 @@ namespace GameStateManagementSample.Models.Items
             //         targetEnemy.HealthPoints -= (int)this.WeaponDamage;
             //     }
             // });
-
+            
             if (owner is Player)
             {
 
