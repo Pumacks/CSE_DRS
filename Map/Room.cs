@@ -497,7 +497,7 @@ namespace GameStateManagementSample.Models.Map
                     oppositeDoorTile.setOtherSideDoor(doorTile);
 
                     doorTile.TeleportPosition = new Vector2(doorTile.getPos().X + doorTile.getTexture().Width / 2, doorTile.getPos().Y - doorTile.getTexture().Height);
-                    oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X + doorTile.getTexture().Width / 2, oppositeDoorTile.getPos().Y + oppositeDoorTile.getTexture().Height + 200);
+                    oppositeDoorTile.TeleportPosition = new Vector2(oppositeDoorTile.getPos().X + doorTile.getTexture().Width / 2, oppositeDoorTile.getPos().Y + oppositeDoorTile.getTexture().Height + 80);
 
                     roomDoors[2] = doorTile;
                     oppositeRoom.roomDoors[0] = oppositeDoorTile;

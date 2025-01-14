@@ -19,13 +19,11 @@ namespace GameStateManagementSample.Screens
     {
         #region Initialization
 
-        bool isDead;
-      
+    
 
         public GameOverScreen(PlayerGameStatus status)
-            : base(status== PlayerGameStatus.DEAD ? "Game  over, you  died!" : "Congratulations, You won!")
+            : base(status == PlayerGameStatus.DEAD ? "Game  over, you  died!" : "Congratulations, You  won! \nTotal  score:  " + Player.totalScore)
         {
-
             // Create our menu entries.
 
             MenuEntry quitGameMenuEntry = new MenuEntry("Quit");

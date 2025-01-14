@@ -50,7 +50,8 @@ namespace GameStateManagementSample.Models.Entities
             }
         }
 
-
+        public static int totalScore;
+        public bool HasKey { get; set; } = false;
 
         public Player() { }
         public Player(int healthPoints, float movementSpeed, Vector2 playerPosition, Texture2D texture, SpriteFont spriteFont, List<Item> items, Engine engine)
@@ -59,6 +60,7 @@ namespace GameStateManagementSample.Models.Entities
             GUIObservers.Add(new HealthGUI(this));
             GUIObservers.Add(new SpeedBuffGUI(this));
             GUIObservers.Add(new FloatingHealthNumbers(this));
+            GUIObservers.Add(new KeyGUI(this));
             gameEngine = engine;
         }
 
@@ -355,6 +357,11 @@ namespace GameStateManagementSample.Models.Entities
             ActiveWeapon.weaponAttack(this);
         }
 
+        public void UseKey()
+        {
+            HasKey = false;
+            NotifyObservers();
+        }
 
         public override void LoadContent(ContentManager content)
         {
@@ -382,6 +389,10 @@ namespace GameStateManagementSample.Models.Entities
             {
                 if (observer is HealthGUI healthGUI)
                     healthGUI.Texture = content.Load<Texture2D>("Player/HPTexture");
+
+                if (observer is KeyGUI keyGUI)
+                    keyGUI.KeyTexture = content.Load<Texture2D>("Items/Key");
+
                 if (observer is SpeedBuffGUI speedBuffGUI)
                     speedBuffGUI.Texture = content.Load<Texture2D>("Player/RunTexture");
             }

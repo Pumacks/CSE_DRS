@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using System.Threading;
 using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
@@ -17,6 +18,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Microsoft.Xna.Framework.Audio;
 using System.Runtime.Serialization;
 using System.IO;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 
 enum PlayerGameStatus
@@ -69,7 +71,7 @@ namespace GameStateManagementSample.Models.GameLogic
         Texture2D SelectedInventorySlotTexture;
         Texture2D ActiveWeaponInventorySlotTexture;
         Texture2D BowTexture;
-
+        Texture2D KeyTexture;
         // Texture2D MarkerTexture;
         Texture2D HealthPotion;
         Texture2D SpeedPotion;
@@ -234,7 +236,7 @@ namespace GameStateManagementSample.Models.GameLogic
             //MarkerTexture = content.Load<Texture2D>("Marker");
             HealthPotion = content.Load<Texture2D>("Items/Potions/HealthPotion");
             SpeedPotion = content.Load<Texture2D>("Items/Potions/SpeedPotion");
-
+            KeyTexture = content.Load<Texture2D>("Items/Key");
             // Loading Sound Effects
             bowEquip1 = content.Load<SoundEffect>("649332__sonofxaudio__bow_draw_fast01");
             bowEquip2 = content.Load<SoundEffect>("649337__sonofxaudio__bow_draw_fast02");
@@ -776,61 +778,6 @@ namespace GameStateManagementSample.Models.GameLogic
         public void HandleInput(KeyboardState keyboardState, PlayerIndex? controllingPlayer,
             ScreenManager screenManager)
         {
-            // --- TO BE DELETED ----
-            if (Keyboard.GetState().IsKeyDown(Keys.K))
-                hero.TakeDamage(1);
-
-            List<Vector2> vecs = new List<Vector2>();
-            for (int i = 0; i < Enemies.Count; i++)
-            {
-                vecs.Add(Vector2.Zero);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                for (int i = 0; i < Enemies.Count; i++)
-                {
-                    Vector2 v = vecs[i];
-                    v.Y += Enemies[i].MovementSpeed;
-                    vecs[i] = v;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                for (int i = 0; i < Enemies.Count; i++)
-                {
-                    Vector2 v = vecs[i];
-                    v.Y -= Enemies[i].MovementSpeed;
-                    vecs[i] = v;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                for (int i = 0; i < Enemies.Count; i++)
-                {
-                    Vector2 v = vecs[i];
-                    v.X -= Enemies[i].MovementSpeed;
-                    vecs[i] = v;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                for (int i = 0; i < Enemies.Count; i++)
-                {
-                    Vector2 v = vecs[i];
-                    v.X += Enemies[i].MovementSpeed;
-                    vecs[i] = v;
-                }
-            }
-            for (int i = 0; i < Enemies.Count; i++)
-            {
-                Enemies[i].Move(vecs[i]);
-            }
-            // --- END TO BE DELETED ----
-
             if (playerGameStatus == PlayerGameStatus.ALIVE)
             {
 
@@ -859,6 +806,19 @@ namespace GameStateManagementSample.Models.GameLogic
                 bool collisionEast = false;
                 foreach (var room in map.Rooms)
                 {
+                    #region StructureCollision
+
+                    if (CollisionDetector.HasStructureCollision(room, hero, north))
+                        collisionNorth = true;
+                    if (CollisionDetector.HasStructureCollision(room, hero, south))
+                        collisionSouth = true;
+                    if (CollisionDetector.HasStructureCollision(room, hero, west))
+                        collisionWest = true;
+                    if (CollisionDetector.HasStructureCollision(room, hero, east))
+                        collisionEast = true;
+
+                    #endregion
+
                     #region DoorCollision
 
                     DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north, ref map);
@@ -960,19 +920,6 @@ namespace GameStateManagementSample.Models.GameLogic
                     }
 
                     #endregion
-
-                    #region StructureCollision
-
-                    if (CollisionDetector.HasStructureCollision(room, hero, north))
-                        collisionNorth = true;
-                    if (CollisionDetector.HasStructureCollision(room, hero, south))
-                        collisionSouth = true;
-                    if (CollisionDetector.HasStructureCollision(room, hero, west))
-                        collisionWest = true;
-                    if (CollisionDetector.HasStructureCollision(room, hero, east))
-                        collisionEast = true;
-
-                    #endregion
                 }
 
 
@@ -1028,7 +975,7 @@ namespace GameStateManagementSample.Models.GameLogic
         private void ClearItemsOnStageChange()
         {
             worldConsumables.Clear();
-            //enemies.Clear();
+            Projectiles.Clear();
         }
 
 
@@ -1108,6 +1055,7 @@ namespace GameStateManagementSample.Models.GameLogic
                     }
                 }
             }
+
         }
 
         public void CollectItems()
@@ -1118,64 +1066,33 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 for (int i = 0; i < hero.Inventory.Length; i++)
                 {
-                    if (itemToCollect is Weapon)
+                    if (hero.Inventory[i] == null)
                     {
-                        if (itemToCollect is MeleeWeapon)
-                        {
-                            if (hero.ActiveWeapon is MeleeWeapon)
-                            {
-                                hero.ActiveWeapon = (MeleeWeapon)itemToCollect;
-                                worldConsumables.Remove(itemToCollect);
-                                break;
-                            }
-                            else
-                            {
-                                for (int n = 0; n < hero.Inventory.Length; n++)
-                                {
-                                    if ((hero.Inventory[n] == null) && hero.Inventory[n] is MeleeWeapon)
-                                    {
-                                        hero.ActiveWeapon = (MeleeWeapon)itemToCollect;
-                                        worldConsumables.Remove(itemToCollect);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        else // if the itemToCollect is a RangedWeapon
-                        {
-                            if (hero.ActiveWeapon is RangedWeapon)
-                            {
-                                hero.ActiveWeapon = (RangedWeapon)itemToCollect;
-                                worldConsumables.Remove(itemToCollect);
-                                break;
-                            }
-                            else
-                            {
-                                for (int n = 0; n < hero.Inventory.Length; n++)
-                                {
-                                    if ((hero.Inventory[n] == null) && hero.Inventory[n] is RangedWeapon)
-                                    {
-                                        hero.ActiveWeapon = (RangedWeapon)itemToCollect;
-                                        worldConsumables.Remove(itemToCollect);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (hero.Inventory[i] == null)
-                        {
-                            itemToCollect.ItemOwner = hero;
-                            hero.Inventory[i] = itemToCollect;
-                            worldConsumables.Remove(itemToCollect);
-                            break;
-                        }
+                        itemToCollect.ItemOwner = hero;
+                        hero.Inventory[i] = itemToCollect;
+                        worldConsumables.Remove(itemToCollect);
+                        break;
                     }
                 }
             }
         }
 
+        public void EnterDoor(DoorTile door)
+        {
+            if (!door.IsLastDoor)
+                hero.Position = door.getOtherSideDoor().TeleportPosition;
+            else
+            {
+                if (hero.HasKey)
+                {
+                    hero.Position = door.TeleportPosition;
+                    stage++;
+                    hero.UseKey();
+                    map.SetStage(stage);
+                    map.GenerateMap(content,ref enemies,camera);
+                    ClearItemsOnStageChange();
+                }
+            }
+        }
     }
 }
