@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using GameStateManagementSample.Models.Entities;
-using GameStateManagementSample.Models.World;
+﻿using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.GameLogic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using GameStateManagementSample.Models.GameLogic;
+using System;
+using System.Collections.Generic;
 
 namespace GameStateManagementSample.Models.Items
 {
@@ -114,7 +111,8 @@ namespace GameStateManagementSample.Models.Items
         */
         #endregion
 
-        public Weapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, Engine engine) : base (itemName, itemTexture, itemOwner) {
+        public Weapon(String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, Engine engine) : base(itemName, itemTexture, itemOwner)
+        {
             this.weaponDamage = weaponDamage;
             this.attackSpeed = attackSpeed;
             this.weaponRange = weaponRange;
@@ -151,7 +149,7 @@ namespace GameStateManagementSample.Models.Items
                 this.lastAttackGameTimeInMilliseconds = (float)owner.GameTime.TotalGameTime.TotalMilliseconds;
                 attack(owner);
             }
-           
+
         }
 
         public abstract void attack(Entity owner);
@@ -171,10 +169,11 @@ namespace GameStateManagementSample.Models.Items
             }
         }
 
-        public Vector2 vectorToTarget() {
+        public Vector2 vectorToTarget()
+        {
             Vector2 startVector = this.ItemOwner.Position;
             Vector2 targetVector = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(this.ItemOwner.Camera.Transform));
-            Vector2 resultVector = new Vector2(targetVector.X-startVector.X,targetVector.Y-startVector.Y);
+            Vector2 resultVector = new Vector2(targetVector.X - startVector.X, targetVector.Y - startVector.Y);
             return resultVector;
         }
     }

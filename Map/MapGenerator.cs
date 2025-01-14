@@ -78,7 +78,7 @@ namespace GameStateManagementSample.Models.Map
                             break;
                         }
                         // Statt xmapVisual - 1 immer nur, wenn es frei ist
-                        if (!rooms[randomRoom].isDirectionBlockedOn(0) 
+                        if (!rooms[randomRoom].isDirectionBlockedOn(0)
                             && !mapVisual[xmapVisual - 1, ymapVisual])
                         {
                             xmapVisual -= 1;

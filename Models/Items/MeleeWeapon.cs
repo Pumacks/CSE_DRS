@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using GameStateManagement;
 using GameStateManagementSample.Models.Entities;
 using GameStateManagementSample.Models.GameLogic;
-using GameStateManagementSample.Models.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 
 namespace GameStateManagementSample.Models.Items
 {
@@ -79,7 +75,8 @@ namespace GameStateManagementSample.Models.Items
             }
             else
             {
-                if (distance(owner.Position, gameEngine.heroPlayer.Position) <= this.WeaponRange) {
+                if (distance(owner.Position, gameEngine.heroPlayer.Position) <= this.WeaponRange)
+                {
                     gameEngine.heroPlayer.TakeDamage((int)WeaponDamage);
                 }
             }

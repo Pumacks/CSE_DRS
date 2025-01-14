@@ -1,19 +1,17 @@
-﻿using GameStateManagementSample.Models.Items;
+﻿using GameStateManagementSample.Models.GameLogic;
+using GameStateManagementSample.Models.Helpers;
+using GameStateManagementSample.Models.Items;
+using GameStateManagementSample.Models.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using GameStateManagementSample.Models.Entities.States;
-using GameStateManagementSample.Models.Helpers;
-using GameStateManagementSample.Models.Map;
-using System.Runtime.CompilerServices;
-using GameStateManagementSample.Models.GameLogic;
 
 namespace GameStateManagementSample.Models.Entities
 {
     public abstract class Enemy : Entity
     {
-        IEnemyState currentState;
+
         CollisionDetector collisionDetector;
 
         protected float distanceXToPlayer;

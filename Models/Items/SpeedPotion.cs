@@ -9,7 +9,7 @@ public class SpeedPotion : Item
     private float movmentSpeedBoost;
     private float secondsDuration;
 
-    public float MovmentSpeedBoost { get => movmentSpeedBoost;}
+    public float MovmentSpeedBoost { get => movmentSpeedBoost; }
     public float SecondsDuration { get => secondsDuration; }
 
     public SpeedPotion(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, float movmentSpeedBoost, float secondsDuration) : base(itemName, itemTexture, itemOwner)

@@ -1,8 +1,7 @@
-﻿using System;
-using GameStateManagementSample.Models.Entities;
+﻿using GameStateManagementSample.Models.Entities;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace GameStateManagementSample.Models.Items
 {
@@ -13,8 +12,8 @@ namespace GameStateManagementSample.Models.Items
         private String itemName;
         public String ItemName
         {
-            get{ return this.itemName;}
-            set{this.itemName = value;}
+            get { return this.itemName; }
+            set { this.itemName = value; }
         }
 
         private Texture2D itemTexture;
@@ -27,20 +26,20 @@ namespace GameStateManagementSample.Models.Items
         private Entity itemOwner;
         public Entity ItemOwner
         {
-            get { return this.itemOwner;}
-            set{this.itemOwner = value;}
+            get { return this.itemOwner; }
+            set { this.itemOwner = value; }
         }
 
         private Vector2 position;
         public Vector2 Position
         {
             get { return position; }
-        
+
             set
             {
                 position = value;
                 BoundingBox = new Rectangle((int)position.X - ItemTexture.Width / 2, (int)position.Y - ItemTexture.Height / 2, ItemTexture.Width, ItemTexture.Height);
-            } 
+            }
         }
         public Rectangle BoundingBox { get; set; }
         //private Sound itemSounds
@@ -52,7 +51,7 @@ namespace GameStateManagementSample.Models.Items
             this.itemName = itemName;
             this.itemTexture = itemTexture;
             this.itemOwner = itemOwner;
-           
+
         }
 
         #region abstract methods

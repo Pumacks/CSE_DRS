@@ -1,16 +1,11 @@
-﻿using System.Collections;
+﻿using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.GUI;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net;
-using System.Numerics;
-using System.Runtime.InteropServices.Marshalling;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-using GameStateManagementSample.Models.GameLogic;
 
 namespace GameStateManagementSample.Models.Entities
 {

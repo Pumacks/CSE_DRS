@@ -1,11 +1,7 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection.Metadata;
 using GameStateManagementSample.Models.Entities;
-using GameStateManagementSample.Models.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace GameStateManagementSample.Models.Items
 {
@@ -174,14 +170,14 @@ namespace GameStateManagementSample.Models.Items
 
             this.velocity = projectileSpeed;
             this.projectileRange = (int)weaponRange;
-            this.projectileDamage = (int) weaponDamage;
+            this.projectileDamage = (int)weaponDamage;
             this.distanceCovered = 0;
 
             this.projectileTexture = itemTexture;
 
             this.projectileHitBox = new Rectangle( // The hitbox shall only be a small rectangle at the tip of the arrow.
-                (int) currentProjectilePosition.X - projectileTexture.Width / 2,
-                (int) currentProjectilePosition.Y - projectileTexture.Height / 2,
+                (int)currentProjectilePosition.X - projectileTexture.Width / 2,
+                (int)currentProjectilePosition.Y - projectileTexture.Height / 2,
                 projectileTexture.Width,
                 projectileTexture.Width);
         }

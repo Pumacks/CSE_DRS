@@ -1,14 +1,9 @@
 ﻿using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.Items;
 using GameStateManagementSample.Models.Map;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameStateManagementSample.Models.Items;
 
 namespace GameStateManagementSample.Models.Helpers
 {

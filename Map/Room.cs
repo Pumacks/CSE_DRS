@@ -6,20 +6,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace GameStateManagementSample.Models.Map
 {
     public class Room
     {
-        enum SkyDirection
-        {
-            NORTH,
-            EAST,
-            SOUTH,
-            WEST
-        }
-
         private Tile[,] tiles;
         private bool[] blocked = new bool[4]; // wird für Map generation genutzt
         private DoorTile[] roomDoors = new DoorTile[4];
@@ -76,7 +67,7 @@ namespace GameStateManagementSample.Models.Map
         public int MapX { get; set; }
         public int MapY { get; set; }
 
-        
+
 
         public Room(Engine engine)
         {

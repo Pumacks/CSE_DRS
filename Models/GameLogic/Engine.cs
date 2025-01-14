@@ -1,23 +1,19 @@
 ﻿using GameStateManagement;
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
 using GameStateManagementSample.Models.Map;
 using GameStateManagementSample.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Numerics;
 using System.Threading;
-using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using Microsoft.Xna.Framework.Audio;
-using System.Runtime.Serialization;
-using System.IO;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 
@@ -108,7 +104,6 @@ namespace GameStateManagementSample.Models.GameLogic
             set { enemies = value; }
         }
 
-        private Ai ai;
 
 
         private List<Projectile> projectiles;
@@ -276,7 +271,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 this
             );
 
-            ai = new Ai();
+
 
             map.LoadMapTextures(content);
             map.GenerateMap(content, ref enemies, hero.Camera);
@@ -1089,7 +1084,7 @@ namespace GameStateManagementSample.Models.GameLogic
                     stage++;
                     hero.UseKey();
                     map.SetStage(stage);
-                    map.GenerateMap(content,ref enemies,camera);
+                    map.GenerateMap(content, ref enemies, camera);
                     ClearItemsOnStageChange();
                 }
             }

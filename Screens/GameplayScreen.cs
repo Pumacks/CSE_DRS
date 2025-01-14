@@ -12,16 +12,14 @@
 #region Using Statements
 
 
+using GameStateManagementSample.Models.GameLogic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Linq;
 using System.Threading;
 using Color = Microsoft.Xna.Framework.Color;
-using GameStateManagementSample.Models.GameLogic;
-using GameStateManagementSample.Models.Items;
 
 #endregion Using Statements
 
@@ -75,18 +73,18 @@ namespace GameStateManagement
 
             gameEngine.LoadContent(ScreenManager);
 
-           
+
 
             // Creating a List-Object for enemies
-           // Enemies = new List<Enemy>();
+            // Enemies = new List<Enemy>();
             //The following is just for testing Textures and rotations.
-           // Projectiles = new List<Projectile>();
+            // Projectiles = new List<Projectile>();
 
 
 
-           // hero = new Player(100, 5, new Vector2(5000, 5000), golem, gameFont, new List<Item>());
+            // hero = new Player(100, 5, new Vector2(5000, 5000), golem, gameFont, new List<Item>());
 
-          //  hero.Camera = camera;
+            //  hero.Camera = camera;
 
 
 
@@ -94,7 +92,7 @@ namespace GameStateManagement
 
 
             // Loading the Texture for Arrows
-           
+
 
             // Placing a few arrows in the world to demonstrate the way they fly:
             // for (int arrowPlacementIndex = 0; arrowPlacementIndex < 100; arrowPlacementIndex++)
@@ -102,12 +100,12 @@ namespace GameStateManagement
             //     Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex*10,200), new Vector2(1000, 500), 500));
             // }
 
- 
 
 
 
 
-    
+
+
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -142,7 +140,7 @@ namespace GameStateManagement
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
-    
+
 
             base.Update(gameTime, otherScreenHasFocus, false);
 
@@ -163,31 +161,31 @@ namespace GameStateManagement
 
                 // Apply some random jitter to make the enemy move around.
 
-/*
-                // Apply a stabilizing force to stop the enemy moving off the screen.
-                Vector2 targetPosition = new Vector2(
-                    ScreenManager.GraphicsDevice.Viewport.Width / 2 - gameFont.MeasureString("Insert Gameplay Here").X / 2,
-                    200);
+                /*
+                                // Apply a stabilizing force to stop the enemy moving off the screen.
+                                Vector2 targetPosition = new Vector2(
+                                    ScreenManager.GraphicsDevice.Viewport.Width / 2 - gameFont.MeasureString("Insert Gameplay Here").X / 2,
+                                    200);
 
-                enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
+                                enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
 
 
 
-                // Updating the positions of the projectiles (arrows) in the world
-                if (Projectiles != null)
-                {
-                    int projectileUpdateIndex;
-                    for (projectileUpdateIndex = 0; projectileUpdateIndex < Projectiles.Count; projectileUpdateIndex++)
-                    {
-                        Projectiles[projectileUpdateIndex].CurrentProjectilePosition += Projectiles[projectileUpdateIndex].SpeedVector / 60;
-                        Projectiles[projectileUpdateIndex].DistanceCovered += Projectiles[projectileUpdateIndex].Velocity / 60;
-                        if (Projectiles[projectileUpdateIndex].DistanceCovered >= Projectiles[projectileUpdateIndex].ProjectileRange)
-                        {
-                            Projectiles.RemoveAt(projectileUpdateIndex);
-                        }
-                    }
-                }
-*/
+                                // Updating the positions of the projectiles (arrows) in the world
+                                if (Projectiles != null)
+                                {
+                                    int projectileUpdateIndex;
+                                    for (projectileUpdateIndex = 0; projectileUpdateIndex < Projectiles.Count; projectileUpdateIndex++)
+                                    {
+                                        Projectiles[projectileUpdateIndex].CurrentProjectilePosition += Projectiles[projectileUpdateIndex].SpeedVector / 60;
+                                        Projectiles[projectileUpdateIndex].DistanceCovered += Projectiles[projectileUpdateIndex].Velocity / 60;
+                                        if (Projectiles[projectileUpdateIndex].DistanceCovered >= Projectiles[projectileUpdateIndex].ProjectileRange)
+                                        {
+                                            Projectiles.RemoveAt(projectileUpdateIndex);
+                                        }
+                                    }
+                                }
+                */
 
 
             }
@@ -253,7 +251,7 @@ namespace GameStateManagement
 
 
 
- 
+
 
 
 
@@ -273,7 +271,7 @@ namespace GameStateManagement
             //     layerDepth: 0f);
             // spriteBatch.End();
 
-           
+
 
 
             // If the game is transitioning on or off, fade it out to black.

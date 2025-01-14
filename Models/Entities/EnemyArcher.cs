@@ -1,12 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using System;
-using System.Collections.Generic;
+﻿using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.Items;
-using Microsoft.Xna.Framework.Graphics;
 using GameStateManagementSample.Models.Map;
-using GameStateManagementSample.Models.Helpers;
-using GameStateManagementSample.Models.GameLogic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -24,7 +22,7 @@ namespace GameStateManagementSample.Models.Entities
                 null,
                 10,
                 4000,
-                (ReductionDistance+1) * 1.42f,
+                (ReductionDistance + 1) * 1.42f,
                 engine.Enemies,
                 600,
                 engine.arrowTextureRef,

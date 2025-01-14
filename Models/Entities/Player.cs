@@ -1,17 +1,12 @@
-﻿using GameStateManagementSample.Models;
-using GameStateManagementSample.Models.GameLogic;
+﻿using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.GUI;
+using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using GameStateManagement;
-using System;
-using GameStateManagementSample.Models.Helpers;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -324,7 +319,8 @@ namespace GameStateManagementSample.Models.Entities
 
         private void dropItem()
         {
-            if (inventory[selectedInventorySlot] != null) {
+            if (inventory[selectedInventorySlot] != null)
+            {
                 inventory[selectedInventorySlot].Position = this.Position;
                 gameEngine.WorldConsumables.Add(inventory[selectedInventorySlot]);
                 inventory[selectedInventorySlot] = null;

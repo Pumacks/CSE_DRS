@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Xna.Framework.Graphics;
-using GameStateManagementSample.Models.Entities;
+﻿using GameStateManagementSample.Models.Entities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 
 
 namespace GameStateManagementSample.Models.GUI
@@ -26,7 +26,7 @@ namespace GameStateManagementSample.Models.GUI
         public FloatingHealthNumbers(Entity entity) : base(entity)
         {
             healthPoints = entity.HealthPoints;
-            offset = new Vector2(-20, (entity.Texture.Width / 4) -5);
+            offset = new Vector2(-20, (entity.Texture.Width / 4) - 5);
         }
 
         public override void Update()

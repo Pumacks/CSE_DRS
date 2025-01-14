@@ -28,7 +28,7 @@ namespace GameStateManagement
     public class GameStateManagementGame : Microsoft.Xna.Framework.Game
     {
         #region Fields
-        
+
         private readonly GraphicsDeviceManager graphics;
         private readonly ScreenManager screenManager;
         private static readonly GraphicsAdapter adapter = new GraphicsAdapter();
@@ -84,7 +84,7 @@ namespace GameStateManagement
             {
                 Content.Load<object>(asset);
 
-                
+
             }
         }
 
