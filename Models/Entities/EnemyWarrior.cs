@@ -24,7 +24,7 @@ namespace GameStateManagementSample.Models.Entities
             null,
             5,
             1000,
-            ReductionDistance * 1.42f,
+            (ReductionDistance+1) * 1.42f,
             engine.Enemies,
             engine);
         }

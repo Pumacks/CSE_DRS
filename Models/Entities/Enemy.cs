@@ -167,7 +167,7 @@ namespace GameStateManagementSample.Models.Entities
         }
         protected bool isPlayerInReach()
         {
-            if (Math.Abs(distanceXToPlayer) < reductionDistance && Math.Abs(distanceYToPlayer) < reductionDistance)
+            if (Math.Abs(distanceXToPlayer) <= reductionDistance && Math.Abs(distanceYToPlayer) <= reductionDistance)
             {
                 return true;
             }
