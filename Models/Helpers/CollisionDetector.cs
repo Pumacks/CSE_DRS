@@ -57,28 +57,7 @@ namespace GameStateManagementSample.Models.Helpers
             }
             return null;
         }
-        /*
-        public static bool HasStructureCollision(Room room, Entity entity, Vector2 movment)
-        {
-            Tile[,] tiles = room.GetTiles();
-            int x = (int)entity.Position.X + (int)movment.X - entity.Texture.Width / 2;
-            int y = (int)entity.Position.Y + (int)movment.Y - entity.Texture.Height / 2;
-
-            Rectangle entityBoundingBoxAfterMovement = new Rectangle(x, y, entity.Texture.Width, entity.Texture.Height);
-
-            for (int i = 0; i < tiles.GetLength(0); i++)
-            {
-                for (int j = 0; j < tiles.GetLength(1); j++)
-                {
-                    if (tiles[i, j].Collision && IsIntersecting(tiles[i, j].BoundingBox, entityBoundingBoxAfterMovement))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        */
+       
         public static bool HasStructureCollision(Room room, Entity entity, Vector2 movement)
         {
             Tile[,] tiles = room.GetTiles();

@@ -197,22 +197,22 @@ namespace GameStateManagementSample.Models.GameLogic
                 this
             );
 
-            Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>(), this);
-            enemySword.ItemOwner = enemyWarrior;
-            enemyWarrior.Camera = camera;
+            //Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>(), this);
+            //enemySword.ItemOwner = enemyWarrior;
+            //enemyWarrior.Camera = camera;
 
-            Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), initTexture, gameFont, new List<Item>(), this);
-            enemyBow.ItemOwner = enemyArcher;
-            enemyArcher.Camera = camera;
+            //Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), initTexture, gameFont, new List<Item>(), this);
+            //enemyBow.ItemOwner = enemyArcher;
+            //enemyArcher.Camera = camera;
 
-            Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>(), this);
-            enemySpear.ItemOwner = enemySpearman;
-            enemySpearman.Camera = camera;
+            //Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>(), this);
+            //enemySpear.ItemOwner = enemySpearman;
+            //enemySpearman.Camera = camera;
 
 
-            enemies.Add(enemyWarrior);
-            enemies.Add(enemyArcher);
-            enemies.Add(enemySpearman);
+            //enemies.Add(enemyWarrior);
+            //enemies.Add(enemyArcher);
+            //enemies.Add(enemySpearman);
 
             // for (int i = 0; i < 100; i++)
             // {
@@ -788,7 +788,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 e.setGameTime(gameTime);
                 e.UpdateDistanceToHero(hero.Position);
                 //e.Idling(map.Rooms[0]);
-                e.FollowPlayer(map.Rooms[0]);
+                e.FollowPlayer(e.EnemyRoom);
                 e.Camera = camera;
                 e.Update(gameTime);
                 if (e.HealthPoints <= 0)

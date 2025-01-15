@@ -22,7 +22,7 @@ namespace GameStateManagementSample.Models.Entities
         protected float recognitionDistance = 800;
         protected float howLong = 100;
         protected float fleeAt = 60;
-
+        public Room EnemyRoom { get; set; }
         protected float ReductionDistance
         {
             get => reductionDistance;
