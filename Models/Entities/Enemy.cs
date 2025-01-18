@@ -60,7 +60,7 @@ namespace GameStateManagementSample.Models.Entities
 
             if (howLong > 0)
             {
-                moveWest(room, 0.5f);
+                moveWest(room);
                 if (howLong == 1)
                     howLong = -100;
                 howLong--;
@@ -68,7 +68,7 @@ namespace GameStateManagementSample.Models.Entities
             }
             if (howLong < 0)
             {
-                moveEast(room, 0.5f);
+                moveEast(room);
                 if (howLong == -1)
                     howLong = 100;
                 howLong++;
@@ -175,44 +175,52 @@ namespace GameStateManagementSample.Models.Entities
         protected void moveSouthEast(Room room)
         {
             Vector2 movingDirection = Vector2.Zero;
-            movingDirection.X += MovementSpeed / 2;
-            movingDirection.Y += MovementSpeed / 2;
+            movingDirection.X += MovementSpeed;
+            movingDirection.Y += MovementSpeed;
 
             if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
             {
                 Move(movingDirection);
             }
+            else
+                moveWest(room);
         }
         protected void moveSouthWest(Room room)
         {
             Vector2 movingDirection = Vector2.Zero;
-            movingDirection.X -= MovementSpeed / 2;
-            movingDirection.Y += MovementSpeed / 2;
+            movingDirection.X -= MovementSpeed;
+            movingDirection.Y += MovementSpeed;
             if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
             {
                 Move(movingDirection);
             }
+            else
+                moveEast(room);
         }
         protected void moveNorthEast(Room room)
         {
             Vector2 movingDirection = Vector2.Zero;
-            movingDirection.Y -= MovementSpeed / 2;
-            movingDirection.X += MovementSpeed / 2;
+            movingDirection.Y -= MovementSpeed;
+            movingDirection.X += MovementSpeed;
             if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
             {
                 Move(movingDirection);
             }
+            else
+                moveWest(room);
         }
         protected void moveNorthWest(Room room)
         {
             Vector2 movingDirection = Vector2.Zero;
-            movingDirection.Y -= MovementSpeed / 2;
-            movingDirection.X -= MovementSpeed / 2;
+            movingDirection.Y -= MovementSpeed;
+            movingDirection.X -= MovementSpeed;
 
             if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
             {
                 Move(movingDirection);
             }
+            else
+                moveEast(room);
         }
         protected void moveNorth(Room room)
         {
@@ -222,6 +230,10 @@ namespace GameStateManagementSample.Models.Entities
             if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
             {
                 Move(movingDirection);
+            }
+            else
+            {
+                moveEast(room);
             }
         }
         protected void moveEast(Room room)
@@ -233,16 +245,8 @@ namespace GameStateManagementSample.Models.Entities
             {
                 Move(movingDirection);
             }
-        }
-        protected void moveEast(Room room, float movementspeedMultiplicator)
-        {
-            Vector2 movingDirection = Vector2.Zero;
-            movingDirection.X += MovementSpeed * movementspeedMultiplicator;
-
-            if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
-            {
-                Move(movingDirection);
-            }
+            else
+                moveSouth(room);
         }
         protected void moveSouth(Room room)
         {
@@ -253,6 +257,8 @@ namespace GameStateManagementSample.Models.Entities
             {
                 Move(movingDirection);
             }
+            else
+                moveWest(room);
         }
         protected void moveWest(Room room)
         {
@@ -263,16 +269,8 @@ namespace GameStateManagementSample.Models.Entities
             {
                 Move(movingDirection);
             }
-        }
-        protected void moveWest(Room room, float movementspeedMultiplicator)
-        {
-            Vector2 movingDirection = Vector2.Zero;
-            movingDirection.X -= MovementSpeed * movementspeedMultiplicator;
-
-            if (!CollisionDetector.HasStructureCollision(room, this, movingDirection))
-            {
-                Move(movingDirection);
-            }
+            else
+                moveNorth(room);
         }
 
         public void UpdateDistanceToHero(Vector2 heroPos)
