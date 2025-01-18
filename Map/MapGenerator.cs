@@ -37,13 +37,11 @@ namespace GameStateManagementSample.Models.Map
 
         public void GenerateMap(ContentManager content, ref List<Enemy> enemies, Camera camera)
         {
-            // Rooms neu initialisieren
             for (int i = 0; i < rooms.Length; i++)
             {
                 rooms[i] = new Room(e);
             }
 
-            // Texturen laden
             LoadMapTextures(content);
 
             rooms[0].GenerateRoom(random, new Vector2(5000, 5000), stage, ref enemies);

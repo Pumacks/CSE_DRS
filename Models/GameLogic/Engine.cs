@@ -55,7 +55,6 @@ namespace GameStateManagementSample.Models.GameLogic
         private PlayerGameStatus playerGameStatus = PlayerGameStatus.ALIVE;
         private bool deathAnimationFinished = false;
 
-        //private Room room;
         private MapGenerator map;
 
         public Models.Camera CameraProperty
@@ -64,8 +63,6 @@ namespace GameStateManagementSample.Models.GameLogic
             set { camera = value; }
         }
 
-
-        // Dummy Texture
         Texture2D ArrowTexture;
         Texture2D SwordTexture;
         Texture2D InventoryTexture;
@@ -73,7 +70,6 @@ namespace GameStateManagementSample.Models.GameLogic
         Texture2D ActiveWeaponInventorySlotTexture;
         Texture2D BowTexture;
         Texture2D KeyTexture;
-        // Texture2D MarkerTexture;
         Texture2D HealthPotion;
         Texture2D SpeedPotion;
 
@@ -188,19 +184,6 @@ namespace GameStateManagementSample.Models.GameLogic
             Enemies = new List<Enemy>();
             // Creating a List-Object for projectiles
             Projectiles = new List<Projectile>();
-            //The following is just for testing Textures and rotations.
-            //for (int arrowPlacementIndex = 0; arrowPlacementIndex < 100; arrowPlacementIndex++)
-            //{
-            //    Projectiles.Add(new Projectile(null, ArrowTexture, null, new Vector2(arrowPlacementIndex * 10, 200), new Vector2(1000, 500), 500, 250));
-            //}
-
-
-            // for (int i = 0; i < 100; i++)
-            // {
-            //     Enemy e = new EnemyWarrior(100, 1, new Vector2(5500 + 10 * i, 5500 + 10 * i), initTexture, gameFont, new List<Item>());
-            //     e.Camera = camera;
-            //     enemies.Add(e);
-            // }
 
             //ArrowTexture = content.Load<Texture2D>("ArrowSmall7x68px");
             ArrowTexture = content.Load<Texture2D>("Items/Projectile/Arrow");
@@ -307,8 +290,6 @@ namespace GameStateManagementSample.Models.GameLogic
             map.DrawMap(spriteBatch);
             spriteBatch.End();
 
-
-            // sortMode: SpriteSortMode.Immediate, blendState: BlendState.Opaque
             spriteBatch.Begin(transformMatrix: camera.Transform);
             foreach (var consumable in worldConsumables)
             {
@@ -323,33 +304,6 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 enemy.Draw(spriteBatch);
             }
-
-
-
-            // Bows, Projectiles, GameTime
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(
-            //    texture: this.hero.ActiveWeapon.ItemTexture,
-            //    position: Vector2.Transform(hero.Position,
-            //        camera.Transform), // Hier Vector2.Transform(hero.Position,camera.Transform) anstatt new Vector2(ScreenManager.GraphicsDevice.Viewport.Width/2,ScreenManager.GraphicsDevice.Viewport.Height/2)
-            //    sourceRectangle: null,
-            //    color: Color.White,
-            //    rotation: (float)Math.PI / 2 +
-            //              (float)Math.Atan2(Mouse.GetState().Y - Vector2.Transform(hero.Position, camera.Transform).Y,
-            //                  Mouse.GetState().X - Vector2.Transform(hero.Position, camera.Transform).X),
-            //    // rotation: hero.ActiveWeapon.calculateWeaponRotation(),
-            //    // rotation: calculateWeaponRotation(hero.Position, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)),
-            //    origin: this.hero.ActiveWeapon is MeleeWeapon
-            //        ? new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2,
-            //            this.hero.ActiveWeapon.ItemTexture.Height * 0.75f)
-            //        : new Vector2(this.hero.ActiveWeapon.ItemTexture.Width / 2,
-            //            this.hero.ActiveWeapon.ItemTexture.Height / 2),
-            //    scale: 1f,
-            //    effects: SpriteEffects.None,
-            //    layerDepth: 0f);
-            //spriteBatch.End();
-
-
 
             if (Projectiles != null)
             {
@@ -573,106 +527,6 @@ namespace GameStateManagementSample.Models.GameLogic
                 spriteBatch.End();
             }
 
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "Total ms: " + gameTime.TotalGameTime.TotalMilliseconds.ToString(),
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 250),
-            //     Color.Red
-            // );
-            // spriteBatch.End();
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "Hero Position: " + hero.Position.ToString(),
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 300),
-            //     Color.Red
-            // );
-            // spriteBatch.End();
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "Hero Transformed Position: " + Vector2.Transform(hero.Position, camera.Transform).ToString(),
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 350),
-            //     Color.Red
-            // );
-            // spriteBatch.End();
-
-
-
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     // text: "M.Cursor Transformed Inverted: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(hero.Camera.Transform)),
-            //     text: "Mouse aiming at: " + Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
-            //         Matrix.Invert(hero.Camera.Transform)),
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 400),
-            //     Color.Red
-            // );
-            // spriteBatch.End();
-
-
-
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "ShowStats: " + hero.ShowStats,
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 450),
-            //     Color.White
-            // );
-            // spriteBatch.End();
-
-
-
-            // spriteBatch.Begin();
-            // spriteBatch.DrawString(
-            //     spriteFont: gameFont,
-            //     text: "ShowControls: " + hero.ShowControls,
-            //     position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-            //         ScreenManager.GraphicsDevice.Viewport.Height - 500),
-            //     Color.White
-            // );
-            // spriteBatch.End();
-
-
-
-            /*
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "selectedInventorySlot: " + this.hero.SelectedInventorySlot,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 450),
-                Color.Red
-            );
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Mouse Wheel Value: " + Mouse.GetState().ScrollWheelValue,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 500),
-                Color.Red
-            );
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                spriteFont: gameFont,
-                text: "Mouse Wheel PREVIOUS Value: " + Mouse.GetState().ScrollWheelValue,
-                position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
-                    ScreenManager.GraphicsDevice.Viewport.Height - 550),
-                Color.Red
-            );
-            spriteBatch.End();
-            */
-
         }
 
 
@@ -681,15 +535,12 @@ namespace GameStateManagementSample.Models.GameLogic
             hero.Update(gameTime);
             camera.Follow(hero);
             UpdateEnemies(gameTime);
-            // CollectItems();
-
 
             if (hero.HealthPoints <= 0)
             {
                 playerGameStatus = PlayerGameStatus.DEAD;
                 deathAnimationFinished = hero.PlayDeathAnimation();
             }
-
 
             // Updating the values of all projectiles (arrows) in the world, whether they collide, when they disappear, etc.
             if (Projectiles != null)
@@ -763,8 +614,6 @@ namespace GameStateManagementSample.Models.GameLogic
                                     }
                                 }
                             }
-
-
                     }
                 }
             }
@@ -1037,7 +886,6 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 e.setGameTime(gameTime);
                 e.UpdateDistanceToHero(hero.Position);
-                //e.Idling(map.Rooms[0]);
                 e.FollowPlayer(map.Rooms[0]);
                 e.Camera = camera;
                 e.Update(gameTime);
