@@ -241,6 +241,12 @@
 /processorParam:TextureFormat=Color
 /build:Bush7.png
 
+#begin doorOpenCloseSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:doorOpenCloseSound.wav
+
 #begin draw-sword1-44724.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -2912,6 +2918,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton_Warrior/Walk.png
+
+#begin stoneDoorOpenCloseSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:stoneDoorOpenCloseSound.wav
+
+#begin stoneMoving.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:stoneMoving.wav
 
 #begin sword-sound-effect-1-234987.wav
 /importer:WavImporter

@@ -105,6 +105,9 @@ namespace GameStateManagementSample.Models.GameLogic
         public SoundEffect potionSound1;
         public SoundEffect potionPickup;
         public SoundEffect burpSound;
+        public SoundEffect doorOpenCloseSound;
+        public SoundEffect stoneDoorOpenCloseSound;
+        public SoundEffect stoneMoving;
 
         public Song songLevelOne;
         public Song songLevelTwo;
@@ -288,10 +291,13 @@ namespace GameStateManagementSample.Models.GameLogic
             potionSound1 = content.Load<SoundEffect>("potionSound1");
             potionPickup = content.Load<SoundEffect>("potionPickup");
             burpSound = content.Load<SoundEffect>("burpSound");
+            doorOpenCloseSound = content.Load<SoundEffect>("doorOpenCloseSound");
+            stoneDoorOpenCloseSound = content.Load<SoundEffect>("stoneDoorOpenCloseSound");
+            stoneMoving = content.Load<SoundEffect>("stoneMoving");
 
 
 
-            
+
             songLevelOne = content.Load<Song>("Our-Mountain_v003");
             songLevelTwo = content.Load<Song>("Bog-Creatures-On-the-Move");
             songLevelThree = content.Load<Song>("Kingdom-of-Darkness");
@@ -823,19 +829,22 @@ namespace GameStateManagementSample.Models.GameLogic
 
 
 
-            if (stage == 2 && songLevelOneIsPlaying) {
+            if (stage == 2 && songLevelOneIsPlaying)
+            {
                 MediaPlayer.Stop();
                 MediaPlayer.Play(songLevelTwo);
                 songLevelTwoIsPlaying = true;
                 songLevelOneIsPlaying = false;
             }
-            if (stage == 3 && songLevelTwoIsPlaying) {
+            if (stage == 3 && songLevelTwoIsPlaying)
+            {
                 MediaPlayer.Stop();
                 MediaPlayer.Play(songLevelThree);
                 songLevelThreeIsPlaying = true;
                 songLevelTwoIsPlaying = false;
             }
-            if (stage == 4 && songLevelThreeIsPlaying) {
+            if (stage == 4 && songLevelThreeIsPlaying)
+            {
                 MediaPlayer.Stop();
                 MediaPlayer.Play(songYouWin);
                 songYouWinIsPlaying = true;
@@ -901,15 +910,17 @@ namespace GameStateManagementSample.Models.GameLogic
                     if (door != null)
                     {
                         if (!door.IsLastDoor)
+                        {
+                            doorOpenCloseSound.Play();
                             hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        }
                         else
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
-
-                            // The enemies and projectiles need to get cleared between stages because we're entering new rooms where the old enemies and projectiles don't exist, and this happens at similar coordinates.
+                            stoneDoorOpenCloseSound.Play();
+                            stoneMoving.Play();
                             clearEnemiesAndProjectiles();
-                            //Enemies = new List<Enemy>();
                             map.SetStage(stage);
                             map.GenerateMap(content, ref enemies, hero.Camera);
                             foreach (var e in enemies)
@@ -927,11 +938,17 @@ namespace GameStateManagementSample.Models.GameLogic
                     if (door != null)
                     {
                         if (!door.IsLastDoor)
+                        {
+                            doorOpenCloseSound.Play();
                             hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        }
                         else
                         {
+
                             hero.Position = door.TeleportPosition;
                             stage++;
+                            stoneDoorOpenCloseSound.Play();
+                            stoneMoving.Play();
                             clearEnemiesAndProjectiles();
                             Enemies = new List<Enemy>();
                             map.SetStage(stage);
@@ -951,11 +968,16 @@ namespace GameStateManagementSample.Models.GameLogic
                     if (door != null)
                     {
                         if (!door.IsLastDoor)
+                        {
+                            doorOpenCloseSound.Play();
                             hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        }
                         else
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
+                            stoneDoorOpenCloseSound.Play();
+                            stoneMoving.Play();
                             clearEnemiesAndProjectiles();
                             Enemies = new List<Enemy>();
                             map.SetStage(stage);
@@ -975,11 +997,16 @@ namespace GameStateManagementSample.Models.GameLogic
                     if (door != null)
                     {
                         if (!door.IsLastDoor)
+                        {
+                            doorOpenCloseSound.Play();
                             hero.Position = door.getOtherSideDoor().TeleportPosition;
+                        }
                         else
                         {
                             hero.Position = door.TeleportPosition;
                             stage++;
+                            stoneDoorOpenCloseSound.Play();
+                            stoneMoving.Play();
                             clearEnemiesAndProjectiles();
                             Enemies = new List<Enemy>();
                             map.SetStage(stage);
@@ -1081,11 +1108,11 @@ namespace GameStateManagementSample.Models.GameLogic
 
                     // 40% Drop Chance for Health Potion
                     if (random.Next(0, 100) < 45)
-                        worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, new Vector2(e.Position.X-10,e.Position.Y), 20, this));
+                        worldConsumables.Add(new HealthPotion("HP", HealthPotion, null, new Vector2(e.Position.X - 10, e.Position.Y), 20, this));
 
                     // 40% Drop Chance for Speed Potion
                     if (random.Next(0, 100) < 35)
-                        worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, new Vector2(e.Position.X-10,e.Position.Y), 2f, 10, this));
+                        worldConsumables.Add(new SpeedPotion("Speed Potion", SpeedPotion, null, new Vector2(e.Position.X - 10, e.Position.Y), 2f, 10, this));
 
                     // Roll for main loot, 10% drop chance
                     int mainDropRoll = random.Next(0, 100);
@@ -1165,7 +1192,7 @@ namespace GameStateManagementSample.Models.GameLogic
                     stage++;
                     hero.UseKey();
                     map.SetStage(stage);
-                    map.GenerateMap(content,ref enemies,camera);
+                    map.GenerateMap(content, ref enemies, camera);
                     ClearItemsOnStageChange();
                 }
             }
