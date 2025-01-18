@@ -1,4 +1,5 @@
 ﻿using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.GameLogic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,10 +10,10 @@ public class SpeedPotion : Item
     private float movmentSpeedBoost;
     private float secondsDuration;
 
-    public float MovmentSpeedBoost { get => movmentSpeedBoost;}
+    public float MovmentSpeedBoost { get => movmentSpeedBoost; }
     public float SecondsDuration { get => secondsDuration; }
 
-    public SpeedPotion(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, float movmentSpeedBoost, float secondsDuration) : base(itemName, itemTexture, itemOwner)
+    public SpeedPotion(string itemName, Texture2D itemTexture, Entity itemOwner, Vector2 position, float movmentSpeedBoost, float secondsDuration, Engine engine) : base(itemName, itemTexture, itemOwner, engine)
     {
         this.Position = position;
         this.movmentSpeedBoost = movmentSpeedBoost;
@@ -34,6 +35,8 @@ public class SpeedPotion : Item
 
     public override void use()
     {
+        gameEngine.potionSound1.Play();
+        gameEngine.burpSound.Play();
         ItemOwner.UseSpeedPotion(this);
     }
 }

@@ -90,7 +90,8 @@ namespace GameStateManagementSample.Models.Items
                     cursorPosition,
                     projectileSpeed,
                     this.weaponRange,
-                    this.weaponDamage));
+                    this.weaponDamage,
+                    gameEngine));
             }
             else {
                 Projectiles.Add(
@@ -104,7 +105,8 @@ namespace GameStateManagementSample.Models.Items
                     // new Vector2(5000,5000),
                     projectileSpeed,
                     this.weaponRange,
-                    this.weaponDamage));
+                    this.weaponDamage,
+                    gameEngine));
             }
 
         }

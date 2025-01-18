@@ -42,10 +42,10 @@ namespace GameStateManagementSample.Models.Items
             //     }
             // });
 
+            Random random = new Random();
             if (owner is Player)
             {
 
-                Random random = new Random();
 
                 if (random.Next(0, 2) == 0)
                     gameEngine.swordSwing1.Play();
@@ -57,7 +57,7 @@ namespace GameStateManagementSample.Models.Items
                 float lengthWeaponToCursor = (float)Math.Sqrt(vectorWeaponToCursor.X * vectorWeaponToCursor.X + vectorWeaponToCursor.Y * vectorWeaponToCursor.Y);
                 Vector2 unitVectorWeaponToCursor = new Vector2(vectorWeaponToCursor.X / lengthWeaponToCursor, vectorWeaponToCursor.Y / lengthWeaponToCursor);
 
-                Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from all Enemies in WeaponRange that are within a designated area.
+                gameEngine.Enemies.ForEach(targetEnemy => // remove WeaponDamage amount of HealthPoints from all Enemies in WeaponRange that are within a designated area.
                 {
                     if (distance(owner.Position, targetEnemy.Position) <= this.WeaponRange)
                     {
@@ -79,6 +79,19 @@ namespace GameStateManagementSample.Models.Items
             }
             else
             {
+                if (owner is EnemyWarrior)
+                {
+                    
+                if (random.Next(0, 2) == 0)
+                    gameEngine.enemySwordHit1.Play();
+                else
+                    gameEngine.enemySwordHit2.Play();
+
+                } else if (owner is EnemySpearman) {
+                    gameEngine.enemySpearHit1.Play();
+                }
+                
+
                 if (distance(owner.Position, gameEngine.heroPlayer.Position) <= this.WeaponRange) {
                     gameEngine.heroPlayer.TakeDamage((int)WeaponDamage);
                 }

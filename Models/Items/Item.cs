@@ -1,5 +1,6 @@
 ﻿using System;
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.GameLogic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -43,15 +44,18 @@ namespace GameStateManagementSample.Models.Items
             } 
         }
         public Rectangle BoundingBox { get; set; }
+
+        protected Engine gameEngine;
         //private Sound itemSounds
         // ItemType können wir einfach mittels Abfrage nach instanceOf weapon oder consumable oder meleeweapon, rangedweapon, etc. machen.
         #endregion
 
-        public Item(String itemName, Texture2D itemTexture, Entity itemOwner)
+        public Item(String itemName, Texture2D itemTexture, Entity itemOwner, Engine engine)
         {
             this.itemName = itemName;
             this.itemTexture = itemTexture;
             this.itemOwner = itemOwner;
+            this.gameEngine = engine;
            
         }
 

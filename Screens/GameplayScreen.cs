@@ -233,7 +233,7 @@ namespace GameStateManagement
         public override void Draw(GameTime gameTime)
         {
             // stage 1 RGB: 149, 153, 28
-            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
+            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0); // Student's Note: Background of the world during gameplay
 
 
             // Our player and enemy are both actually just text strings.

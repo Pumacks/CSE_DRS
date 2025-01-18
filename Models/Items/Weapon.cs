@@ -101,8 +101,6 @@ namespace GameStateManagementSample.Models.Items
                 this.projectiles = value;
             }
         }
-
-        protected Engine gameEngine;
         /*
         Die Überlegung ist an dieser Stelle, wie kompliziert wir die Waffenlogik machen wollen.
         Um eine Art Balance zu haben sollten Nahkampf und Fernkampf sich ausgleichende Vor-, und Nachteile haben. Gleichzeitig soll keines davon den sicheren Tod bedeuten (Man sollte vielleicht mit dem Schwert angreifend außer Reichweite bleiben können).
@@ -114,14 +112,13 @@ namespace GameStateManagementSample.Models.Items
         */
         #endregion
 
-        public Weapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, Engine engine) : base (itemName, itemTexture, itemOwner) {
+        public Weapon (String itemName, Texture2D itemTexture, Entity itemOwner, float weaponDamage, float attackSpeed, float weaponRange, List<Enemy> enemies, Engine engine) : base (itemName, itemTexture, itemOwner, engine) {
             this.weaponDamage = weaponDamage;
             this.attackSpeed = attackSpeed;
             this.weaponRange = weaponRange;
-            this.enemies = enemies;
+            this.enemies = gameEngine.Enemies;
             this.lastAttackGameTimeInMilliseconds = 0;
             this.weaponRotationFloatValue = 0;
-            gameEngine = engine;
         }
 
         // public float calculateWeaponRotation()
