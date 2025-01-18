@@ -324,8 +324,8 @@ namespace GameStateManagementSample.Models.Map
 
             switch (direction)
             {
-                case 0: // Norden
-                    mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
+                case 0:
+                    mid = (tiles.GetLength(1) / 2);
 
                     doorTile = new DoorTile(tiles[0, mid]);
                     doorTile.setTexture(stoneDoorN);
@@ -336,8 +336,8 @@ namespace GameStateManagementSample.Models.Map
                     tiles[0, mid] = doorTile;
                     return doorTile;
 
-                case 1: // Osten
-                    mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
+                case 1:
+                    mid = (tiles.GetLength(0) / 2);
 
                     doorTile = new DoorTile(tiles[mid, tiles.GetLength(1) - 1]);
                     doorTile.setTexture(stoneDoorE);
@@ -354,8 +354,8 @@ namespace GameStateManagementSample.Models.Map
                     tiles[mid, tiles.GetLength(1) - 1] = doorTile;
                     return doorTile;
 
-                case 2: // Süden
-                    mid = (tiles.GetLength(1) / 2); // Vertikale Mitte
+                case 2:
+                    mid = (tiles.GetLength(1) / 2); 
 
                     doorTile = new DoorTile(tiles[tiles.GetLength(0) - 1, mid]);
                     doorTile.setTexture(stoneDoorS);
@@ -366,8 +366,8 @@ namespace GameStateManagementSample.Models.Map
                     tiles[tiles.GetLength(0) - 1, mid] = doorTile;
                     return doorTile;
 
-                case 3: // Westen
-                    mid = (tiles.GetLength(0) / 2); // Horizontale Mitte
+                case 3:
+                    mid = (tiles.GetLength(0) / 2);
 
                     doorTile = new DoorTile(tiles[mid, 0]);
                     doorTile.setTexture(stoneDoorW);
@@ -403,21 +403,20 @@ namespace GameStateManagementSample.Models.Map
 
             switch (direction)
             {
-                case 0: // Norden
+                case 0:
                     mid = (tiles.GetLength(1) / 2);
                     tiles[0, mid].setTexture(doorN);
 
                     doorTile = new DoorTile(tiles[0, mid]);
                     tiles[0, mid] = doorTile;
 
-                    // Für den anderen Raum
+
                     oppositeMid = oppositeRoom.GetTiles().GetLength(1) / 2;
                     oppositeRoom.tiles[oppositeRoom.GetTiles().GetLength(0) - 1, oppositeMid].setTexture(doorS);
 
                     oppositeDoorTile = new DoorTile(oppositeRoom.GetTiles()[oppositeRoom.GetTiles().GetLength(0) - 1, oppositeMid]);
                     oppositeRoom.tiles[oppositeRoom.GetTiles().GetLength(0) - 1, oppositeMid] = oppositeDoorTile;
 
-                    // ((DoorTile)tiles[0, mid]).setOtherSideDoor((DoorTile)oppositeRoom.GetTiles()[oppositeRoom.GetTiles().GetLength(0) - 1, oppositeMid]);
                     doorTile.setOtherSideDoor(oppositeDoorTile);
                     oppositeDoorTile.setOtherSideDoor(doorTile);
 
@@ -428,14 +427,13 @@ namespace GameStateManagementSample.Models.Map
                     oppositeRoom.roomDoors[2] = oppositeDoorTile;
                     break;
 
-                case 1: // Osten
+                case 1: 
                     mid = (tiles.GetLength(0) / 2);
                     tiles[mid, tiles.GetLength(1) - 1].setTexture(doorE);
 
                     doorTile = new DoorTile(tiles[mid, tiles.GetLength(1) - 1]);
                     tiles[mid, tiles.GetLength(1) - 1] = doorTile;
 
-                    // Für den anderen Raum
                     oppositeMid = oppositeRoom.GetTiles().GetLength(0) / 2;
                     oppositeRoom.tiles[oppositeMid, 0].setTexture(doorW);
 
@@ -470,14 +468,13 @@ namespace GameStateManagementSample.Models.Map
                     oppositeRoom.roomDoors[3] = oppositeDoorTile;
                     break;
 
-                case 2: // Süden
+                case 2:
                     mid = (tiles.GetLength(1) / 2);
                     tiles[tiles.GetLength(0) - 1, mid].setTexture(doorS);
 
                     doorTile = new DoorTile(tiles[tiles.GetLength(0) - 1, mid]);
                     tiles[tiles.GetLength(0) - 1, mid] = doorTile;
 
-                    // Für den anderen Raum
                     oppositeMid = oppositeRoom.GetTiles().GetLength(1) / 2;
                     oppositeRoom.tiles[0, oppositeMid].setTexture(doorN);
 
@@ -494,14 +491,13 @@ namespace GameStateManagementSample.Models.Map
                     oppositeRoom.roomDoors[0] = oppositeDoorTile;
                     break;
 
-                case 3: // Westen
+                case 3: 
                     mid = (tiles.GetLength(0) / 2);
                     tiles[mid, 0].setTexture(doorW);
 
                     doorTile = new DoorTile(tiles[mid, 0]);
                     tiles[mid, 0] = doorTile;
 
-                    // Für den anderen Raum
                     oppositeMid = oppositeRoom.GetTiles().GetLength(0) / 2;
                     oppositeRoom.tiles[oppositeMid, oppositeRoom.GetTiles().GetLength(1) - 1].setTexture(doorE);
 
