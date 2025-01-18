@@ -13,9 +13,6 @@ namespace GameStateManagementSample.Models.Entities
 {
     public abstract class Enemy : Entity
     {
-        IEnemyState currentState;
-        CollisionDetector collisionDetector;
-
         protected float distanceXToPlayer;
         protected float distanceYToPlayer;
         protected float followPlayerMultiplier = 2;

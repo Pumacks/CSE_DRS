@@ -46,24 +46,17 @@ namespace GameStateManagementSample.Models.Map
             // Texturen laden
             LoadMapTextures(content);
 
-            // Ersten Raum erzeugen
             rooms[0].GenerateRoom(random, new Vector2(5000, 5000), stage, ref enemies);
 
-            // Start im bool-Array markieren und in Room speichern
             mapVisual = new bool[10, 10];
             xmapVisual = 4;
             ymapVisual = 4;
             mapVisual[xmapVisual, ymapVisual] = true;
 
-            // WICHTIG: die Map-Koordinaten des ersten Raums merken
-            rooms[0].MapX = xmapVisual;
-            rooms[0].MapY = ymapVisual;
-
             int randomdirection;
             int randomRoom;
             Vector2 posOfRoom;
 
-            // Weitere Räume platzieren
             for (int i = 1; i < rooms.Length; i++)
             {
                 randomdirection = random.Next(0, 4);
@@ -77,23 +70,16 @@ namespace GameStateManagementSample.Models.Map
                             i--;
                             break;
                         }
-                        // Statt xmapVisual - 1 immer nur, wenn es frei ist
-                        if (!rooms[randomRoom].isDirectionBlockedOn(0) 
+                        if (!rooms[randomRoom].isDirectionBlockedOn(0)
                             && !mapVisual[xmapVisual - 1, ymapVisual])
                         {
                             xmapVisual -= 1;
                             mapVisual[xmapVisual, ymapVisual] = true;
 
-                            // Raum generieren
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
-                            posOfRoom.Y -= ROOM_DISTANCE;
+                            posOfRoom.X -= ROOM_DISTANCE;
                             rooms[i].GenerateRoom(random, posOfRoom, stage, ref enemies);
 
-                            // Neue Raum-Koordinaten merken
-                            rooms[i].MapX = xmapVisual;
-                            rooms[i].MapY = ymapVisual;
-
-                            // Türen / Blockierungen
                             rooms[randomRoom].blockDirection(0);
                             rooms[i].blockDirection(2);
                             rooms[randomRoom].setDoors(0, rooms[i]);
@@ -118,11 +104,8 @@ namespace GameStateManagementSample.Models.Map
                             mapVisual[xmapVisual, ymapVisual] = true;
 
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
-                            posOfRoom.X += ROOM_DISTANCE;
+                            posOfRoom.Y += ROOM_DISTANCE;
                             rooms[i].GenerateRoom(random, posOfRoom, stage, ref enemies);
-
-                            rooms[i].MapX = xmapVisual;
-                            rooms[i].MapY = ymapVisual;
 
                             rooms[randomRoom].blockDirection(1);
                             rooms[i].blockDirection(3);
@@ -148,11 +131,8 @@ namespace GameStateManagementSample.Models.Map
                             mapVisual[xmapVisual, ymapVisual] = true;
 
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
-                            posOfRoom.Y += ROOM_DISTANCE;
+                            posOfRoom.X += ROOM_DISTANCE;
                             rooms[i].GenerateRoom(random, posOfRoom, stage, ref enemies);
-
-                            rooms[i].MapX = xmapVisual;
-                            rooms[i].MapY = ymapVisual;
 
                             rooms[randomRoom].blockDirection(2);
                             rooms[i].blockDirection(0);
@@ -178,11 +158,8 @@ namespace GameStateManagementSample.Models.Map
                             mapVisual[xmapVisual, ymapVisual] = true;
 
                             posOfRoom = rooms[randomRoom].GetTiles()[0, 0].getPos();
-                            posOfRoom.X -= ROOM_DISTANCE;
+                            posOfRoom.Y -= ROOM_DISTANCE;
                             rooms[i].GenerateRoom(random, posOfRoom, stage, ref enemies);
-
-                            rooms[i].MapX = xmapVisual;
-                            rooms[i].MapY = ymapVisual;
 
                             rooms[randomRoom].blockDirection(3);
                             rooms[i].blockDirection(1);

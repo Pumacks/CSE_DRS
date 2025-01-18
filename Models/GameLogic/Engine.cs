@@ -166,59 +166,6 @@ namespace GameStateManagementSample.Models.GameLogic
             //}
 
 
-
-
-            RangedWeapon enemyBow = new RangedWeapon(
-                "Bow of the Dungeon",
-                BowTexture,
-                null,
-                15,
-                2000,
-                1000,
-                Enemies,
-                600,
-                ArrowTexture,
-                Projectiles,
-                this
-            );
-            MeleeWeapon enemySword = new MeleeWeapon(
-                "Sword of the Dungeon",
-                SwordTexture,
-                null,
-                10,
-                1500,
-                150,
-                Enemies,
-                this
-            );
-            MeleeWeapon enemySpear = new MeleeWeapon(
-                "Sword of the Dungeon",
-                SwordTexture,
-                null,
-                15,
-                2000,
-                250,
-                Enemies,
-                this
-            );
-
-            Enemy enemyWarrior = new EnemyWarrior(100, 1, new Vector2(5500, 5500), initTexture, gameFont, new List<Item>(), this);
-            enemySword.ItemOwner = enemyWarrior;
-            enemyWarrior.Camera = camera;
-
-            Enemy enemyArcher = new EnemyArcher(100, 1, new Vector2(5500, 5800), initTexture, gameFont, new List<Item>(), this);
-            enemyBow.ItemOwner = enemyArcher;
-            enemyArcher.Camera = camera;
-
-            Enemy enemySpearman = new EnemySpearman(100, 1, new Vector2(5800, 5800), initTexture, gameFont, new List<Item>(), this);
-            enemySpear.ItemOwner = enemySpearman;
-            enemySpearman.Camera = camera;
-
-
-            enemies.Add(enemyWarrior);
-            enemies.Add(enemyArcher);
-            enemies.Add(enemySpearman);
-
             // for (int i = 0; i < 100; i++)
             // {
             //     Enemy e = new EnemyWarrior(100, 1, new Vector2(5500 + 10 * i, 5500 + 10 * i), initTexture, gameFont, new List<Item>());

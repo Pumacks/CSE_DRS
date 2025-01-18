@@ -30,10 +30,6 @@ namespace GameStateManagementSample.Models.Map
         private Texture2D grass3;
         private Texture2D tree;
 
-        private Texture2D grassElement1;
-        private Texture2D grassElement2;
-        private Texture2D grassElement3;
-
         private Texture2D grasslvl2;
         private Texture2D stone;
         private Texture2D stone2;
@@ -71,12 +67,7 @@ namespace GameStateManagementSample.Models.Map
 
         private Texture2D s1BrokenTree, s1Bush, s1Rock, s2Stone, s2LightStone, s2BrownStone, s3BrokenTree, s3Mushroom1, s3Mushroom2;
 
-        private Random random = new Random();
-
-        public int MapX { get; set; }
-        public int MapY { get; set; }
-
-        
+        private Random random = new Random();       
 
         public Room(Engine engine)
         {
