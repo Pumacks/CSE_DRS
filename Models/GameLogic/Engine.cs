@@ -416,7 +416,7 @@ namespace GameStateManagementSample.Models.GameLogic
             spriteBatch.Begin();
             spriteBatch.DrawString(
                 spriteFont: gameFont,
-                text: "Press_F2_to_show_Controls",
+                text: "F2_Controls", //"Press_F2_to_show_Controls"
                 position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
                     ScreenManager.GraphicsDevice.Viewport.Height * 0.01f + 150),
                 Color.Blue
@@ -481,7 +481,7 @@ namespace GameStateManagementSample.Models.GameLogic
             spriteBatch.Begin();
             spriteBatch.DrawString(
                 spriteFont: gameFont,
-                text: "Press_F1_to_toggle_Stats",
+                text: "F1_Stats", // Press_F1_to_toggle_Stats
                 position: new Vector2(ScreenManager.GraphicsDevice.Viewport.Width * 0.01f,
                     ScreenManager.GraphicsDevice.Viewport.Height - 250),
                 Color.Blue
