@@ -6,20 +6,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace GameStateManagementSample.Models.Map
 {
     public class Room
     {
-        enum SkyDirection
-        {
-            NORTH,
-            EAST,
-            SOUTH,
-            WEST
-        }
-
         private Tile[,] tiles;
         private bool[] blocked = new bool[4]; // wird für Map generation genutzt
         private DoorTile[] roomDoors = new DoorTile[4];
@@ -216,11 +207,24 @@ namespace GameStateManagementSample.Models.Map
                     if (rdmNumber >= 90 && i >= 4 && j >= 4 && i <= tiles.GetLength(0) - 3 && j <= tiles.GetLength(1) - 3)
                     {
                         if (rdmNumber == 90 /* && rdmNumber <= 93 */)
-                            enemies.Add(new EnemyWarrior(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
+                        {
+                            Enemy tmp = new EnemyWarrior(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine);
+                            tmp.EnemyRoom = this;
+                            enemies.Add(tmp);
+                        }
                         if (rdmNumber == 94 /* && rdmNumber <= 97 */)
-                            enemies.Add(new EnemySpearman(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
+                        {
+                            Enemy tmp = new EnemySpearman(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine);
+                            tmp.EnemyRoom = this;
+                            enemies.Add(tmp);
+                        }
                         if (rdmNumber == 98 /* && rdmNumber <= 100 */)
-                            enemies.Add(new EnemyArcher(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine));
+                        {
+                            Enemy tmp = new EnemyArcher(100, 1, tilePos, initTexture, gameFont, new List<Item>(), engine);
+                            tmp.EnemyRoom = this;
+                            enemies.Add(tmp);
+                        }
+
 
                     }
 

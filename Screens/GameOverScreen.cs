@@ -1,17 +1,6 @@
 ﻿using GameStateManagement;
-using GameStateManagementSample.Models;
 using GameStateManagementSample.Models.Entities;
-using GameStateManagementSample.Models.Items;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GameStateManagementSample.Screens
 {
@@ -19,7 +8,7 @@ namespace GameStateManagementSample.Screens
     {
         #region Initialization
 
-    
+
 
         public GameOverScreen(PlayerGameStatus status)
             : base(status == PlayerGameStatus.DEAD ? "Game  over, you  died!" : "Congratulations, You  won! \nTotal  score:  " + Player.totalScore)

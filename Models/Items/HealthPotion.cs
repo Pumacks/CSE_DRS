@@ -1,7 +1,7 @@
 using GameStateManagementSample.Models.Entities;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using GameStateManagementSample.Models.GameLogic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 namespace GameStateManagementSample.Models.Items
 {
     public class HealthPotion : Item

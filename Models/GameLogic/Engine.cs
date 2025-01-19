@@ -1,23 +1,19 @@
 ﻿using GameStateManagement;
 using GameStateManagementSample.Models.Entities;
+using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
 using GameStateManagementSample.Models.Map;
 using GameStateManagementSample.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Numerics;
 using System.Threading;
-using GameStateManagementSample.Models.Helpers;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using Microsoft.Xna.Framework.Audio;
-using System.Runtime.Serialization;
-using System.IO;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Microsoft.Xna.Framework.Media;
 
@@ -133,7 +129,6 @@ namespace GameStateManagementSample.Models.GameLogic
             set { enemies = value; }
         }
 
-        private Ai ai;
 
 
         private List<Projectile> projectiles;
@@ -170,7 +165,7 @@ namespace GameStateManagementSample.Models.GameLogic
             gameFont = content.Load<SpriteFont>("gamefont");
             initTexture = content.Load<Texture2D>("Player/idle_frames/idle0");
 
-            hero = new Player(100, 5, new Vector2(5300, 5300), initTexture, gameFont, new List<Item>(), this);
+            hero = new Player(100, 10, new Vector2(5300, 5300), initTexture, gameFont, new List<Item>(), this);
             heroPlayer = hero;
             enginereference = this;
             hero.Camera = camera;
@@ -245,7 +240,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 "Bow of the Gods",
                 BowTexture,
                 hero,
-                17,
+                1700,
                 900, //cooldown
                 1000,
                 Enemies,
@@ -259,14 +254,14 @@ namespace GameStateManagementSample.Models.GameLogic
                 "Sword of the Gods",
                 SwordTexture,
                 hero,
-                17,
+                1700,
                 700, //cooldown
                 300,
                 Enemies,
                 this
             );
 
-            ai = new Ai();
+
 
             map.LoadMapTextures(content);
             map.GenerateMap(content, ref enemies, hero.Camera);
@@ -579,6 +574,7 @@ namespace GameStateManagementSample.Models.GameLogic
                                 if (!theProjectile.IsStuck) // <---------- notice this
                                     if (theProjectile.ProjectileHitBox.Intersects(targetEnemy.BoundingBox))
                                     {
+                                        Player.totalScore += (int)theProjectile.ProjectileDamage;
                                         targetEnemy.TakeDamage(theProjectile.ProjectileDamage);
                                         Projectiles.Remove(theProjectile); // Projectiles.RemoveAt(projectileUpdateIndex); <--- ist fehleranfällig für IndexOutOfBoundsException
                                     }
@@ -705,116 +701,28 @@ namespace GameStateManagementSample.Models.GameLogic
                     DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north, ref map);
                     if (door != null)
                     {
-                        if (!door.IsLastDoor)
-                        {
-                            doorOpenCloseSound.Play();
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        }
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            stoneDoorOpenCloseSound.Play();
-                            stoneMoving.Play();
-                            clearEnemiesAndProjectiles();
-                            map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies, hero.Camera);
-                            foreach (var e in enemies)
-                            {
-                                e.LoadContent(content);
-                                e.Camera = camera;
-                            }
-                            ClearItemsOnStageChange();
-                        }
-
+                        EnterDoor(door);
                         break;
                     }
 
                     door = CollisionDetector.HasDoorTileCollision(room, hero, south, ref map);
                     if (door != null)
                     {
-                        if (!door.IsLastDoor)
-                        {
-                            doorOpenCloseSound.Play();
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        }
-                        else
-                        {
-
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            stoneDoorOpenCloseSound.Play();
-                            stoneMoving.Play();
-                            clearEnemiesAndProjectiles();
-                            Enemies = new List<Enemy>();
-                            map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies, hero.Camera);
-                            foreach (var e in enemies)
-                            {
-                                e.LoadContent(content);
-                                e.Camera = camera;
-                            }
-                            ClearItemsOnStageChange();
-                        }
-
+                        EnterDoor(door);
                         break;
                     }
 
                     door = CollisionDetector.HasDoorTileCollision(room, hero, west, ref map);
                     if (door != null)
                     {
-                        if (!door.IsLastDoor)
-                        {
-                            doorOpenCloseSound.Play();
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        }
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            stoneDoorOpenCloseSound.Play();
-                            stoneMoving.Play();
-                            clearEnemiesAndProjectiles();
-                            Enemies = new List<Enemy>();
-                            map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies, hero.Camera);
-                            foreach (var e in enemies)
-                            {
-                                e.LoadContent(content);
-                                e.Camera = camera;
-                            }
-                            ClearItemsOnStageChange();
-                        }
-
+                        EnterDoor(door);
                         break;
                     }
 
                     door = CollisionDetector.HasDoorTileCollision(room, hero, east, ref map);
                     if (door != null)
                     {
-                        if (!door.IsLastDoor)
-                        {
-                            doorOpenCloseSound.Play();
-                            hero.Position = door.getOtherSideDoor().TeleportPosition;
-                        }
-                        else
-                        {
-                            hero.Position = door.TeleportPosition;
-                            stage++;
-                            stoneDoorOpenCloseSound.Play();
-                            stoneMoving.Play();
-                            clearEnemiesAndProjectiles();
-                            Enemies = new List<Enemy>();
-                            map.SetStage(stage);
-                            map.GenerateMap(content, ref enemies, hero.Camera);
-                            foreach (var e in enemies)
-                            {
-                                e.LoadContent(content);
-                                e.Camera = camera;
-                            }
-                            ClearItemsOnStageChange();
-                        }
-
+                        EnterDoor(door);
                         break;
                     }
 
@@ -886,7 +794,8 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 e.setGameTime(gameTime);
                 e.UpdateDistanceToHero(hero.Position);
-                e.FollowPlayer(map.Rooms[0]);
+                //e.Idling(map.Rooms[0]);
+                e.FollowPlayer(e.EnemyRoom);
                 e.Camera = camera;
                 e.Update(gameTime);
                 if (e.HealthPoints <= 0)
@@ -900,6 +809,8 @@ namespace GameStateManagementSample.Models.GameLogic
                 if (finishedAnim)
                 {
                     Enemies.Remove(e);
+                    if (Enemies.Count <= 0)
+                        worldConsumables.Add(new Key("key", KeyTexture, hero, e.Position, this));
 
                     // 40% Drop Chance for Health Potion
                     if (random.Next(0, 100) < 45)
@@ -983,12 +894,23 @@ namespace GameStateManagementSample.Models.GameLogic
             {
                 if (hero.HasKey)
                 {
-                    hero.Position = door.TeleportPosition;
                     stage++;
-                    hero.UseKey();
-                    map.SetStage(stage);
-                    map.GenerateMap(content, ref enemies, camera);
-                    ClearItemsOnStageChange();
+                    if (stage > 3)
+                        playerGameStatus = PlayerGameStatus.WON;
+                    else
+                    {
+                        hero.Position = door.TeleportPosition;
+                        clearEnemiesAndProjectiles();
+                        map.SetStage(stage);
+                        map.GenerateMap(content, ref enemies, hero.Camera);
+                        foreach (var e in enemies)
+                        {
+                            e.LoadContent(content);
+                            e.Camera = camera;
+                        }
+                        ClearItemsOnStageChange();
+                        hero.UseKey();
+                    }
                 }
             }
         }

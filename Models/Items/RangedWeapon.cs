@@ -1,16 +1,10 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Mime;
-using System.Reflection.Metadata;
-using GameStateManagementSample.Models;
 using GameStateManagementSample.Models.Entities;
-using GameStateManagementSample.Models.World;
+using GameStateManagementSample.Models.GameLogic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using GameStateManagement;
+using System;
 using System.Collections.Generic;
-using GameStateManagementSample.Models.GameLogic;
 
 
 namespace GameStateManagementSample.Models.Items
@@ -93,7 +87,8 @@ namespace GameStateManagementSample.Models.Items
                     this.weaponDamage,
                     gameEngine));
             }
-            else {
+            else
+            {
                 Projectiles.Add(
                 new Projectile(
                     this.ItemName,

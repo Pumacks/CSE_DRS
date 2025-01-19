@@ -1,18 +1,12 @@
-﻿using GameStateManagementSample.Models;
-using GameStateManagementSample.Models.GameLogic;
+﻿using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.GUI;
+using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using GameStateManagement;
-using System;
-using GameStateManagementSample.Models.Helpers;
-using Microsoft.Xna.Framework.Media;
 
 
 namespace GameStateManagementSample.Models.Entities
@@ -425,10 +419,10 @@ namespace GameStateManagementSample.Models.Entities
 
 
             animManager.walk.ChangeAnimationDuration(3);
-            animManager.attack.ChangeAnimationDuration(3);
+            animManager.attack.ChangeAnimationDuration(4);
             animManager.idle.ChangeAnimationDuration(2);
             animManager.death.ChangeAnimationDuration(8);
-            animManager.shot.ChangeAnimationDuration(2);
+            animManager.shot.ChangeAnimationDuration(5);
             Texture = animManager.IdleAnimation();
 
 

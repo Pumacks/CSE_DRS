@@ -1,15 +1,10 @@
-﻿using Microsoft.Xna.Framework.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.Items;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using GameStateManagementSample.Models.Helpers;
 using GameStateManagementSample.Models.Map;
-using GameStateManagementSample.Models.GameLogic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace GameStateManagementSample.Models.Entities
 {
@@ -24,7 +19,7 @@ namespace GameStateManagementSample.Models.Entities
             null,
             5,
             1000,
-            (ReductionDistance+1) * 1.42f,
+            (ReductionDistance + 1) * 1.42f,
             engine.Enemies,
             engine);
         }
@@ -39,7 +34,7 @@ namespace GameStateManagementSample.Models.Entities
             for (int i = 0; i <= 3; i++)
                 animManager.death.addFrame(content.Load<Texture2D>("Skeleton_Warrior/death_frames/death" + i.ToString()));
             animManager.walk.ChangeAnimationDuration(3);
-            animManager.attack.ChangeAnimationDuration(2);
+            animManager.attack.ChangeAnimationDuration(3);
             animManager.idle.ChangeAnimationDuration(2);
             animManager.death.ChangeAnimationDuration(15);
             Texture = animManager.IdleAnimation();
@@ -110,7 +105,11 @@ namespace GameStateManagementSample.Models.Entities
             }
             else if (isPlayerInReach())
             {
-                ActiveWeapon.weaponAttack(this);
+                if (animState != AnimState.Death)
+                {
+                    ActiveWeapon.weaponAttack(this);
+                    Move(Vector2.Zero);
+                }
             }
         }
     }

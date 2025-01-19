@@ -1,12 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameStateManagementSample.Models
 {
@@ -16,11 +9,12 @@ namespace GameStateManagementSample.Models
         private float animationSpeed;
         private float timeCounter;
         private int currentFrame;
+        private int iterationCounter;
         private bool isLooping = true;
         private float totalDuration;
 
         public List<Texture2D> Textures { get => textures; }
- 
+
 
         public Animation(float totalDuration)
         {
@@ -73,7 +67,13 @@ namespace GameStateManagementSample.Models
 
         public bool IterationFinished()
         {
-            return currentFrame == textures.Count - 1;
+            iterationCounter = currentFrame;
+            if (currentFrame >= textures.Count - 1)
+            {
+                currentFrame = 0;
+                return true;
+            }
+            return false;
         }
 
         public void ChangeAnimationDuration(float duration)

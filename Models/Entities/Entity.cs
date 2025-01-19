@@ -1,16 +1,11 @@
-﻿using System.Collections;
+﻿using GameStateManagementSample.Models.GameLogic;
 using GameStateManagementSample.Models.GUI;
 using GameStateManagementSample.Models.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net;
-using System.Numerics;
-using System.Runtime.InteropServices.Marshalling;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-using GameStateManagementSample.Models.GameLogic;
 
 namespace GameStateManagementSample.Models.Entities
 {
@@ -232,11 +227,11 @@ namespace GameStateManagementSample.Models.Entities
 
 
             if (activeWeapon != null && activeWeapon is MeleeWeapon)
-                if (animManager.AttackAnimationFinished() && GameTime.TotalGameTime.TotalMilliseconds - activeWeapon.LastAttackGameTimeInMilliseconds >= activeWeapon.AttackSpeed)
+                if (animManager.AttackAnimationFinished())
                     activeWeapon.IsAtacking = false;
 
             if (activeWeapon != null && activeWeapon is RangedWeapon)
-                if (animManager.ShotAnimationFinished() && GameTime.TotalGameTime.TotalMilliseconds - activeWeapon.LastAttackGameTimeInMilliseconds >= activeWeapon.AttackSpeed)
+                if (animManager.ShotAnimationFinished())
                     activeWeapon.IsAtacking = false;
 
 

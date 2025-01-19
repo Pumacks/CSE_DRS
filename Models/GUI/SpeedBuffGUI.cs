@@ -1,8 +1,6 @@
-﻿using System;
-using GameStateManagementSample.Models.Entities;
+﻿using GameStateManagementSample.Models.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Drawing;
 using Color = Microsoft.Xna.Framework.Color;
 
 namespace GameStateManagementSample.Models.GUI;
@@ -37,7 +35,7 @@ public class SpeedBuffGUI : GUIObserver
                     layerDepth: 0f);
 
             }
-            spriteBatch.DrawString(spriteFont, ((int)player.SpeedPotionDuration+1).ToString(), textPosition, Color.White);
+            spriteBatch.DrawString(spriteFont, ((int)player.SpeedPotionDuration + 1).ToString(), textPosition, Color.White);
             spriteBatch.End();
         }
     }

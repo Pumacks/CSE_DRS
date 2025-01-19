@@ -1,13 +1,11 @@
-﻿using GameStateManagementSample.Models.Items;
+﻿using GameStateManagementSample.Models.GameLogic;
+using GameStateManagementSample.Models.Helpers;
+using GameStateManagementSample.Models.Items;
+using GameStateManagementSample.Models.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using GameStateManagementSample.Models.Entities.States;
-using GameStateManagementSample.Models.Helpers;
-using GameStateManagementSample.Models.Map;
-using System.Runtime.CompilerServices;
-using GameStateManagementSample.Models.GameLogic;
 
 namespace GameStateManagementSample.Models.Entities
 {
@@ -21,7 +19,7 @@ namespace GameStateManagementSample.Models.Entities
         protected float recognitionDistance = 800;
         protected float howLong = 100;
         protected float fleeAt = 60;
-
+        public Room EnemyRoom { get; set; }
         protected float ReductionDistance
         {
             get => reductionDistance;
@@ -184,7 +182,9 @@ namespace GameStateManagementSample.Models.Entities
             }
             else
             {
-                moveWest(room);
+                movingDirection = Vector2.Zero;
+                movingDirection.X -= MovementSpeed;
+                Move(movingDirection);
             }
         }
         protected void moveSouthWest(Room room)
@@ -198,7 +198,9 @@ namespace GameStateManagementSample.Models.Entities
             }
             else
             {
-                moveEast(room);
+                movingDirection = Vector2.Zero;
+                movingDirection.X += MovementSpeed;
+                Move(movingDirection);
             }
         }
         protected void moveNorthEast(Room room)
@@ -212,7 +214,9 @@ namespace GameStateManagementSample.Models.Entities
             }
             else
             {
-                moveWest(room);
+                movingDirection = Vector2.Zero;
+                movingDirection.X -= MovementSpeed;
+                Move(movingDirection);
             }
         }
         protected void moveNorthWest(Room room)
@@ -227,7 +231,9 @@ namespace GameStateManagementSample.Models.Entities
             }
             else
             {
-                moveEast(room);
+                movingDirection = Vector2.Zero;
+                movingDirection.X += MovementSpeed;
+                Move(movingDirection);
             }
         }
         protected void moveNorth(Room room)
@@ -241,7 +247,9 @@ namespace GameStateManagementSample.Models.Entities
             }
             else
             {
-                moveEast(room);
+                movingDirection = Vector2.Zero;
+                movingDirection.X += MovementSpeed;
+                Move(movingDirection);
             }
         }
         protected void moveEast(Room room)
@@ -254,7 +262,11 @@ namespace GameStateManagementSample.Models.Entities
                 Move(movingDirection);
             }
             else
-                moveSouth(room);
+            {
+                movingDirection = Vector2.Zero;
+                movingDirection.Y += MovementSpeed;
+                Move(movingDirection);
+            }
         }
         protected void moveSouth(Room room)
         {
@@ -266,7 +278,12 @@ namespace GameStateManagementSample.Models.Entities
                 Move(movingDirection);
             }
             else
-                moveWest(room);
+            {
+                movingDirection = Vector2.Zero;
+                movingDirection.X -= MovementSpeed;
+                Move(movingDirection);
+            }
+
         }
         protected void moveWest(Room room)
         {
@@ -278,7 +295,13 @@ namespace GameStateManagementSample.Models.Entities
                 Move(movingDirection);
             }
             else
-                moveNorth(room);
+            {
+                movingDirection = Vector2.Zero;
+                movingDirection.Y -= MovementSpeed;
+                Move(movingDirection);
+
+            }
+
         }
 
         public void UpdateDistanceToHero(Vector2 heroPos)
