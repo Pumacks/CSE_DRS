@@ -691,28 +691,28 @@ namespace GameStateManagementSample.Models.GameLogic
 
                     #region DoorCollision
 
-                    DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north, ref map);
+                    DoorTile door = CollisionDetector.HasDoorTileCollision(room, hero, north);
                     if (door != null)
                     {
                         EnterDoor(door);
                         break;
                     }
 
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, south, ref map);
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, south);
                     if (door != null)
                     {
                         EnterDoor(door);
                         break;
                     }
 
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, west, ref map);
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, west);
                     if (door != null)
                     {
                         EnterDoor(door);
                         break;
                     }
 
-                    door = CollisionDetector.HasDoorTileCollision(room, hero, east, ref map);
+                    door = CollisionDetector.HasDoorTileCollision(room, hero, east);
                     if (door != null)
                     {
                         EnterDoor(door);

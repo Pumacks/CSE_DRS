@@ -35,7 +35,7 @@ namespace GameStateManagementSample.Models.Helpers
             }
         }
 
-        public static DoorTile HasDoorTileCollision(Room room, Entity entity, Vector2 movement, ref MapGenerator map)
+        public static DoorTile HasDoorTileCollision(Room room, Entity entity, Vector2 movement)
         {
             Tile[,] tiles = room.GetTiles();
             int x = (int)entity.Position.X + (int)movement.X - entity.Texture.Width / 2;
