@@ -183,7 +183,9 @@ namespace GameStateManagementSample.Models.Entities
                 Move(movingDirection);
             }
             else
+            {
                 moveWest(room);
+            }
         }
         protected void moveSouthWest(Room room)
         {
@@ -195,7 +197,9 @@ namespace GameStateManagementSample.Models.Entities
                 Move(movingDirection);
             }
             else
+            {
                 moveEast(room);
+            }
         }
         protected void moveNorthEast(Room room)
         {
@@ -207,7 +211,9 @@ namespace GameStateManagementSample.Models.Entities
                 Move(movingDirection);
             }
             else
+            {
                 moveWest(room);
+            }
         }
         protected void moveNorthWest(Room room)
         {
@@ -220,7 +226,9 @@ namespace GameStateManagementSample.Models.Entities
                 Move(movingDirection);
             }
             else
+            {
                 moveEast(room);
+            }
         }
         protected void moveNorth(Room room)
         {
