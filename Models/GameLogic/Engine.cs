@@ -240,8 +240,8 @@ namespace GameStateManagementSample.Models.GameLogic
                 "Bow of the Gods",
                 BowTexture,
                 hero,
-                1700,
-                900, //cooldown
+                17,
+                1000, //cooldown
                 1000,
                 Enemies,
                 1500,
@@ -254,7 +254,7 @@ namespace GameStateManagementSample.Models.GameLogic
                 "Sword of the Gods",
                 SwordTexture,
                 hero,
-                1700,
+                24,
                 700, //cooldown
                 300,
                 Enemies,
