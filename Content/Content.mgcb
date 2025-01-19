@@ -271,6 +271,12 @@
 /processorParam:Quality=Best
 /build:enemyDeath1.wav
 
+#begin Fantascape.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Fantascape.mp3
+
 #begin gamefont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

@@ -13,6 +13,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 
 #endregion Using Statements
@@ -35,6 +36,8 @@ namespace GameStateManagement
 
         public static int ScreenWidth = adapter.CurrentDisplayMode.Width;
         public static int ScreenHeight = adapter.CurrentDisplayMode.Height;
+
+        public Song titleSong;
 
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
@@ -64,6 +67,9 @@ namespace GameStateManagement
             // Activate the first screens.
             screenManager.AddScreen(new BackgroundScreen(), null);
             screenManager.AddScreen(new MainMenuScreen(), null);
+
+            titleSong = Content.Load<Song>("Fantascape");
+            MediaPlayer.Play(titleSong);
         }
 
         protected override void Initialize()

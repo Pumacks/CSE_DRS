@@ -165,7 +165,7 @@ namespace GameStateManagementSample.Models.GameLogic
             gameFont = content.Load<SpriteFont>("gamefont");
             initTexture = content.Load<Texture2D>("Player/idle_frames/idle0");
 
-            hero = new Player(100, 10, new Vector2(5300, 5300), initTexture, gameFont, new List<Item>(), this);
+            hero = new Player(100, 5, new Vector2(5300, 5300), initTexture, gameFont, new List<Item>(), this);
             heroPlayer = hero;
             enginereference = this;
             hero.Camera = camera;
