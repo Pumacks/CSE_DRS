@@ -1,7 +1,7 @@
 # Computerspielentwicklung WS2024
 
 ## Name
-(Heftiger Name)
+Credit Conquest
 
 ## Description
 Rogue like
