@@ -4,15 +4,17 @@
 Credit Conquest
 
 ## Description
-Rogue like
-
+a simple Rogue like
 
 ## Setup
 - Monogame
 - Visual Studio Code
 
 ## Installation
-
+- .NET 8.0 SDK
+- Dieses Repository herunterladen
+- cd `CSE_DRS`
+- type in cli: `dotnet run`
 
 ## Vorgegebenes Spielkonzept: Roguelike
 • Konzentration auf Entwicklung
