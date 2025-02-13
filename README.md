@@ -1,5 +1,9 @@
 # Computerspielentwicklung WS2024
 
+## Info
+Dieses Projekt wurde im Rahmen des Moduls Computerspielentwicklung durchgeführt
+und wurde mit 54 von 60 erreichbaren Punkten bewertet.
+
 ## Name
 Credit Conquest
 
