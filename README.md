@@ -1,4 +1,5 @@
 # Computerspielentwicklung WS2024
+![CreditConquest2](https://github.com/user-attachments/assets/7755bc59-b70d-4fc0-8ef1-d438c183efd2)
 
 ## Info
 Dieses Projekt wurde im Rahmen des Moduls Computerspielentwicklung durchgeführt
